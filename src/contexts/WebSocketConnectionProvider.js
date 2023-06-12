@@ -60,6 +60,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }
     };
 
+    const closeConnection = () => {
+        socketRef.current.close()
+    }
  
 
 
@@ -69,7 +72,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         isUserRegistered,
         connectWebSocket,
         sendWebSocketMessage,
-        createUser
+        createUser,
+        closeConnection
     }
     
 

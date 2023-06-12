@@ -26,6 +26,7 @@ export const Login = ()=>{
     ,[isConnected])
 
     useEffect(()=>{
+        setIsLoading(false)
         isUserRegistered && history("/findingPair")
     }     
     ,[isUserRegistered])
@@ -82,7 +83,8 @@ export const Login = ()=>{
                     <form>
                         <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                         <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
-                    </form>                    
+                    </form> 
+                    <button>cerrar</button>                   
                 </div>
                 
             }
