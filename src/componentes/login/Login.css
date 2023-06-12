@@ -1,0 +1,66 @@
+.formContainer{
+    display: flex;
+    position: relative;
+    justify-content: center;    
+    border-radius: 7px;    
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    top: 30%;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    padding: 20px;    
+}
+
+
+.nickNameInput{
+    width: 320px;
+    height: 45px;
+    margin-bottom: 20px;
+    font-family: Montserrat;
+    font-size: 18px;
+    border-radius: 10px;
+    border: 1px solid #6c6c6c;
+    padding: 0 15px;
+    cursor: text;
+    text-align: center;
+    
+}
+
+.nickNameInput::placeholder{
+    text-align: center;
+}
+
+.nickNameInput:focus-visible{   
+    outline: none;
+    text-align: center;
+}
+
+
+
+.startSessionButton{
+    width: 320px;
+    height: 60px;
+    font-family: Montserrat;
+    font-size: 20px;
+    background: rgb(131,58,180);
+    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(190,29,253,1) 0%, rgba(252,176,69,1) 100%);
+    border: none;
+    border-radius: 10px;
+    color: #56FF30;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.spinner{
+    margin: auto;
+}
+
+
+
