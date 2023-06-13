@@ -1,10 +1,8 @@
 import { useRef, useContext, useEffect} from "react"
 import { useNavigate } from 'react-router-dom'
-
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { isLoadingContext } from "../../contexts/IsLoadingProvider";
-
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
@@ -14,23 +12,25 @@ export const Login = ()=>{
     const input = useRef()
     const user = useRef()
     const {isLoading, setIsLoading} = useContext(isLoadingContext)    
-    const {isConnected, isUserRegistered, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
+    const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
     const history = useNavigate()
 
     useEffect(()=>{
-        if(isConnected){      
+        if(connectionstatus==="offline"){      
+            history("/login")          
+        }
+
+        if(connectionstatus==="online"){      
             setIsLoading(true)
             createUser(user.current)          
         }
-    }     
-    ,[isConnected])
 
-    useEffect(()=>{
-        setIsLoading(false)
-        isUserRegistered && history("/findingPair")
+        if(connectionstatus==="userRegistered"){      
+            setIsLoading(false)
+            history("/findingPair")          
+        }
     }     
-    ,[isUserRegistered])
-    
+    ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
@@ -71,7 +71,6 @@ export const Login = ()=>{
     const onBlurHandler = ()=>{        
         input.current.setAttribute("placeholder", "Insert a nick name")
     }
-
    
     return(
         <>
@@ -79,8 +78,8 @@ export const Login = ()=>{
                 isLoading ?
                 <Spinner className="spinner" animation="border" />                 
                         :
-                <div className="formContainer">
-                    <form>
+                <div className="formContainerLogin">
+                    <form className="formLogin">
                         <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                         <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
                     </form>                                        

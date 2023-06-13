@@ -1,18 +1,28 @@
-import { useRef, useContext } from 'react';
+import { useRef, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
-
 import { AiFillCloseSquare } from "react-icons/ai";
 
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
 
-    const input = useRef()
+    const input = useRef()    
+    const history = useNavigate()
 
-    const {closeConnection} = useContext(webSocketConnectionContext)
+    const { connectionstatus, closeConnection } = useContext(webSocketConnectionContext)
 
+    const closeConnectionHandler = ()=>{        
+        closeConnection()
+    }
+
+    useEffect(()=>{
+        connectionstatus==="offline" && history("/login")                  
+    }     
+    ,[connectionstatus])
+  
     // COMPORTAMIENTO INPUT
-    const onFocusHandler = ()=>{        
+    const onFocusHandler = ()=>{          
         input.current.removeAttribute("placeholder")
     }
 
@@ -23,9 +33,9 @@ export const FindingPairs = ()=>{
 
     return(
         <>
-            <AiFillCloseSquare className="closeConnectionButton" onClick={()=>closeConnection()}/>
+            <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
             <div className="formContainer">                    
-                <form>
+                <form className="formFindingPair">
                     <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                     <button className="startSessionButton">Start chat</button>
                 </form>                                        

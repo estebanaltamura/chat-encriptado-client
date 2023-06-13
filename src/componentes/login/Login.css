@@ -1,4 +1,4 @@
-.formContainer{
+.formContainerLogin{
     display: flex;
     position: relative;
     justify-content: center;    
@@ -9,7 +9,8 @@
     top: 30%;
 }
 
-form{
+
+.formLogin{
     display: flex;
     flex-direction: column;
     width: fit-content;

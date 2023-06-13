@@ -1,17 +1,16 @@
 import { createContext, useRef, useState } from "react"
 
+
 export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
 
-    const socketRef = useRef(null);
-    const [isConnected, setIsConnected] = useState(false);
-    const [isUserRegistered, setIsUserRegistered] = useState(false);
-
-
+    const socketRef = useRef(null);    
+    const [connectionstatus, setConnectionStatus] = useState("offline")
+    
     const handleOpen = () => {
         console.log("connected")        
-        setIsConnected(true);
+        setConnectionStatus("online");
     };
     
     const handleMessage = (event) => { 
@@ -19,13 +18,14 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         console.log("mensaje recibido del servidor: ", message)
 
         if(message === "userCreated"){
-            setIsUserRegistered(true)
+            setConnectionStatus("userRegistered")
         }
     };
     
     const handleClose = () => {
         console.log("closed")
-        setIsConnected(false);
+        window.location.href = "/login"
+        setConnectionStatus("offline");
     };
     
     const handleError = (error) => {
@@ -45,7 +45,6 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         return false
     };
-
     
     const createUser = (message) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {            
@@ -63,20 +62,15 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const closeConnection = () => {
         socketRef.current.close()
     }
- 
-
-
-    
+     
     const WebSocketContextValue = {
-        isConnected,        
-        isUserRegistered,
+        connectionstatus,           
         connectWebSocket,
         sendWebSocketMessage,
         createUser,
         closeConnection
     }
     
-
     return(
         <webSocketConnectionContext.Provider value={WebSocketContextValue}>
             {children}

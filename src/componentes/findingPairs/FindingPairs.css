@@ -1,8 +1,9 @@
 .closeConnectionButton{
-    margin: 0 50%;
+    margin-top: 40px;
+    margin-left: calc(50% - 27px);
     width: 55px;
     height: 55px;
-    color: rgb(177, 5, 5);
+    color: #e75874 ;
 
 }
 
@@ -14,10 +15,10 @@
     width: fit-content;
     height: fit-content;
     margin: 0 auto;
-    top: 30%;
+    top: 18%;
 }
 
-form{
+.formFindingPair{
     display: flex;
     flex-direction: column;
     width: fit-content;
