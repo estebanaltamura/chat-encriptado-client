@@ -40,3 +40,8 @@ Si alguno de los cierra la sesion, se cierran las conexiones, se borran los dos 
     -con la contraseña se desencripta el session storage, se pide la clave privada y se desencripta el mensaje, todo en una sola linea para no persistir nada en una variable referido a una clave
 
 
+
+no persisti el context  en el evento unloading en el local storage por que de frla conexion web socket se cae
+                                                  
+
+
