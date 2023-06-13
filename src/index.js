@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnectionProvider';
 import { IsLoadingContextProvider } from './contexts/IsLoadingProvider';
-import { PairDataProvider } from './contexts/PairDataProvider';
+import { PublicKeyProvider } from './contexts/publickKeyProvider';
 import App from './App';
 import './index.css';
 
@@ -13,9 +13,9 @@ root.render(
   <React.StrictMode>
     <WebSocketConnectionContextProvider>
       <IsLoadingContextProvider>
-        <PairDataProvider>
+        <PublicKeyProvider>
           <App />
-        </PairDataProvider>
+        </PublicKeyProvider>
       </IsLoadingContextProvider>
     </WebSocketConnectionContextProvider>
   </React.StrictMode>

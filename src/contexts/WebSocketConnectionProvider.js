@@ -19,7 +19,15 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         if(message === "userCreated"){
             setConnectionStatus("userRegistered")
-        }
+        }   
+
+        if(message === "tryPairing"){
+            alert("entro mensaje")
+        } 
+        
+        
+
+
     };
     
     const handleClose = () => {
@@ -52,9 +60,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }
     };
 
-    const tryPairing = (message) => {        
+    const tryPairing = (publicKey, nickName) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {            
-            socketRef.current.send(JSON.stringify({"tryPairing":message}));
+            socketRef.current.send(JSON.stringify({"tryPairing":{"publicKey": publicKey, "nickName": nickName}}));
         }
     };
 

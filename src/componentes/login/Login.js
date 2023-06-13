@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { isLoadingContext } from "../../contexts/IsLoadingProvider";
-import { pairDataContext } from "../../contexts/PairDataProvider";
+import { publicKeyContext } from "../../contexts/publickKeyProvider";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
@@ -14,7 +14,7 @@ export const Login = ()=>{
     const user = useRef()
     const {isLoading, setIsLoading} = useContext(isLoadingContext)    
     const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
-    const { setPairData } = useContext(pairDataContext) 
+    const { setPublicKey } = useContext(publicKeyContext) 
     const history = useNavigate()
 
     useEffect(()=>{
@@ -29,7 +29,7 @@ export const Login = ()=>{
 
         if(connectionstatus==="userRegistered"){      
             setIsLoading(false)
-            setPairData({"from": user.current.publicKey, "to": null})
+            setPublicKey(user.current.publicKey)
             history("/findingPair")          
         }
     }     
@@ -57,7 +57,7 @@ export const Login = ()=>{
                             "publicKey"         : publicKeyString,
                             "nickName"          : nickNameInsertedHandled,
                             "password"          : null,
-                            "pair"              : null,
+                            "to"                : null,
                             "state"             : "findingPair",
                             "stateTimeStamp"    : Date.now(),
                             "lastMessageTime"   : null

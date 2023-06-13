@@ -2,8 +2,8 @@ import { useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { isLoadingContext } from "../../contexts/IsLoadingProvider";
+import { publicKeyContext } from "../../contexts/publickKeyProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
-import Spinner from 'react-bootstrap/Spinner';
 
 import "./FindingPairs.css"
 
@@ -12,6 +12,7 @@ export const FindingPairs = ()=>{
     const input = useRef()    
     const history = useNavigate()
     const {isLoading, setIsLoading} = useContext(isLoadingContext)    
+    const { publicKey } = useContext(publicKeyContext) 
 
     const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
 
@@ -27,8 +28,7 @@ export const FindingPairs = ()=>{
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         setIsLoading(true)
-        tryPairing(input.current.value)
-        console.log(input.current.value)
+        tryPairing(publicKey, input.current.value)        
     }
   
     // COMPORTAMIENTO INPUT
@@ -82,9 +82,16 @@ export const FindingPairs = ()=>{
 
 
 
-    
+
     cuando el par esta creado cada uno en su chat manda mensaje de from to, en el servidor se verifica si ese par existe. 
     es el mismo par por que va a estar ordenado con sort a - b. Osea se recibe mensaje from to y su par. si el par existe y cada uno es un integrante del par se envia el mensaje al otro
+
+
+
+    nueva teoria. el server no sabe ni quien esta hablando con quien. Una vez que uno autoriza al otro queda en el front del otro. 
+    Como las claves son largas y efimeras son muy dificiles de 
+
+    chequear que el otro tenga el par completo para abrir la ventana
 
 
 
