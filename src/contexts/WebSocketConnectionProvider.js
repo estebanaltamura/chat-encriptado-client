@@ -61,7 +61,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     };
 
     const tryPairing = (publicKey, nickName) => {        
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {            
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {    
+            console.log("entron")        
             socketRef.current.send(JSON.stringify({"tryPairing":{"publicKey": publicKey, "nickName": nickName}}));
         }
     };
