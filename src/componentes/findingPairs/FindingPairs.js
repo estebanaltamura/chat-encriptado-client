@@ -10,7 +10,7 @@ export const FindingPairs = ()=>{
     const input = useRef()    
     const history = useNavigate()
 
-    const { connectionstatus, closeConnection } = useContext(webSocketConnectionContext)
+    const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
 
     const closeConnectionHandler = ()=>{        
         closeConnection()
@@ -20,6 +20,11 @@ export const FindingPairs = ()=>{
         connectionstatus==="offline" && history("/login")                  
     }     
     ,[connectionstatus])
+
+    const tryPairingHandler = (e)=>{
+        e.preventDefault()
+        tryPairing(input.value)
+    }
   
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{          
@@ -37,7 +42,7 @@ export const FindingPairs = ()=>{
             <div className="formContainer">                    
                 <form className="formFindingPair">
                     <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                    <button className="startSessionButton">Start chat</button>
+                    <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
                 </form>                                        
             </div>
         </>

@@ -52,6 +52,14 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }
     };
 
+    const tryPairing = (message) => {        
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {            
+            socketRef.current.send(JSON.stringify({"tryPairing":message}));
+        }
+    };
+
+
+
     const sendWebSocketMessage = (message) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
             console.log("Envio mensaje", message)
@@ -68,7 +76,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         connectWebSocket,
         sendWebSocketMessage,
         createUser,
-        closeConnection
+        closeConnection,
+        tryPairing
     }
     
     return(
