@@ -23,7 +23,7 @@ export const FindingPairs = ()=>{
 
     const tryPairingHandler = (e)=>{
         e.preventDefault()
-        tryPairing(input.value)
+        tryPairing(input.current.value)
     }
   
     // COMPORTAMIENTO INPUT
