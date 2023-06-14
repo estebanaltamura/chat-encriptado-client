@@ -9,7 +9,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const socketRef = useRef(null);    
     const [connectionstatus, setConnectionStatus] = useState("offline")
 
-    const { publicKeys } = useContext(publicKeysContext) 
+    const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const publicKeyRef = useRef()
 
     useEffect(()=>{
@@ -44,6 +44,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
                 const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current}})
                 socketRef.current.send(confirmedRequest)
             }
+        } 
+
+        if(pardedMessage.hasOwnProperty("chatConfirmed")){
+            const to = pardedMessage.chatConfirmed.to
+            setPublicKeys({...publicKeys, "to": to})            
         } 
 
         //user1 pide a user2, funcion try con user 1 y user2
