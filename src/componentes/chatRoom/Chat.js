@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
-import "./ChatRoom.css"
+import "./Chat.css"
 
-export const ChatRoom = ()=>{
+export const Chat = ()=>{
 
     const { closeConnection } = useContext(webSocketConnectionContext)
 

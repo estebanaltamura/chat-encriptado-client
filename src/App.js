@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Login } from './componentes/login/Login';
 import { FindingPairs } from './componentes/findingPairs/FindingPairs';
-import { ChatRoom } from './componentes/chatRoom/ChatRoom';
+import { Chat } from './componentes/chatRoom/Chat';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -14,7 +14,7 @@ function App() {
           <Route path="*" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/findingPair" element={<FindingPairs />} />
-          <Route path="/chatRoom" element={<ChatRoom />} />
+          <Route path="/chatRoom" element={<Chat />} />
           
         </Routes>
       </BrowserRouter>            
