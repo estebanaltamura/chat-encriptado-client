@@ -15,7 +15,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const handleMessage = (event) => { 
         const message = event.data; 
-        const pardedMessage = JSON.parse(message)  
+        //const pardedMessage = JSON.parse(message)  
 
         console.log("mensaje recibido del servidor: ", message)
 
