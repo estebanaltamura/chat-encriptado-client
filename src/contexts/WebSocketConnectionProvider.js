@@ -13,7 +13,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const publicKeyRef = useRef()
 
     useEffect(()=>{
-        publicKeyRef.current = publicKeys.from
+        publicKeyRef.current = publicKeys
     },[publicKeys])
     
 
@@ -41,14 +41,14 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             const response = window.confirm(`${nickNameUser1} wants talk to you. Accept the request?`) 
 
             if(response === true){                
-                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current}})
+                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current.from}})
                 socketRef.current.send(confirmedRequest)
             }
         } 
 
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
-            setPublicKeys({"from": publicKeys.from, "to": to})            
+            setPublicKeys({"from": publicKeyRef.current.from, "to": to})            
         } 
 
         //user1 pide a user2, funcion try con user 1 y user2
