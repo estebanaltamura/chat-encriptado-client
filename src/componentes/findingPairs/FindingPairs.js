@@ -22,7 +22,10 @@ export const FindingPairs = ()=>{
 
     useEffect(()=>{
         connectionstatus==="offline" && history("/login") 
-        connectionstatus==="chating" && history("/chatRoom")
+        if(connectionstatus==="chating"){
+            history("/chatRoom") 
+            setIsLoading(false)
+        }
 
     }     
     ,[connectionstatus])
