@@ -6,13 +6,16 @@ import "./Chat.css"
 
 export const Chat = ()=>{
 
-    const { connectionstatus, closeConnection } = useContext(webSocketConnectionContext)
+    const { connectionstatus, closeConnection, requestCloseConnection } = useContext(webSocketConnectionContext)
 
     const history = useNavigate()
 
-    const closeConnectionHandler = ()=>{        
+    const closeConnectionHandler = ()=>{         
+        requestCloseConnection()        
         closeConnection()
     }
+
+
 
     useEffect(()=>{
         connectionstatus==="offline" && history("/login") 

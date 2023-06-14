@@ -123,6 +123,10 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const closeConnection = () => {
         socketRef.current.close()
     }
+
+    const requestCloseConnection = ()=>{
+        socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));        
+    }
      
     const WebSocketContextValue = {
         connectionstatus,           
@@ -130,6 +134,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         sendWebSocketMessage,
         createUser,
         closeConnection,
+        requestCloseConnection,
         tryPairing
     }
     
