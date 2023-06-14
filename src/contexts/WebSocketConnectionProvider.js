@@ -1,4 +1,5 @@
 import { createContext, useRef, useState } from "react"
+import { publicKeyContext } from "./publickKeyProvider";
 
 
 export const webSocketConnectionContext = createContext(null)
@@ -7,6 +8,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
     const socketRef = useRef(null);    
     const [connectionstatus, setConnectionStatus] = useState("offline")
+
+    const { publicKey } = useContext(publicKeyContext) 
     
     const handleOpen = () => {
         console.log("connected")        
@@ -25,8 +28,15 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
 
         if(pardedMessage.hasOwnProperty("requestConnection")){
-            console.log("ho")
-            const a = window.confirm("entro mensaje") 
+            const userNameUser1 = pardedMessage.requestConnection.userName
+            const nickNameUser1 = pardedMessage.requestConnection.nickName
+
+            const response = window.confirm(`${nickNameUser1} wants talk to you. Accept the request?`) 
+
+            if(response === true){
+                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKey}})
+                socketRef.current.send(confirmedRequest)
+            }
         } 
 
         //user1 pide a user2, funcion try con user 1 y user2
