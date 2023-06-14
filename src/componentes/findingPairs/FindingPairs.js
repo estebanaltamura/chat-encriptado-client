@@ -26,9 +26,10 @@ export const FindingPairs = ()=>{
     ,[connectionstatus])
 
     const tryPairingHandler = (e)=>{
+        const publicKeyUser2 = input.current.value
         e.preventDefault()
         setIsLoading(true)
-        tryPairing(publicKey, input.current.value)        
+        tryPairing(publicKey, publicKeyUser2)        
     }
   
     // COMPORTAMIENTO INPUT
