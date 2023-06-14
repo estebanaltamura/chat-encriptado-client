@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnectionProvider';
 import { IsLoadingContextProvider } from './contexts/IsLoadingProvider';
-import { PublicKeyProvider } from './contexts/publickKeyProvider';
+import { PublicKeysProvider } from './contexts/publickKeysProvider';
 import App from './App';
 import './index.css';
 
@@ -11,13 +11,13 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <WebSocketConnectionContextProvider>
-      <IsLoadingContextProvider>
-        <PublicKeyProvider>
+    <PublicKeysProvider>
+      <WebSocketConnectionContextProvider>
+        <IsLoadingContextProvider>
           <App />
-        </PublicKeyProvider>
-      </IsLoadingContextProvider>
-    </WebSocketConnectionContextProvider>
+        </IsLoadingContextProvider>
+      </WebSocketConnectionContextProvider>
+    </PublicKeysProvider>
   </React.StrictMode>
 );
 

@@ -1,5 +1,5 @@
-import { createContext, useRef, useState } from "react"
-import { publicKeyContext } from "./publickKeyProvider";
+import { createContext, useRef, useState, useContext, useEffect } from "react"
+import { publicKeysContext } from "./publickKeysProvider";
 
 
 export const webSocketConnectionContext = createContext(null)
@@ -9,13 +9,20 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const socketRef = useRef(null);    
     const [connectionstatus, setConnectionStatus] = useState("offline")
 
-    const { publicKey } = useContext(publicKeyContext) 
+    const { publicKeys } = useContext(publicKeysContext) 
+    const publicKeyRef = useRef()
+
+    useEffect(()=>{
+        publicKeyRef.current = publicKeys
+    },[publicKeys])
     
+
     const handleOpen = () => {
         console.log("connected")        
         setConnectionStatus("online");
     };
     
+
     const handleMessage = (event) => { 
         const message = event.data; 
         const pardedMessage = JSON.parse(message)  
@@ -33,9 +40,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
             const response = window.confirm(`${nickNameUser1} wants talk to you. Accept the request?`) 
 
-            console.log(response)
-            if(response === true){
-                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKey}})
+            if(response === true){                
+                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current}})
                 socketRef.current.send(confirmedRequest)
             }
         } 

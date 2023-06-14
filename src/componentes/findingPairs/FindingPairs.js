@@ -2,7 +2,7 @@ import { useRef, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { isLoadingContext } from "../../contexts/IsLoadingProvider";
-import { publicKeyContext } from "../../contexts/publickKeyProvider";
+import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
 
 import "./FindingPairs.css"
@@ -12,7 +12,7 @@ export const FindingPairs = ()=>{
     const input = useRef()    
     const history = useNavigate()
     const {isLoading, setIsLoading} = useContext(isLoadingContext)    
-    const { publicKey } = useContext(publicKeyContext) 
+    const { publicKeys } = useContext(publicKeysContext) 
 
     const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
 
@@ -29,7 +29,7 @@ export const FindingPairs = ()=>{
         const publicKeyUser2 = input.current.value
         e.preventDefault()
         setIsLoading(true)
-        tryPairing(publicKey, publicKeyUser2)        
+        tryPairing(publicKeys.from, publicKeyUser2)        
     }
   
     // COMPORTAMIENTO INPUT
