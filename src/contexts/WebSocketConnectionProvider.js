@@ -13,7 +13,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const publicKeyRef = useRef()
 
     useEffect(()=>{
-        publicKeyRef.current = publicKeys
+        publicKeyRef.current = publicKeys.from
     },[publicKeys])
     
 
