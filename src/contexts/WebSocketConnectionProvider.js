@@ -47,7 +47,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
     };
     
-    const handleClose = () => {
+    const handleClose = () => { 
         console.log("closed")
         window.location.href = "/login"
         setConnectionStatus("offline");
