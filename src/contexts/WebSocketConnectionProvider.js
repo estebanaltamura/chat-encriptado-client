@@ -26,7 +26,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         if(pardedMessage.hasOwnProperty("requestConnection")){
             console.log("ho")
-            confirm("entro mensaje")
+            confirm("entro mensaje") 
         } 
 
         //user1 pide a user2, funcion try con user 1 y user2
