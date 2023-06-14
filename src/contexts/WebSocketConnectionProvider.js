@@ -25,6 +25,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
 
         if(pardedMessage.hasOwnProperty("requestConnection")){
+            console.log("ho")
             alert("entro mensaje")
         } 
 
