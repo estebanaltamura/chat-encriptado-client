@@ -48,7 +48,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
-            setPublicKeys({"from": publicKeyRef.current.from, "to": to})            
+            setPublicKeys({"from": publicKeyRef.current.from, "to": to})
+            setConnectionStatus("chating")
+
         } 
 
         //user1 pide a user2, funcion try con user 1 y user2

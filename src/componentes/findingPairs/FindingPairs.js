@@ -21,7 +21,9 @@ export const FindingPairs = ()=>{
     }
 
     useEffect(()=>{
-        connectionstatus==="offline" && history("/login")                  
+        connectionstatus==="offline" && history("/login") 
+        connectionstatus==="chating" && history("/chatRoom")
+
     }     
     ,[connectionstatus])
 
