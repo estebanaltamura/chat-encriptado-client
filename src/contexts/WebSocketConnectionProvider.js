@@ -33,6 +33,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
             const response = window.confirm(`${nickNameUser1} wants talk to you. Accept the request?`) 
 
+            console.log(response)
             if(response === true){
                 const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKey}})
                 socketRef.current.send(confirmedRequest)
