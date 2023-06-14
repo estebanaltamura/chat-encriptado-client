@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Login } from './componentes/login/Login';
 import { FindingPairs } from './componentes/findingPairs/FindingPairs';
+import { ChatRoom } from './componentes/chatRoom/ChatRoom'; 
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
@@ -13,6 +14,7 @@ function App() {
           <Route path="*" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/findingPair" element={<FindingPairs />} />
+          <Route path="/chatRoom" element={<ChatRoom />} />
         </Routes>
       </BrowserRouter>            
     </div>
