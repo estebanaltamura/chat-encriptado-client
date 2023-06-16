@@ -34,11 +34,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }   
 
 
-        if(pardedMessage.hasOwnProperty("requestConnection")){
+        if(pardedMessage.hasOwnProperty("requestConnection")){           
             const userNameUser1 = pardedMessage.requestConnection.userName
             const nickNameUser1 = pardedMessage.requestConnection.nickName
 
-            const response = window.confirm(`${nickNameUser1} wants talk to you. Accept the request?`) 
+            const response = window.confirm(`The user ${nickNameUser1} wants talk to you. Accept the request?`) 
 
             if(response === true){                
                 const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current.from}})
