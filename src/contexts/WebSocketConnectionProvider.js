@@ -53,6 +53,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         } 
 
+        //prueba pull request
+
         //user1 pide a user2, funcion try con user 1 y user2
         //el servidor envia a user2 confirm con JSON mensaje, user1, user2, si dice si, envia al servidor respuesta afirmativa, user1, user2. 
         //El servidor envia a user1 y user2 JSON con el user del otro para completar el TO del provider y TO del servidor y sean redirigidos automaticamente al chat        / 
