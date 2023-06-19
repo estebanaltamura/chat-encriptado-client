@@ -11,17 +11,13 @@ import "./Login.css"
 export const Login = ()=>{
 
     const input = useRef()
-    const user = useRef()
+    const user = useRef()    
     const {isLoading, setIsLoading} = useContext(isLoadingContext)    
     const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const history = useNavigate()
 
-    useEffect(()=>{
-        if(connectionstatus==="offline"){      
-            history("/login")          
-        }
-
+    useEffect(()=>{        
         if(connectionstatus==="online"){      
             setIsLoading(true)
             createUser(user.current)          
@@ -37,7 +33,17 @@ export const Login = ()=>{
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
+        setUserData()
+        connectWebSocket()     
+    }
 
+
+
+
+
+
+    const setUserData = ()=>{
+        //CANDIDATO A CUSTOM HOOK
         if(input.current.value === ""){
             alert("ingresar apodo")
             return           
@@ -61,10 +67,8 @@ export const Login = ()=>{
                             "state"             : "findingPair",
                             "stateTimeStamp"    : Date.now(),
                             "lastMessageTime"   : null
-                        }
-        connectWebSocket()      
+                        }        
     }
-
     
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        

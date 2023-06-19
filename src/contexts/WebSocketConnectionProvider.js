@@ -27,13 +27,17 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         const message = event.data; 
         const pardedMessage = JSON.parse(message)  
 
+        //GESTION RECEPCION DE MENSAJES
+
+        //TODOS reflejando su coentenido por console.log
         console.log("mensaje recibido del servidor: ", pardedMessage)
 
+        //Usuario creado por el servidor
         if(pardedMessage.hasOwnProperty("userCreated")){
             setConnectionStatus("userRegistered")
         }   
 
-
+        //Solicitud de chat de privado
         if(pardedMessage.hasOwnProperty("requestConnection")){           
             const userNameUser1 = pardedMessage.requestConnection.userName
             const nickNameUser1 = pardedMessage.requestConnection.nickName
@@ -46,11 +50,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             }
         } 
 
+        //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
             setPublicKeys({"from": publicKeyRef.current.from, "to": to})
             setConnectionStatus("chating")
-
         } 
 
         //prueba pull request
@@ -75,8 +79,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const handleClose = () => { 
         console.log("closed")
-        window.location.href = "/login"
-        setConnectionStatus("offline");
+        window.location.href = "/login"        
     };
     
     const handleError = (error) => {
