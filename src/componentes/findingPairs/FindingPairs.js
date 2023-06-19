@@ -2,6 +2,7 @@ import { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
+import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
 
 import "./FindingPairs.css"
@@ -9,8 +10,9 @@ import "./FindingPairs.css"
 export const FindingPairs = ()=>{
     const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
     const { publicKeys } = useContext(publicKeysContext) 
+    const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
     const input = useRef()    
-    const [isLoading, setIsLoading] = useContext(useState)    
+    const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
     
 
@@ -33,6 +35,7 @@ export const FindingPairs = ()=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
         setIsLoading(true)
+        setSecondsFromLastActivity(0)
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
   
