@@ -16,6 +16,8 @@ connectionStatus va reflejando diferentes estadios posibles de la conexion:
     -offline
     -online
     -userRegistered
+    -requestReceived (para separar la logica que hoy esta en websocket a nivel de componentes para poder mostrar el popup)
+    -disconnectionByInactivity
     -chating
 
 offline: La conexion con el servido no fue establecida aun

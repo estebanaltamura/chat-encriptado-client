@@ -4,13 +4,14 @@ import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionPr
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
+import { PopUp } from '../popUp/PopUp';
 
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
     const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
     const { publicKeys } = useContext(publicKeysContext) 
-    const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
+    const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
     const input = useRef()    
     const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
@@ -30,6 +31,8 @@ export const FindingPairs = ()=>{
         }
     }     
     ,[connectionstatus])
+
+    
 
     const tryPairingHandler = (e)=>{
         e.preventDefault()
@@ -53,9 +56,9 @@ export const FindingPairs = ()=>{
         <>
             {
                 isLoading ?
-                <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
+                    <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
                         :
-                <>
+                <>                    
                     <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
                     <div className="formContainer">                    
                         <form className="formFindingPair">

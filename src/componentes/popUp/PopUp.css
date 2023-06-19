@@ -1,0 +1,108 @@
+
+
+.popUpContainer{
+    position: absolute;    
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    background-color: black;
+    
+}
+
+.popUpElement{
+    position: relative; 
+    z-index: 2;   
+    margin: auto;
+    padding: 20px;
+    top: 20%;
+    min-width: 240px;
+    max-width: 100%;
+    width: 320px;    
+    height: 420px;
+    background-color: white;    
+    border-radius: 20px;
+    
+}
+
+.popUpGrid{
+    display: grid;    
+    height: 380px;
+    width: 280px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 80px 100px 60px 60px;
+    grid-template-areas: "logo" "titulo" "mensaje" "boton1" "boton2";
+}
+
+.buttonPopUp{
+    margin: auto;
+    height: 50px;
+    width: 270px;
+    border-radius: 7px;
+    border: none;    
+    font-weight: 500;    
+    font-size: 20px;
+    font-family: Montserrat;
+}
+
+.logoPopUp{    
+    grid-area: logo;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    border-bottom: 1px solid #6c6c6c
+}
+
+.tituloPopUp{
+    grid-area: titulo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+}
+
+.messagePopUp{
+    grid-area: mensaje;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.button1PopUp{
+    grid-area: boton1;
+    background-color: #fe5f50;
+}
+
+.button2PopUp{
+    grid-area: boton2;
+    background-color: #0EB056;
+}
+
+
+@media (min-width: 768px) {
+    .popUpElement{        
+        width: 500px;       
+    }
+
+    .popUpGrid{          
+        width: 460px;              
+    }
+}
+/*
+ <div className="popUpContainer">
+            <div className="popUpElement">
+                <div className="popUpGrid">
+                    <div className="messageContainer"></div>
+                    <button></button>
+                    <button></button>
+                </div>
+            </div>
+        </div>
+
+
+
+
+*/

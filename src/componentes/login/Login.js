@@ -6,10 +6,11 @@ import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
+import { PopUp } from "../popUp/PopUp";
 
 
 export const Login = ()=>{
-    const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
+    const { connectionstatus, connectWebSocket, createUser, closeConnection } = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext)
     const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
     const input = useRef()
@@ -28,9 +29,7 @@ export const Login = ()=>{
             setPublicKeys({...publicKeys, "from": user.current.publicKey})
             history("/findingPair")          
         }        
-    }     
-
-    
+    }    
     ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
@@ -40,9 +39,10 @@ export const Login = ()=>{
         connectWebSocket()     
     }
 
-
-
-
+    const popUpAcceptHadler = ()=>{
+        console.log("sd")
+        closeConnection()
+    }
 
 
     const setUserData = ()=>{
@@ -84,17 +84,23 @@ export const Login = ()=>{
    
     return(
         <>
-            {
+            {  
+                connectionstatus === "disconnectionByInactivity" 
+                    ?                
+                <PopUp  title="The connection is shutting down" 
+                        message="Due to inactivity of more than 1 minute, the connection is going to be closed" 
+                        type="oneButton" 
+                        handledAccept={popUpAcceptHadler}/>                                             
+                    :
                 isLoading ?
-                <Spinner className="spinner" animation="border" />                 
-                        :
-                <div className="formContainerLogin">
-                    <form className="formLogin">                        
-                        <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                        <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
-                    </form>                                        
-                </div>
-                
+                    <Spinner className="spinner" animation="border" />                 
+                          :
+                    <div className="formContainerLogin">
+                        <form className="formLogin">                        
+                            <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                            <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
+                        </form>                                        
+                    </div>                
             }
         </>        
     )
