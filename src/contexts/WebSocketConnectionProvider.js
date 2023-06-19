@@ -1,15 +1,12 @@
 import { createContext, useRef, useState, useContext, useEffect } from "react"
 import { publicKeysContext } from "./publickKeysProvider";
 
-
 export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
-
-    const socketRef = useRef(null);    
     const [connectionstatus, setConnectionStatus] = useState("offline")
-
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
+    const socketRef = useRef(null);    
     const publicKeyRef = useRef()
 
     useEffect(()=>{
@@ -27,13 +24,17 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         const message = event.data; 
         const pardedMessage = JSON.parse(message)  
 
+        //GESTION RECEPCION DE MENSAJES
+
+        //TODOS reflejando su coentenido por console.log
         console.log("mensaje recibido del servidor: ", pardedMessage)
 
+        //Usuario creado por el servidor
         if(pardedMessage.hasOwnProperty("userCreated")){
             setConnectionStatus("userRegistered")
         }   
 
-
+        //Solicitud de chat de privado
         if(pardedMessage.hasOwnProperty("requestConnection")){           
             const userNameUser1 = pardedMessage.requestConnection.userName
             const nickNameUser1 = pardedMessage.requestConnection.nickName
@@ -46,37 +47,18 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             }
         } 
 
+        //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
             setPublicKeys({"from": publicKeyRef.current.from, "to": to})
             setConnectionStatus("chating")
-
         } 
-
-        //prueba pull request
-
-        //user1 pide a user2, funcion try con user 1 y user2
-        //el servidor envia a user2 confirm con JSON mensaje, user1, user2, si dice si, envia al servidor respuesta afirmativa, user1, user2. 
-        //El servidor envia a user1 y user2 JSON con el user del otro para completar el TO del provider y TO del servidor y sean redirigidos automaticamente al chat        / 
-        
-        
-        //cuando uno manda un mensaje al servidor es un JSON, mensaje, TO y si el otro existe y su to es user 1 envia, sino servidor envia notificacion de user2 no esta coenctado y cierre del chat
-        //si el otro se desconecta el servidor busca si algun usuario tenia ese usuario en su TO. si es asi manda mensaje envia notificacion de user2 no esta coenctado y cierre del chat
-
-        // if(pardedMessage.hasOwnProperty("requestMessage")){
-        //     alert("entro mensaje")
-        // } 
-        
-        //aca manejar la notificacion de conexion creada
-        
-
-
     };
     
     const handleClose = () => { 
         console.log("closed")
-        window.location.href = "/login"
-        setConnectionStatus("offline");
+        //Al usar location.href re fuerza el refresh lo cual borra todos los estados y contextos
+        window.location.href = "/login"        
     };
     
     const handleError = (error) => {
@@ -85,16 +67,21 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const connectWebSocket = () => {
         if (!socketRef.current) {
-          socketRef.current = new WebSocket('ws://localhost:8080');
-          
+          socketRef.current = new WebSocket('ws://localhost:8080');          
           socketRef.current.addEventListener('open', handleOpen);
           socketRef.current.addEventListener('message', handleMessage);
           socketRef.current.addEventListener('close', handleClose);
           socketRef.current.addEventListener('error', handleError);
           return true
         }
-
         return false
+    };
+
+    const sendWebSocketMessage = (message) => {        
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+            console.log("Envio mensaje", message)
+            socketRef.current.send(JSON.stringify({"mensaje":message}));
+        }
     };
     
     const createUser = (message) => {        
@@ -103,22 +90,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }
     };
 
-
-    //PRINCIPIOS
-    //cada front tiene que:1 intentar conectar con un par (bloquea) o 2 recibir una peticion 3 recibir la notificacion deconexion creada 4 ir a chating
-    
     const tryPairing = (publicKeyUser1, publicKeyUser2) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {    
             socketRef.current.send(JSON.stringify({"tryPairing":{"publicKeyUser1": publicKeyUser1, "publicKeyUser2": publicKeyUser2}}));
-        }
-    };
-
-
-
-    const sendWebSocketMessage = (message) => {        
-        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            console.log("Envio mensaje", message)
-            socketRef.current.send(JSON.stringify({"mensaje":message}));
         }
     };
 
@@ -129,7 +103,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const requestCloseConnection = ()=>{
         socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));        
     }
-     
+    
+    
     const WebSocketContextValue = {
         connectionstatus,           
         connectWebSocket,
@@ -144,7 +119,5 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         <webSocketConnectionContext.Provider value={WebSocketContextValue}>
             {children}
         </webSocketConnectionContext.Provider>
-
-    )        
-    
+    )   
 }

@@ -1,27 +1,21 @@
-import { useRef, useContext, useEffect} from "react"
+import { useRef, useContext, useEffect, useState} from "react"
 import { useNavigate } from 'react-router-dom'
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
-import { isLoadingContext } from "../../contexts/IsLoadingProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
 
 export const Login = ()=>{
-
-    const input = useRef()
-    const user = useRef()
-    const {isLoading, setIsLoading} = useContext(isLoadingContext)    
     const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
+    const input = useRef()
+    const user = useRef()    
+    const [isLoading, setIsLoading] = useContext(useState)    
     const history = useNavigate()
 
-    useEffect(()=>{
-        if(connectionstatus==="offline"){      
-            history("/login")          
-        }
-
+    useEffect(()=>{        
         if(connectionstatus==="online"){      
             setIsLoading(true)
             createUser(user.current)          
@@ -32,12 +26,25 @@ export const Login = ()=>{
             setPublicKeys({...publicKeys, "from": user.current.publicKey})
             history("/findingPair")          
         }
+
+          
+
     }     
     ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
+        setUserData()
+        connectWebSocket()     
+    }
 
+
+
+
+
+
+    const setUserData = ()=>{
+        //CANDIDATO A CUSTOM HOOK
         if(input.current.value === ""){
             alert("ingresar apodo")
             return           
@@ -61,10 +68,8 @@ export const Login = ()=>{
                             "state"             : "findingPair",
                             "stateTimeStamp"    : Date.now(),
                             "lastMessageTime"   : null
-                        }
-        connectWebSocket()      
+                        }        
     }
-
     
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        

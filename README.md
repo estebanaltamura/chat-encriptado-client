@@ -1,3 +1,46 @@
+La app esta basada en un estado statusConnection en el contexto webSocketConnectionProvider y el estado publicKeys en el contexto publicKeysProvider
+
+Reglas duras de cierre: 
+    Cerrar para el front significa redddireccionar conlocation.href lo borra todos los estados y contextos. ConecctionStatus al cargar desde cero toma el estado de "offline" y publicKeys toma el valor inicial {from: null, to: null}
+
+    Cerrar para el servidor es borrar el usuario dentro del objeto de usuarios
+    
+
+ESTADO PUBLICKKEYS
+valor inicial: {from: null, to: null}
+
+ESTADO CONECCIONSTATUS
+Valor inicial: "offline"
+
+connectionStatus va reflejando diferentes estadios posibles de la conexion:
+    -offline
+    -online
+    -userRegistered
+    -chating
+
+offline: La conexion con el servido no fue establecida aun
+
+online: La conexion fue establecida
+
+userRegisted: Un usuario fue creado en el servidor, persistiendo el apodo, la clave publica y otros datos
+
+chating: Dos usuarios se emparentaron mediante la invitacion de uno al otro y estan chateando. Cuando se emparentaron el servidor persistio en cada usuario en la propiedad "to" la clave publica del otro
+
+El caminbo feliz es:
+Login => Pairing => Chating
+De login a pairing:
+-App empieza en login, publicKeys null (connectionStatus: offline)=>
+-Se invoca a la funcion connectWebSocket del context webSocketConnectionProvider =>
+-Cuando conecta cambia el estado (connectionStatus: online) y capturando ese cambio de estado con un useEffect se envia como argumento un objeto creado con los datos del usuario en   la funcion createUser de websockeckConnectionProvider=>
+-El servidor crea el usuario y devuelve un mensaje para que front lo tome y cambie el estado de connectionStatus a "userRegistered" y genera un reenvio a la pantalla findingPairing
+
+
+
+
+
+
+
+
 login:
 
 1-Inserta apodo, clickea en iniciar sesion

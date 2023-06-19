@@ -1,38 +1,37 @@
-import { useRef, useContext, useEffect } from 'react';
+import { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
-import { isLoadingContext } from "../../contexts/IsLoadingProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
 
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-
-    const input = useRef()    
-    const history = useNavigate()
-    const {isLoading, setIsLoading} = useContext(isLoadingContext)    
-    const { publicKeys } = useContext(publicKeysContext) 
-
     const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
+    const { publicKeys } = useContext(publicKeysContext) 
+    const input = useRef()    
+    const [isLoading, setIsLoading] = useContext(useState)    
+    const history = useNavigate()
+    
 
     const closeConnectionHandler = ()=>{        
         closeConnection()
     }
 
+   
     useEffect(()=>{
         connectionstatus==="offline" && history("/login") 
+        
         if(connectionstatus==="chating"){
             history("/chatRoom") 
             setIsLoading(false)
         }
-
     }     
     ,[connectionstatus])
 
     const tryPairingHandler = (e)=>{
-        const publicKeyUser2 = input.current.value
         e.preventDefault()
+        const publicKeyUser2 = input.current.value
         setIsLoading(true)
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
