@@ -55,18 +55,27 @@ export const FindingPairs = ()=>{
     return(
         <>
             {
-                isLoading ?
-                    <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
-                        :
-                <>                    
-                    <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
-                    <div className="formContainer">                    
-                        <form className="formFindingPair">
-                            <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                            <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
-                        </form>                                        
-                    </div>
-                </>
+                connectionstatus === "disconnectionByInactivity" 
+                    ?                
+                    <PopUp  title="The connection is shutting down" 
+                    message="Due to inactivity of more than 1 minute, the connection is going to be closed"
+                    CTAtext="If you want to stay connected, please press the button"
+                    type="oneButton" 
+                    button2Text="I'm here"
+                    />                                             
+                    :
+                    isLoading   ?
+                        <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
+                                :
+                        <>                    
+                            <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
+                            <div className="formContainer">                    
+                                <form className="formFindingPair">
+                                    <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                                    <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
+                                </form>                                        
+                            </div>
+                        </>
             }
         </>            
     )

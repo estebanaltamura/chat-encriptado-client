@@ -6,13 +6,12 @@ import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
-import { PopUp } from "../popUp/PopUp";
+
 
 
 export const Login = ()=>{
     const { connectionstatus, connectWebSocket, createUser, closeConnection } = useContext(webSocketConnectionContext)
-    const { publicKeys, setPublicKeys } = useContext(publicKeysContext)
-    const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
+    const { publicKeys, setPublicKeys } = useContext(publicKeysContext)    
     const input = useRef()
     const user = useRef()    
     const [isLoading, setIsLoading] = useState(false)    
@@ -34,15 +33,9 @@ export const Login = ()=>{
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
-        setUserData()
-        setSecondsFromLastActivity(0)
+        setUserData()        
         connectWebSocket()     
-    }
-
-    const popUpAcceptHadler = ()=>{
-        console.log("sd")
-        closeConnection()
-    }
+    }  
 
 
     const setUserData = ()=>{
@@ -84,14 +77,7 @@ export const Login = ()=>{
    
     return(
         <>
-            {  
-                connectionstatus === "disconnectionByInactivity" 
-                    ?                
-                <PopUp  title="The connection is shutting down" 
-                        message="Due to inactivity of more than 1 minute, the connection is going to be closed" 
-                        type="oneButton" 
-                        handledAccept={popUpAcceptHadler}/>                                             
-                    :
+            {                  
                 isLoading ?
                     <Spinner className="spinner" animation="border" />                 
                           :

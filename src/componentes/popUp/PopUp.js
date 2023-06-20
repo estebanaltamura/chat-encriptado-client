@@ -1,20 +1,62 @@
+import { useState, useEffect } from "react"
+
 import "./PopUp.css"
 
-export const PopUp = ({title, message, type, handledAccept, handledReject})=>{
+export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, handledAccept, handledReject})=>{
+
+    const [ countDown, setCountDown ] = useState(10)
+    const [ messageCountDown, setMessageCountDown ] = useState(10)
+
+    useEffect(()=>{
+        let timeOut
+        const interval = setInterval(()=>{
+        
+
+            setCountDown((countDown)=>{
+                if(countDown > 1){                    
+                    return countDown-1
+                }                 
+
+                //comportamiento cierre automatico
+                timeOut = setTimeout(()=>window.location.href = "./login", 1000)
+            })
+
+        },1000)
+        
+        return ()=>{
+            console.log(timeOut)
+            clearInterval(interval)
+            clearTimeout(timeOut)
+        }
+    },[])
+
+    useEffect(()=>{
+        if(countDown > 1){
+            setMessageCountDown(` in ${countDown} seconds`)
+        }
+        else if(countDown === 1){
+            setMessageCountDown(` in ${countDown} second`)
+        }
+        else setMessageCountDown("")
+          
+    },[countDown])
+
+
     return(
         <div className="popUpContainer">
-            <div className="popUpElement">
-                <div className="popUpGrid">
+            <div className={type === "oneButton" ? "popUpElementOneButton popUpElement" : "popUpElementTwoButton popUpElement"}>
+                <div className={type === "oneButton" ? "popUpGridOneButton" : "popUpGridTwoButton"}>
                     <div className="logoPopUp">IMAGEN LOGO</div>
                     <h2 className="tituloPopUp">{title}</h2>
-                    <p className="messagePopUp">{message}</p>                    
+                    <p className="messagePopUp">{`${message} ${messageCountDown}`}</p>  
+                    <p className="CTA">{CTAtext}</p>                  
                         {
                             type === "oneButton" ?
-                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept}>Accept</button>
+                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept}>{button2Text}</button>
                                                  :
                                 <>
-                                    <button className="button1PopUp buttonPopUp" onClick={handledReject}>Reject</button>     
-                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept}>Accept</button>                
+                                    <button className="button1PopUp buttonPopUp" onClick={handledReject}>{button1Text}</button>     
+                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept}>{button2Text}</button>                
                                 </>
 
                         }                
