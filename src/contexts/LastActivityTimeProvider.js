@@ -9,7 +9,7 @@ export const LastActivityTimeProvider = ({children})=>{
     const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0)
     
     useEffect(()=>{
-        (connectionstatus !== "offline" && secondsFromLastActivity >= 5) && setConnectionStatus("disconnectionByInactivity")
+        (connectionstatus !== "offline" && secondsFromLastActivity >= 40) && setConnectionStatus("disconnectionByInactivity")
         
     }, [secondsFromLastActivity])
     
@@ -23,8 +23,7 @@ export const LastActivityTimeProvider = ({children})=>{
             setSecondsFromLastActivity(0)
         }
 
-        const mousemoveActivityHandler = (e)=>{
-            console.log(e.offsetX)
+        const mousemoveActivityHandler = (e)=>{            
             setSecondsFromLastActivity(0)
         }
         

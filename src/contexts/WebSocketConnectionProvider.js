@@ -4,7 +4,8 @@ import { publicKeysContext } from "./publickKeysProvider";
 export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
-    const [connectionstatus, setConnectionStatus] = useState("offline")
+    const [ connectionstatus, setConnectionStatus ] = useState("offline")
+    const [ requesterData, setRequesterData ] = useState({"publicKey": null, "nickName": null})
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const socketRef = useRef(null);    
     const publicKeyRef = useRef()
@@ -36,15 +37,18 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         //Solicitud de chat de privado
         if(pardedMessage.hasOwnProperty("requestConnection")){           
-            const userNameUser1 = pardedMessage.requestConnection.userName
-            const nickNameUser1 = pardedMessage.requestConnection.nickName
+            const publicKeyRequester = pardedMessage.requestConnection.userName
+            const nickNameRequester = pardedMessage.requestConnection.nickName
 
-            const response = window.confirm(`The user ${nickNameUser1} wants talk to you. Accept the request?`) 
+            setRequesterData({"publicKey": publicKeyRequester, "nickName": nickNameRequester})
+            setConnectionStatus("requestReceived")        
 
-            if(response === true){                
-                const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current.from}})
-                socketRef.current.send(confirmedRequest)
-            }
+            
+
+            // if(response === true){                
+            //     const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current.from}})
+            //     socketRef.current.send(confirmedRequest)
+            // }
         } 
 
         //Mensaje de chat confirmado
@@ -113,7 +117,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         createUser,
         closeConnection,
         requestCloseConnection,
-        tryPairing
+        tryPairing,
+        requesterData
     }
     
     return(

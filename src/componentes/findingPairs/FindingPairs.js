@@ -9,7 +9,7 @@ import { PopUp } from '../popUp/PopUp';
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, requesterData } = useContext(webSocketConnectionContext)
     const { publicKeys } = useContext(publicKeysContext) 
     const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
     const input = useRef()    
@@ -43,7 +43,12 @@ export const FindingPairs = ()=>{
     }
 
     //Callback I'm Here en popUp de inactividad
-    const handledAccept =()=>{
+    const handledAcceptIactivity =()=>{
+        setSecondsFromLastActivity(0)
+        setConnectionStatus("userRegistered")
+    }
+
+    const handledAcceptRequest =()=>{
         setSecondsFromLastActivity(0)
         setConnectionStatus("userRegistered")
     }
@@ -64,12 +69,25 @@ export const FindingPairs = ()=>{
                 connectionstatus === "disconnectionByInactivity" 
                     ?                
                     <PopUp  title="The connection is shutting down" 
-                    message="Due to inactivity of more than 1 minute, the connection is going to be closed"
-                    CTAtext="If you want to stay connected, please press the button"
-                    type="oneButton" 
-                    button2Text="I'm here"
-                    handledAccept={handledAccept}
+                            message="Due to inactivity of more than 1 minute, the connection is going to be closed"
+                            CTAtext="If you want to stay connected, please press the button"
+                            type="oneButton" 
+                            seconds={25}
+                            button2Text="I'm here"
+                            handledAccept={handledAcceptIactivity}
                     />                                             
+                    :
+                connectionstatus === "requestReceived" 
+                    ?   
+                    <PopUp  title="An user wants talk to you" 
+                            message={`${requesterData.nickName} asks you to talk in a private room`}
+                            CTAtext={`If you want talk with ${requesterData.nickName}, please press accept`}
+                            type="twoButton" 
+                            seconds={25}
+                            button1Text="Reject"
+                            button2Text="Start chat"
+                            handledAccept={handledAcceptRequest}
+                    />   
                     :
                     isLoading   ?
                         <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 

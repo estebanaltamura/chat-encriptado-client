@@ -2,17 +2,15 @@ import { useState, useEffect,useContext } from "react"
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import "./PopUp.css"
 
-export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, handledAccept, handledReject})=>{
+export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, seconds, handledAccept, handledReject})=>{
 
-    const [ countDown, setCountDown ] = useState(10)
-    const [ messageCountDown, setMessageCountDown ] = useState(10)
+    const [ countDown, setCountDown ] = useState(seconds)
+    const [ messageCountDown, setMessageCountDown ] = useState()
     const { closeConnection } = useContext(webSocketConnectionContext)
-
 
     useEffect(()=>{
         let timeOut
-        const interval = setInterval(()=>{
-        
+        const interval = setInterval(()=>{       
 
             setCountDown((countDown)=>{
                 if(countDown > 1){                    
@@ -25,8 +23,7 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
 
         },1000)
         
-        return ()=>{
-            console.log(timeOut)
+        return ()=>{            
             clearInterval(interval)
             clearTimeout(timeOut)
         }
