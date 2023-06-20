@@ -57,7 +57,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const handleClose = () => { 
         console.log("closed")
-        //Al usar location.href re fuerza el refresh lo cual borra todos los estados y contextos
+        //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
         window.location.href = "/login"        
     };
     
@@ -108,6 +108,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const WebSocketContextValue = {
         connectionstatus,           
         connectWebSocket,
+        setConnectionStatus,
         sendWebSocketMessage,
         createUser,
         closeConnection,

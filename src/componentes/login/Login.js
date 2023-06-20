@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
+import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
 
+
 export const Login = ()=>{
-    const {connectionstatus, connectWebSocket, createUser} = useContext(webSocketConnectionContext)
-    const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
+    const { connectionstatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)
+    const { publicKeys, setPublicKeys } = useContext(publicKeysContext)    
     const input = useRef()
     const user = useRef()    
-    const [isLoading, setIsLoading] = useContext(useState)    
+    const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
 
     useEffect(()=>{        
@@ -25,22 +27,15 @@ export const Login = ()=>{
             setIsLoading(false)
             setPublicKeys({...publicKeys, "from": user.current.publicKey})
             history("/findingPair")          
-        }
-
-          
-
-    }     
+        }        
+    }    
     ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
-        setUserData()
+        setUserData()        
         connectWebSocket()     
-    }
-
-
-
-
+    }  
 
 
     const setUserData = ()=>{
@@ -82,17 +77,16 @@ export const Login = ()=>{
    
     return(
         <>
-            {
+            {                  
                 isLoading ?
-                <Spinner className="spinner" animation="border" />                 
-                        :
-                <div className="formContainerLogin">
-                    <form className="formLogin">
-                        <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                        <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
-                    </form>                                        
-                </div>
-                
+                    <Spinner className="spinner" animation="border" />                 
+                          :
+                    <div className="formContainerLogin">
+                        <form className="formLogin">                        
+                            <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                            <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
+                        </form>                                        
+                    </div>                
             }
         </>        
     )

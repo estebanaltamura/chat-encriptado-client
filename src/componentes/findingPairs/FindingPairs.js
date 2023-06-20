@@ -2,15 +2,18 @@ import { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
+import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import { AiFillCloseSquare } from "react-icons/ai";
+import { PopUp } from '../popUp/PopUp';
 
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
     const { publicKeys } = useContext(publicKeysContext) 
+    const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
     const input = useRef()    
-    const [isLoading, setIsLoading] = useContext(useState)    
+    const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
     
 
@@ -29,11 +32,20 @@ export const FindingPairs = ()=>{
     }     
     ,[connectionstatus])
 
+    
+
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
         setIsLoading(true)
+        setSecondsFromLastActivity(0)
         tryPairing(publicKeys.from, publicKeyUser2)        
+    }
+
+    //Callback I'm Here en popUp de inactividad
+    const handledAccept =()=>{
+        setSecondsFromLastActivity(0)
+        setConnectionStatus("userRegistered")
     }
   
     // COMPORTAMIENTO INPUT
@@ -49,18 +61,28 @@ export const FindingPairs = ()=>{
     return(
         <>
             {
-                isLoading ?
-                <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
-                        :
-                <>
-                    <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
-                    <div className="formContainer">                    
-                        <form className="formFindingPair">
-                            <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                            <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
-                        </form>                                        
-                    </div>
-                </>
+                connectionstatus === "disconnectionByInactivity" 
+                    ?                
+                    <PopUp  title="The connection is shutting down" 
+                    message="Due to inactivity of more than 1 minute, the connection is going to be closed"
+                    CTAtext="If you want to stay connected, please press the button"
+                    type="oneButton" 
+                    button2Text="I'm here"
+                    handledAccept={handledAccept}
+                    />                                             
+                    :
+                    isLoading   ?
+                        <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
+                                :
+                        <>                    
+                            <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
+                            <div className="formContainer">                    
+                                <form className="formFindingPair">
+                                    <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                                    <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
+                                </form>                                        
+                            </div>
+                        </>
             }
         </>            
     )
