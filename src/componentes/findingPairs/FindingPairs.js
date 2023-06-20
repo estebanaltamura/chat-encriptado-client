@@ -9,7 +9,7 @@ import { PopUp } from '../popUp/PopUp';
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
     const { publicKeys } = useContext(publicKeysContext) 
     const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
     const input = useRef()    
@@ -41,6 +41,12 @@ export const FindingPairs = ()=>{
         setSecondsFromLastActivity(0)
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
+
+    //Callback I'm Here en popUp de inactividad
+    const handledAccept =()=>{
+        setSecondsFromLastActivity(0)
+        setConnectionStatus("userRegistered")
+    }
   
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{          
@@ -62,6 +68,7 @@ export const FindingPairs = ()=>{
                     CTAtext="If you want to stay connected, please press the button"
                     type="oneButton" 
                     button2Text="I'm here"
+                    handledAccept={handledAccept}
                     />                                             
                     :
                     isLoading   ?

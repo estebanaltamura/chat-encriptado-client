@@ -10,7 +10,7 @@ import "./Login.css"
 
 
 export const Login = ()=>{
-    const { connectionstatus, connectWebSocket, createUser, closeConnection } = useContext(webSocketConnectionContext)
+    const { connectionstatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext)    
     const input = useRef()
     const user = useRef()    

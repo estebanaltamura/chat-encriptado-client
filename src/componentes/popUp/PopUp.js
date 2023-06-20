@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react"
-
+import { useState, useEffect,useContext } from "react"
+import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import "./PopUp.css"
 
 export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, handledAccept, handledReject})=>{
 
     const [ countDown, setCountDown ] = useState(10)
     const [ messageCountDown, setMessageCountDown ] = useState(10)
+    const { closeConnection } = useContext(webSocketConnectionContext)
+
 
     useEffect(()=>{
         let timeOut
@@ -18,7 +20,7 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
                 }                 
 
                 //comportamiento cierre automatico
-                timeOut = setTimeout(()=>window.location.href = "./login", 1000)
+                timeOut = setTimeout(()=>closeConnection(), 1000)
             })
 
         },1000)
@@ -48,7 +50,7 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
                 <div className={type === "oneButton" ? "popUpGridOneButton" : "popUpGridTwoButton"}>
                     <div className="logoPopUp">IMAGEN LOGO</div>
                     <h2 className="tituloPopUp">{title}</h2>
-                    <p className="messagePopUp">{`${message} ${messageCountDown}`}</p>  
+                    <p className="messagePopUp">{message}{messageCountDown}</p>  
                     <p className="CTA">{CTAtext}</p>                  
                         {
                             type === "oneButton" ?
