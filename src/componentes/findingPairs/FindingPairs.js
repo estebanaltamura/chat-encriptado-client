@@ -15,10 +15,11 @@ export const FindingPairs = ()=>{
     const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
     const { publicKeys } = useContext(publicKeysContext)     
     const input = useRef() 
-    const requestDataRef = useRef()   
+    const requesterDataRef = useRef()   
     const requestErrorRef = useRef()
     const publicKeysRef = useRef()
-    const [isLoading, setIsLoading] = useState(false) 
+    const [isLoading, setIsLoading] = useState(false)
+    const [requesterNickName, setRequesterNickName] = useState() 
     const [copyPublicKeyText, setCopyPublicKeyText] = useState("Copy my public key")   
     const history = useNavigate()
     
@@ -42,10 +43,26 @@ export const FindingPairs = ()=>{
     }     
     ,[connectionstatus])
 
+
+
     useEffect(()=>{
-        requestDataRef.current = requesterData
+        requesterDataRef.current = requesterData
+        
+        if (requesterData.nickName !== null){
+            if(requesterData.nickName.length < 18){
+                setRequesterNickName(requesterData.nickName)
+            } 
+            else{
+                const nickNameHandled = requesterData.nickName.slice(0,18) + "..."
+                setRequesterNickName(nickNameHandled)
+            }
+        }
+        
     }     
     ,[requesterData])
+
+
+
 
     useEffect(()=>{
         requestErrorRef.current = requestError
@@ -79,13 +96,13 @@ export const FindingPairs = ()=>{
     }
 
     const handledAcceptRequest =()=>{        
-        const confirmedRequest = {"confirmedRequest": {"user1": requestDataRef.current.publicKey, "user2": publicKeys.from}}   
+        const confirmedRequest = {"confirmedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
         sendWebSocketMessage(confirmedRequest)
     }
 
-    const handledRejectRequest = ()=>{    
+    const handledRejectRequest = ()=>{            
         setSecondsFromLastActivity(0)    
-        const confirmedRequest = {"rejectedRequest": {"user1": requestDataRef.current.publicKey, "user2": publicKeys.from}}   
+        const confirmedRequest = {"rejectedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
         sendWebSocketMessage(confirmedRequest)
         setConnectionStatus("userRegistered")
     }
@@ -139,8 +156,8 @@ export const FindingPairs = ()=>{
                 connectionstatus === "requestReceived" 
                     ?   
                     <PopUp  title="An user wants talk to you" 
-                            message={`${requesterData.nickName} asks you to talk in a private room`}
-                            CTAtext={`If you want talk with ${requesterData.nickName}, please press accept`}
+                            message={`${requesterNickName} asks you to talk in a private room`}
+                            CTAtext={`If you want talk with ${requesterNickName}, please press accept`}
                             type="twoButton" 
                             seconds={25}
                             button1Text="Reject"
