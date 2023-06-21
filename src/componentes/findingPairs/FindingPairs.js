@@ -1,10 +1,12 @@
 import { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
-import { AiFillCloseSquare } from "react-icons/ai";
+import { AiFillCloseSquare, AiOutlineCopy } from "react-icons/ai";
 import { PopUp } from '../popUp/PopUp';
+
 
 import "./FindingPairs.css"
 
@@ -15,7 +17,9 @@ export const FindingPairs = ()=>{
     const input = useRef() 
     const requestDataRef = useRef()   
     const requestErrorRef = useRef()
-    const [isLoading, setIsLoading] = useState(false)    
+    const publicKeysRef = useRef()
+    const [isLoading, setIsLoading] = useState(false) 
+    const [copyPublicKeyText, setCopyPublicKeyText] = useState("Copy my public key")   
     const history = useNavigate()
     
 
@@ -47,6 +51,12 @@ export const FindingPairs = ()=>{
         requestErrorRef.current = requestError
     }     
     ,[requestError])
+
+
+    useEffect(()=>{
+        publicKeysRef.current = publicKeys
+    }     
+    ,[publicKeys])
 
     
 
@@ -90,6 +100,15 @@ export const FindingPairs = ()=>{
         setConnectionStatus("userRegistered")
     }
 
+    const copyToClipboard = async () => {       
+        await navigator.clipboard.writeText(publicKeysRef.current.from);  
+        setCopyPublicKeyText("Copied!")
+        const timeOut = setTimeout(()=>{
+            setCopyPublicKeyText("Copy my public key")
+            clearTimeout(timeOut)
+        },1500)
+        
+    };
 
   
     // COMPORTAMIENTO INPUT
@@ -152,6 +171,7 @@ export const FindingPairs = ()=>{
                                 <form className="formFindingPair">
                                     <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                                     <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
+                                    <div className="copyPublicKeyContainer" onClick={copyToClipboard}><AiOutlineCopy className="copyIcon" /><p className="copyPublicKeyText">{copyPublicKeyText}</p></div>
                                 </form>                                        
                             </div>
                         </>

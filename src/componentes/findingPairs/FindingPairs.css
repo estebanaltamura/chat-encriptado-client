@@ -51,11 +51,10 @@
     text-align: center;
 }
 
-
-
 .startSessionButton{
     width: 320px;
     height: 60px;
+    margin-bottom: 8px;
     font-family: Montserrat;
     font-size: 20px;
     background: rgb(131,58,180);
@@ -65,6 +64,25 @@
     color: #56FF30;
     font-weight: 500;
     cursor: pointer;
+}
+
+.copyPublicKeyContainer{
+    margin: auto;
+    cursor: pointer;
+}
+
+.copyPublicKeyText{
+    display: inline;
+    margin: auto;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.copyIcon{
+    display: inline;
+    width: 20px;
+    height: 20px;
 }
 
 .waitingMessage{
