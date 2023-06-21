@@ -9,10 +9,12 @@ import { PopUp } from '../popUp/PopUp';
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, requesterData } = useContext(webSocketConnectionContext)
-    const { publicKeys } = useContext(publicKeysContext) 
-    const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
-    const input = useRef()    
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, requesterData, sendWebSocketMessage, requestError } = useContext(webSocketConnectionContext)
+    const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
+    const { publicKeys } = useContext(publicKeysContext)     
+    const input = useRef() 
+    const requestDataRef = useRef()   
+    const requestErrorRef = useRef()
     const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
     
@@ -29,29 +31,66 @@ export const FindingPairs = ()=>{
             history("/chatRoom") 
             setIsLoading(false)
         }
+
+        if(connectionstatus==="requestError"){            
+            setIsLoading(false)
+        }
     }     
     ,[connectionstatus])
+
+    useEffect(()=>{
+        requestDataRef.current = requesterData
+    }     
+    ,[requesterData])
+
+    useEffect(()=>{
+        requestErrorRef.current = requestError
+    }     
+    ,[requestError])
 
     
 
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
-        setIsLoading(true)
-        setSecondsFromLastActivity(0)
+        setIsLoading(true)        
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
 
+
+
     //Callback I'm Here en popUp de inactividad
-    const handledAcceptIactivity =()=>{
-        setSecondsFromLastActivity(0)
+    const handledAcceptInactivity =()=>{        
         setConnectionStatus("userRegistered")
     }
 
-    const handledAcceptRequest =()=>{
-        setSecondsFromLastActivity(0)
+    const handledRejectInactivity = ()=>{
+        closeConnectionHandler()
+    }
+
+    const handledAcceptRequest =()=>{        
+        const confirmedRequest = {"confirmedRequest": {"user1": requestDataRef.current.publicKey, "user2": publicKeys.from}}   
+        sendWebSocketMessage(confirmedRequest)
+    }
+
+    const handledRejectRequest = ()=>{    
+        setSecondsFromLastActivity(0)    
+        const confirmedRequest = {"rejectedRequest": {"user1": requestDataRef.current.publicKey, "user2": publicKeys.from}}   
+        sendWebSocketMessage(confirmedRequest)
         setConnectionStatus("userRegistered")
     }
+
+
+    const handledAcceptError =()=>{        
+        setConnectionStatus("userRegistered")
+    }
+
+    const handledRejectError =()=>{   
+        setSecondsFromLastActivity(0)       
+        setConnectionStatus("userRegistered")
+    }
+
+
   
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{          
@@ -72,9 +111,10 @@ export const FindingPairs = ()=>{
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButton" 
-                            seconds={25}
+                            seconds={5}
                             button2Text="I'm here"
-                            handledAccept={handledAcceptIactivity}
+                            handledAccept={handledAcceptInactivity}
+                            handledReject={handledRejectInactivity}
                     />                                             
                     :
                 connectionstatus === "requestReceived" 
@@ -83,10 +123,24 @@ export const FindingPairs = ()=>{
                             message={`${requesterData.nickName} asks you to talk in a private room`}
                             CTAtext={`If you want talk with ${requesterData.nickName}, please press accept`}
                             type="twoButton" 
-                            seconds={25}
+                            seconds={50}
                             button1Text="Reject"
                             button2Text="Start chat"
                             handledAccept={handledAcceptRequest}
+                            handledReject={handledRejectRequest}
+                    />   
+                    :
+                connectionstatus === "requestError"
+                    ?   
+                    <PopUp  title={`${requestErrorRef.current.title}`}
+                            message={`${requestErrorRef.current.message}`}
+                            CTAtext={`${requestErrorRef.current.CTA}`}
+                            type="oneButton" 
+                            seconds={50}                            
+                            button2Text="OK"
+                            handledAccept={handledAcceptError}
+                            handledReject={handledRejectError}
+                            
                     />   
                     :
                     isLoading   ?

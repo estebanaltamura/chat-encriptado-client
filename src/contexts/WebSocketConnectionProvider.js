@@ -1,11 +1,13 @@
 import { createContext, useRef, useState, useContext, useEffect } from "react"
 import { publicKeysContext } from "./publickKeysProvider";
+import Swal from 'sweetalert2'
 
 export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
     const [ connectionstatus, setConnectionStatus ] = useState("offline")
     const [ requesterData, setRequesterData ] = useState({"publicKey": null, "nickName": null})
+    const [ requestError, setRequestError ] = useState({"publicKey": null, "nickName": null})    
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const socketRef = useRef(null);    
     const publicKeyRef = useRef()
@@ -41,14 +43,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             const nickNameRequester = pardedMessage.requestConnection.nickName
 
             setRequesterData({"publicKey": publicKeyRequester, "nickName": nickNameRequester})
-            setConnectionStatus("requestReceived")        
-
-            
-
-            // if(response === true){                
-            //     const confirmedRequest = JSON.stringify({"confirmedRequest": {"user1": userNameUser1, "user2": publicKeyRef.current.from}})
-            //     socketRef.current.send(confirmedRequest)
-            // }
+            setConnectionStatus("requestReceived")             
         } 
 
         //Mensaje de chat confirmado
@@ -57,16 +52,37 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             setPublicKeys({"from": publicKeyRef.current.from, "to": to})
             setConnectionStatus("chating")
         } 
+
+        //Mensaje de error
+        if(pardedMessage.hasOwnProperty("error")){
+            
+            if(pardedMessage.error === "errorUserDoesntExistOrReject"){
+                setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
+            }
+            else if(pardedMessage.error === "errorUserIsTheSame"){
+                setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
+            }
+            else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})
+
+            setConnectionStatus("requestError")            
+        } 
     };
     
-    const handleClose = () => { 
+    const handleClose = async () => { 
         console.log("closed")
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
-        window.location.href = "/login"        
+        await Swal.fire({
+            title: 'Error!',
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })       
+        window.location.href = "/login"          
     };
     
-    const handleError = (error) => {
+    const handleError = async (error) => {
         console.error('Error de conexión:', error);
+        
     };
     
     const connectWebSocket = () => {
@@ -84,7 +100,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const sendWebSocketMessage = (message) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
             console.log("Envio mensaje", message)
-            socketRef.current.send(JSON.stringify({"mensaje":message}));
+            socketRef.current.send(JSON.stringify(message));
         }
     };
     
@@ -112,6 +128,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const WebSocketContextValue = {
         connectionstatus,           
         connectWebSocket,
+        requestError,
         setConnectionStatus,
         sendWebSocketMessage,
         createUser,
