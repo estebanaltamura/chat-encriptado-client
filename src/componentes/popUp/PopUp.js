@@ -6,7 +6,8 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
           
 
     useEffect(()=>{       
-        const timeOut = setTimeout(()=>handledReject(), seconds)             
+        const secondsToMiliSeconds = seconds * 1000
+        const timeOut = setTimeout(()=>handledReject(), secondsToMiliSeconds)             
         
         return ()=>{            
             clearTimeout(timeOut)
