@@ -111,7 +111,7 @@ export const FindingPairs = ()=>{
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButton" 
-                            seconds={5}
+                            seconds={10}
                             button2Text="I'm here"
                             handledAccept={handledAcceptInactivity}
                             handledReject={handledRejectInactivity}
@@ -123,7 +123,7 @@ export const FindingPairs = ()=>{
                             message={`${requesterData.nickName} asks you to talk in a private room`}
                             CTAtext={`If you want talk with ${requesterData.nickName}, please press accept`}
                             type="twoButton" 
-                            seconds={50}
+                            seconds={25}
                             button1Text="Reject"
                             button2Text="Start chat"
                             handledAccept={handledAcceptRequest}
@@ -136,7 +136,7 @@ export const FindingPairs = ()=>{
                             message={`${requestErrorRef.current.message}`}
                             CTAtext={`${requestErrorRef.current.CTA}`}
                             type="oneButton" 
-                            seconds={50}                            
+                            seconds={10}                            
                             button2Text="OK"
                             handledAccept={handledAcceptError}
                             handledReject={handledRejectError}
