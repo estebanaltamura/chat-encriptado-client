@@ -40,6 +40,11 @@ export const FindingPairs = ()=>{
         if(connectionstatus==="requestError"){            
             setIsLoading(false)
         }
+
+        if(connectionstatus==="requestReceived"){
+            setSecondsFromLastActivity(0)
+        }
+        
     }     
     ,[connectionstatus])
 
