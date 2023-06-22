@@ -218,38 +218,4 @@ export const FindingPairs = ()=>{
     )
 }
 
-/*
-//Usuario 1 manda al servidor una direccion publica correspondiente supuestamente a usuario2. 
-    -Apenas envia el mensaje queda waiting bloqueado sin la posibilidad de manipular nada. 
-        -Si esta, manda un alert a usuario 2 
-        -Si no esta en 30 segundos alert a usuario 1 indicando que el usuario 1 no existe o no acepto la solicitud
-    
-        si acepta:
-                -1 usuario2 manda mensaje al servidor
-                -2 el servidor crea el par. 
-                -3 El servidor manda mensaje a usuario1 y a usuario2 avisando de la creacion del par
-                -4 Usuario 1 y usuario 2 son redirigidos a la ventana de chat
-        
-        si rechaza manda mensaje a usuario 1, genera un alert indicando que el usuario 1 no existe o no acepto la solicitud
 
-
-    try manda una key. 
-    usuario que envia se bloquea, 
-    si existe, manda un mensaje preguntando a esa key, si acepta se crea el par
-
-
-
-
-    cuando el par esta creado cada uno en su chat manda mensaje de from to, en el servidor se verifica si ese par existe. 
-    es el mismo par por que va a estar ordenado con sort a - b. Osea se recibe mensaje from to y su par. si el par existe y cada uno es un integrante del par se envia el mensaje al otro
-
-
-
-    nueva teoria. el server no sabe ni quien esta hablando con quien. Una vez que uno autoriza al otro queda en el front del otro. 
-    Como las claves son largas y efimeras son muy dificiles de 
-
-    chequear que el otro tenga el par completo para abrir la ventana
-
-
-
-*/
