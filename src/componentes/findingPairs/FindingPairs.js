@@ -30,21 +30,16 @@ export const FindingPairs = ()=>{
 
    
     useEffect(()=>{
-        connectionstatus==="offline" && history("/login") 
+        if(connectionstatus==="offline") window.location.href = "/login"  
         
         if(connectionstatus==="chating"){
             history("/chatRoom") 
             setIsLoading(false)
         }
 
-        if(connectionstatus==="requestError"){            
+        if(connectionstatus==="requestError"){
             setIsLoading(false)
-        }
-
-        if(connectionstatus==="requestReceived"){
-            setSecondsFromLastActivity(0)
-        }
-        
+        }        
     }     
     ,[connectionstatus])
 
@@ -117,9 +112,16 @@ export const FindingPairs = ()=>{
         setConnectionStatus("userRegistered")
     }
 
-    const handledRejectError =()=>{   
-        setSecondsFromLastActivity(0)       
+    const handledRejectError =()=>{            
         setConnectionStatus("userRegistered")
+    }
+
+    const handledAcceptClosing =()=>{        
+        setConnectionStatus("offline")
+    }
+
+    const handledRejectClosing =()=>{            
+        setConnectionStatus("offline")
     }
 
     const copyToClipboard = async () => {       
@@ -156,6 +158,7 @@ export const FindingPairs = ()=>{
                             button2Text="I'm here"
                             handledAccept={handledAcceptInactivity}
                             handledReject={handledRejectInactivity}
+                            key={connectionstatus}
                     />                                             
                     :
                 connectionstatus === "requestReceived" 
@@ -169,6 +172,7 @@ export const FindingPairs = ()=>{
                             button2Text="Start chat"
                             handledAccept={handledAcceptRequest}
                             handledReject={handledRejectRequest}
+                            key={connectionstatus}
                     />   
                     :
                 connectionstatus === "requestError"
@@ -181,9 +185,21 @@ export const FindingPairs = ()=>{
                             button2Text="OK"
                             handledAccept={handledAcceptError}
                             handledReject={handledRejectError}
-                            
+                            key={connectionstatus}
                     />   
                     :
+                connectionstatus === "closing"
+                    ?   
+                    <PopUp  title="Closing"  
+                            message="Error interacting with server"                      
+                            type="oneButton" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handledAccept={handledAcceptClosing}
+                            handledReject={handledRejectClosing}
+                            key={connectionstatus}
+                    />   
+                    :    
                     isLoading   ?
                         <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
                                 :

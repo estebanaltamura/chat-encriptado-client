@@ -68,16 +68,16 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         } 
     };
     
-    const handleClose = async () => { 
+    const handleClose = async (e) => {         
         console.log("closed")
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
-        await Swal.fire({
-            title: 'Error!',
-            text: 'Do you want to continue',
-            icon: 'error',
-            confirmButtonText: 'Cool'
-          })       
-        window.location.href = "/login"          
+        console.log(socketRef.current.readyState)
+
+        setConnectionStatus("closing")       
+        const timeOut = setTimeout(()=>{
+            window.location.href = "/login"
+            clearTimeout(timeOut) 
+        },2000)         
     };
     
     const handleError = async (error) => {

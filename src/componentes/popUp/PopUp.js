@@ -1,19 +1,27 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
+import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 
 import "./PopUp.css"
 
 export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, seconds, handledAccept, handledReject})=>{
           
+    const { connectionstatus } = useContext(webSocketConnectionContext)
+    //const [ isMounted, setIsMounted ] = useState()
+    //const isMountedRef = useRef(null)
 
-    useEffect(()=>{       
-        const secondsToMiliSeconds = seconds * 1000
-        console.log("timeout")
-        const timeOut = setTimeout(()=>handledReject(), secondsToMiliSeconds)             
-        
-        return ()=>{            
-            clearTimeout(timeOut)
-        }
-    },[])   
+    
+    useEffect(() => {
+      //isMountedRef.current = true;
+      const secondsToMiliSeconds = seconds * 1000;      
+      
+      const timeOut = setTimeout(() => {        
+          handledReject();        
+      }, secondsToMiliSeconds);
+  
+      return () => {        
+        clearTimeout(timeOut);
+      };
+    }, []);
 
     
     return(

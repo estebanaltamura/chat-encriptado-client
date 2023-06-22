@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
-import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
+import { PopUp } from "../popUp/PopUp";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
 
 
 export const Login = ()=>{
-    const { connectionstatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)
+    const { connectionstatus, connectWebSocket, createUser, setConnectionStatus } = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext)    
     const input = useRef()
     const user = useRef()    
@@ -18,8 +18,7 @@ export const Login = ()=>{
     const history = useNavigate()
 
     useEffect(()=>{        
-        if(connectionstatus==="online"){      
-            setIsLoading(true)
+        if(connectionstatus==="online"){                
             createUser(user.current)          
         }
 
@@ -33,6 +32,7 @@ export const Login = ()=>{
 
     const iniciarSesion = (e)=>{
         e.preventDefault()
+        setIsLoading(true)
         setUserData()        
         connectWebSocket()     
     }  
@@ -66,6 +66,15 @@ export const Login = ()=>{
                         }        
     }
     
+
+    const handledAcceptClosing =()=>{        
+        setConnectionStatus("offline")
+    }
+
+    const handledRejectClosing =()=>{            
+        setConnectionStatus("offline")
+    }
+
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        
         input.current.removeAttribute("placeholder")
@@ -77,7 +86,19 @@ export const Login = ()=>{
    
     return(
         <>
-            {                  
+            {          
+                connectionstatus === "closing"
+                ?   
+                <PopUp  title="Closing"  
+                        message="Error trying to connect to the server"                      
+                        type="oneButton" 
+                        seconds={10}                            
+                        button2Text="OK"
+                        handledAccept={handledAcceptClosing}
+                        handledReject={handledRejectClosing}
+                        key={connectionstatus}
+                />   
+                :            
                 isLoading ?
                     <Spinner className="spinner" animation="border" />                 
                           :
