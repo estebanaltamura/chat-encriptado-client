@@ -31,18 +31,21 @@ export const Login = ()=>{
     ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
-        e.preventDefault()
-        setIsLoading(true)
-        setUserData()        
-        connectWebSocket()     
+        e.preventDefault()        
+        setUserData() 
+        if (input.current.value !== ""){
+            setIsLoading(true)   
+            connectWebSocket()   
+        }    
+          
     }  
 
 
     const setUserData = ()=>{
         //CANDIDATO A CUSTOM HOOK
         if(input.current.value === ""){
-            alert("ingresar apodo")
-            return           
+            setConnectionStatus("nickNameError")
+            return false         
         } 
 
         const nickNameInserted = input.current.value
@@ -75,6 +78,14 @@ export const Login = ()=>{
         setConnectionStatus("offline")
     }
 
+    const handledAcceptNickNameError =()=>{        
+        setConnectionStatus("offline")
+    }
+
+    const handledRejectNickNameError =()=>{            
+        setConnectionStatus("offline")
+    }
+
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        
         input.current.removeAttribute("placeholder")
@@ -98,7 +109,19 @@ export const Login = ()=>{
                         handledReject={handledRejectClosing}
                         key={connectionstatus}
                 />   
-                :            
+                :           
+                connectionstatus === "nickNameError"
+                ?   
+                <PopUp  title="Nick name error"  
+                        message="Nick name should have only alphanumeric characters and minimum one character"                      
+                        type="oneButton" 
+                        seconds={10}                            
+                        button2Text="OK"
+                        handledAccept={handledAcceptNickNameError}
+                        handledReject={handledRejectNickNameError}
+                        key={connectionstatus}
+                />   
+                :             
                 isLoading ?
                     <Spinner className="spinner" animation="border" />                 
                           :

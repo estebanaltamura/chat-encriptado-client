@@ -77,7 +77,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         const timeOut = setTimeout(()=>{
             window.location.href = "/login"
             clearTimeout(timeOut) 
-        },2000)         
+        },4000)         
     };
     
     const handleError = async (error) => {
