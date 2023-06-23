@@ -12,17 +12,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
     const socketRef = useRef(null);  
-    const chatHistoryRef = useRef()  
     const publicKeyRef = useRef()
 
     useEffect(()=>{
         publicKeyRef.current = publicKeys
     },[publicKeys])
-
-    useEffect(()=>{
-        chatHistoryRef.current = publicKeys
-    },[chatHistory])
-    
 
     const handleOpen = () => {
         console.log("connected")        
@@ -84,7 +78,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         //Recepcion de mensajes
         if(pardedMessage.hasOwnProperty("sentMessaje")){
             const message = pardedMessage.sentMessaje.message
-            setChatHistory([{"other": message}, ...chatHistoryRef.current])
+            setChatHistory([{"other": message}, ...chatHistory])
             
         } 
 
