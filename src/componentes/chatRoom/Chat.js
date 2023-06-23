@@ -1,6 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
+import { publicKeysContext } from "../../contexts/publickKeysProvider";
+import { chatHistoryContext } from "../../contexts/ChatHistoryProvider";
 import { PopUp } from "../popUp/PopUp";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
@@ -9,7 +11,10 @@ import "./Chat.css"
 
 export const Chat = ()=>{
 
-    const { connectionstatus, setConnectionStatus, closeConnection, requestCloseConnection, requesterData } = useContext(webSocketConnectionContext)    
+    const { connectionstatus, setConnectionStatus, closeConnection, requestCloseConnection, requesterData, sendWebSocketMessage } = useContext(webSocketConnectionContext)    
+    const { publicKeys } = useContext(publicKeysContext)
+    const { chatHistory, setChatHistory } = useContext(chatHistoryContext)
+    const inputRef = useRef()
     const history = useNavigate()
 
     const closeConnectionHandler = ()=>{   
@@ -26,6 +31,15 @@ export const Chat = ()=>{
         connectionstatus==="findingPairs" && history("/login") 
     }     
     ,[connectionstatus])
+
+    const sendMessageHandler = (e)=>{
+        e.preventDefault()
+        console.log(publicKeys.from, publicKeys.to, inputRef.current.value)
+        const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": inputRef.current.value}}        
+        setChatHistory([...chatHistory, {"me": inputRef.current.value}])
+        inputRef.current.value = ""
+        sendWebSocketMessage(messageToSend)
+    }
 
     const handledAcceptServerError =()=>{        
         setConnectionStatus("offline")
@@ -90,27 +104,37 @@ export const Chat = ()=>{
                             handledReject={handledRejectOtherUserClosed}
                             key={connectionstatus}
                     />   
-                    :                 
-                    <div className="backgroundChatRoom">
-                        <div className="chatRoomContainer">
-                            <div className="ChatRoomGrid">
-                                <div className="chatRoomHeader">
-                                    <p className="nickNameInHeaderChatRoom">{requesterData.nickName}</p>
-                                    <AiFillCloseCircle className="closeButtonInHeaderChatRoom" onClick={closeConnectionHandler}/>
-                                </div>
-                                <div className="chatRoomArea"></div>
-                                <div className="chatRoomSendMessageBar">
-                                    <form className="formChatRoomSendMessageBar">
-                                        <input className="inputChatRoomSendMessageBar"></input>
-                                        <div className="submitChatRoomSendMessageBarContainer">
-                                            <BsFillCircleFill className="submitCircleChatRoomSendMessageBar" />
-                                            <IoMdSend  className="submitArrowIconChatRoomSendMessageBar" />
-                                        </div>                              
-                                    </form>
-                                </div>
-                            </div>
-                        </div>                 
-                    </div>
+                    :       
+                    <>
+                        <div className="ChatRoomContainer">
+                            <div className="greenBar"></div>
+
+                            <div className="chatContainer">
+                                
+                                    <div className="chatHeader">
+                                        <p className="nickNameInHeaderChat">{requesterData.nickName}</p>
+                                        <AiFillCloseCircle className="closeButtonInHeaderChat" onClick={closeConnectionHandler}/>
+                                    </div>
+
+                                    <div className="chatMainArea"></div>
+                                    
+                                    <div className="chatSendMessageBar">
+                                        <form className="formChatSendMessageBar">
+                                            <input className="inputChatSendMessageBar" placeholder="Escriba un mensaje aquí" ref={inputRef}></input>
+                                            <div className="submitChatSendMessageBarContainer" onClick={sendMessageHandler}>
+                                                <BsFillCircleFill className="submitCircleChatSendMessageBar" />
+                                                <IoMdSend  className="submitArrowIconChatSendMessageBar" />
+                                            </div>                              
+                                        </form>
+                                    </div>
+                                
+                            </div>                 
+
+
+                        </div>
+
+                    </>          
+                    
                     
             }
             

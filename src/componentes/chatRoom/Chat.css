@@ -1,25 +1,39 @@
-.backgroundChatRoom{
-    position: none;    
+
+
+.ChatRoomContainer{
+    width: 100vw;
+    height: 100vh;    
+    background-color: #eae6df;
 }
 
-.chatRoomContainer{
-    z-index: 1;   
-    width: 100%;
-    height: 100vh;
-    background-color: white;
-    overflow: hidden;
+.greenBar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 127px;
+    background-color: #00A884;
 }
 
-.ChatRoomGrid{
+.chatContainer{
     display: grid;
+    position: relative;    
+    margin: auto;    
     width: 100%;
+    max-width: 1375px;
     height: 100vh;
+    top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62;
+    background-color: #eeeeee;
+    overflow: hidden;
+    border-radius: 4px;
     grid-template-areas: "chatRoomHeader" "chatRoomArea" "chatRoomSendMessageBar";
 }
 
-.chatRoomHeader{
+
+/* ------ HEADER ------ */
+.chatHeader{
     grid-area: chatRoomHeader;
     display: grid;
     position:relative;
@@ -32,7 +46,7 @@
     background-color: #00A884;
 }
 
-.nickNameInHeaderChatRoom{
+.nickNameInHeaderChat{
     display: flex;
     align-items: center;
     justify-content: left;
@@ -43,7 +57,7 @@
 
 }
 
-.closeButtonInHeaderChatRoom{
+.closeButtonInHeaderChat{
     grid-area: closeButton;  
     position: absolute;
     top: -1px;
@@ -56,7 +70,8 @@
 
 }
 
-.chatRoomArea{
+/* ------ MAIN ------ */
+.chatMainArea{
     grid-area: chatRoomArea;
     width: 100%;
     height: calc(100vh - 122px);
@@ -65,18 +80,20 @@
     opacity: 0.5;
 }
 
-.chatRoomSendMessageBar{
+
+/* ------ SEND MESSAGE AREA ------*/
+.chatSendMessageBar{
     grid-area: chatRoomSendMessageBar;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    width: 100%;
     height: 62px;
     background-color: #F0F2F5;
     
 }
 
-.formChatRoomSendMessageBar{
+.formChatSendMessageBar{
     display:grid;
     padding: 7px 8px 7px 10px;
     width: 100%;
@@ -86,22 +103,27 @@
     grid-template-areas: "input submit";
 }
 
-.inputChatRoomSendMessageBar{
+.inputChatSendMessageBar{
     grid-area: input;
+    padding: 9px 12px;
     width: 100%;
     height: 100%;
     border-radius: 10px;
     border: 1px solid #cfcfcf;
 }
 
-.submitChatRoomSendMessageBarContainer{
+.inputChatSendMessageBar:focus-visible{
+    outline: none;
+}
+
+.submitChatSendMessageBarContainer{
     grid-area: submit;
     position: relative;
     
 }
 
 
-.submitCircleChatRoomSendMessageBar{   
+.submitCircleChatSendMessageBar{   
     position: absolute;
     top: 2px; 
     left: 8px;
@@ -112,7 +134,7 @@
     color: #00A884;
 }
 
-.submitArrowIconChatRoomSendMessageBar{
+.submitArrowIconChatSendMessageBar{
     position: absolute;
     top: 7px;
     left: 15px; 
@@ -123,20 +145,31 @@
 }
 
 
+/* ------ MEDIA QUERIES ------ */
 
 
+@media (min-width: 1375px) {
 
-@media (min-width: 768px) {
+    .chatMainArea{        
+        height: calc(100vh - 162px);   
+    }    
 
-    .backgroundChatRoom{
-        position: absolute;
-        width: 100%;
-        height: 100%;   
-        background-color: #00A884; 
-        padding: 0 30px;
-        z-index: -1;
+    .chatContainer{
+        height: calc(100vh - 40px);
+        top: 20px;
+        
+    } 
+
+    .chatHeader{
+        background-color: #F0F2F5;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .chatSendMessageBar{
+        border-top: 1px solid #e4e4e4;
     }
 }
+
 
 /*                     <div className="backgroundChatRoom">
                         <div className="chatRoomContainer">

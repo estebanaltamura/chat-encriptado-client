@@ -1,6 +1,7 @@
 import { createContext, useRef, useState, useContext, useEffect } from "react"
 import { publicKeysContext } from "./publickKeysProvider";
-import Swal from 'sweetalert2'
+import { chatHistoryContext } from "./ChatHistoryProvider";
+
 
 export const webSocketConnectionContext = createContext(null)
 
@@ -9,6 +10,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const [ requesterData, setRequesterData ] = useState({"publicKey": null, "nickName": null})
     const [ requestError, setRequestError ] = useState(null)      
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
+    const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
     const socketRef = useRef(null);    
     const publicKeyRef = useRef()
 
@@ -67,11 +69,21 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             setConnectionStatus("requestError")            
         } 
 
+        //cierre
         if(pardedMessage.hasOwnProperty("closing")){            
             if(pardedMessage.closing === "otherUserClosed"){                
                 setConnectionStatus("otherUserClosed")
             }                        
         } 
+
+        //Recepcion de mensajes
+        if(pardedMessage.hasOwnProperty("sentMessaje")){
+            const message = pardedMessage.sentMessaje.message
+            setChatHistory([...chatHistory, {"other": message}])
+            
+        } 
+
+
 
         
     };
