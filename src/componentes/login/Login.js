@@ -98,7 +98,7 @@ export const Login = ()=>{
     return(
         <>
             {          
-                connectionstatus === "closing"
+                connectionstatus === "serverError"
                 ?   
                 <PopUp  title="Closing"  
                         message="Error trying to connect to the server"                      

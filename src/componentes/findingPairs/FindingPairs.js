@@ -188,7 +188,7 @@ export const FindingPairs = ()=>{
                             key={connectionstatus}
                     />   
                     :
-                connectionstatus === "closing"
+                connectionstatus === "serverError"
                     ?   
                     <PopUp  title="Closing"  
                             message="Error interacting with server"                      

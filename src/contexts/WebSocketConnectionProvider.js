@@ -7,7 +7,7 @@ export const webSocketConnectionContext = createContext(null)
 export const WebSocketConnectionContextProvider = ({children})=>{
     const [ connectionstatus, setConnectionStatus ] = useState("offline")
     const [ requesterData, setRequesterData ] = useState({"publicKey": null, "nickName": null})
-    const [ requestError, setRequestError ] = useState({"publicKey": null, "nickName": null})    
+    const [ requestError, setRequestError ] = useState(null)      
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const socketRef = useRef(null);    
     const publicKeyRef = useRef()
@@ -66,23 +66,29 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
             setConnectionStatus("requestError")            
         } 
+
+        if(pardedMessage.hasOwnProperty("closing")){            
+            if(pardedMessage.closing === "otherUserClosed"){                
+                setConnectionStatus("otherUserClosed")
+            }                        
+        } 
+
+        
     };
     
     const handleClose = async (e) => {         
         console.log("closed")
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
         console.log(socketRef.current.readyState)
-
-        setConnectionStatus("closing")       
         const timeOut = setTimeout(()=>{
             window.location.href = "/login"
             clearTimeout(timeOut) 
         },4000)         
     };
     
-    const handleError = async (error) => {
-        console.error('Error de conexión:', error);
-        
+    const handleError = async (error) => {   
+        setConnectionStatus("serverError")                     
+        console.error('Error de conexión:', error);        
     };
     
     const connectWebSocket = () => {
@@ -120,7 +126,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         socketRef.current.close()
     }
 
-    const requestCloseConnection = ()=>{
+    const requestCloseConnection = ()=>{        
         socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));        
     }
     
