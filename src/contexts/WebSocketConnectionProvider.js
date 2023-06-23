@@ -78,7 +78,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         //Recepcion de mensajes
         if(pardedMessage.hasOwnProperty("sentMessaje")){
             const message = pardedMessage.sentMessaje.message
-            setChatHistory((chatHistory)=>[...chatHistory, {"other": message}])
+            setChatHistory((chatHistory)=>[...chatHistory, {"type": "messageReceived", "message": message}])
             
         } 
 

@@ -1,0 +1,31 @@
+.messageRow{       
+    display: block;
+    width: 100%;
+    height: fit-content;
+    margin-top: 7px;    
+}
+
+.messageReceivedContainer{       
+    display: flex;  
+    justify-content: left; 
+    padding-left: 10px;  
+}
+
+.messageSentContainer{       
+    display: flex;     
+    justify-content: right; 
+    padding-right: 10px;
+}
+
+.massage{
+    display: flex;    
+    border-radius: 10px;
+    border: 1px solid #cacaca;    
+    background-color: white;
+    opacity: 1;
+    width: fit-content;
+    max-width: 280px;
+    height: fit-content;
+    padding: 6px 7px 8px 9px;    
+}
+

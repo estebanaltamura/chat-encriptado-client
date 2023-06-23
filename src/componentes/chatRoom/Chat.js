@@ -4,6 +4,7 @@ import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionPr
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { chatHistoryContext } from "../../contexts/ChatHistoryProvider";
 import { PopUp } from "../popUp/PopUp";
+import { Message } from "../message/Message";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 import { BsFillCircleFill } from "react-icons/bs";
@@ -36,7 +37,7 @@ export const Chat = ()=>{
         e.preventDefault()
         console.log(publicKeys.from, publicKeys.to, inputRef.current.value)
         const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": inputRef.current.value}}        
-        setChatHistory([...chatHistory, {"me": inputRef.current.value}])
+        setChatHistory([...chatHistory, {type: "messageSent", "message": inputRef.current.value}])
         inputRef.current.value = ""
         sendWebSocketMessage(messageToSend)
     }
@@ -116,7 +117,11 @@ export const Chat = ()=>{
                                         <AiFillCloseCircle className="closeButtonInHeaderChat" onClick={closeConnectionHandler}/>
                                     </div>
 
-                                    <div className="chatMainArea"></div>
+                                    <div className="chatMainArea">
+                                        {
+                                            chatHistory.map((element, index)=><Message key={index} type={element.type} message={element.message}/>)
+                                        }                                        
+                                    </div>
                                     
                                     <div className="chatSendMessageBar">
                                         <form className="formChatSendMessageBar">
