@@ -14,6 +14,14 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const socketRef = useRef(null);  
     const publicKeyRef = useRef()
    
+    useEffect(()=>{
+        
+        window.addEventListener("unload", closeConnection)
+
+        return(
+            window.removeEventListener("unload", closeConnection)
+        )
+    },[])
     
     useEffect(()=>{
         publicKeyRef.current = publicKeys
