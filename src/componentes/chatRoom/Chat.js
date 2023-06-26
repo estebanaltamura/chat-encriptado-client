@@ -8,6 +8,7 @@ import { Message } from "../message/Message";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 import { BsFillCircleFill } from "react-icons/bs";
+import { usePopUpHandler } from '../../hooks/usePopUpHandler';
 import "./Chat.css"
 
 export const Chat = ()=>{
@@ -17,6 +18,14 @@ export const Chat = ()=>{
     const { chatHistory, setChatHistory } = useContext(chatHistoryContext)
     const inputRef = useRef()
     const history = useNavigate()
+
+    const { inactivityAcceptHandler,
+            inactivityRejectHandler,            
+            acceptOtherUserHasClosedHandler,
+            rejectOtherUserHasClosedHandler,
+            acceptServerErrorClosingHandler,
+            rejectedServerErrorClosingHandler,
+        } = usePopUpHandler()
 
     const closeConnectionHandler = ()=>{   
         setConnectionStatus("userClosed")      
@@ -42,34 +51,23 @@ export const Chat = ()=>{
         sendWebSocketMessage(messageToSend)
     }
 
-    const handledAcceptServerError =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectServerError =()=>{            
-        setConnectionStatus("offline")
-    }
-
-    const handledAcceptUserClosed =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectUserClosed =()=>{            
-        setConnectionStatus("offline")
-    }
-
-    const handledAcceptOtherUserClosed =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectOtherUserClosed =()=>{            
-        setConnectionStatus("offline")
-    }
-
 
 
     return(
         <>  {
+            connectionstatus === "disconnectionByInactivity" 
+                    ?                
+                    <PopUp  title="The connection is shutting down" 
+                            message="Due to inactivity of more than 1 minute, the connection is going to be closed"
+                            CTAtext="If you want to stay connected, please press the button"
+                            type="oneButton" 
+                            seconds={10}
+                            button2Text="I'm here"
+                            handledAccept={inactivityAcceptHandler}
+                            handledReject={inactivityRejectHandler}
+                            key={connectionstatus}
+                    />                                             
+                    :
             connectionstatus === "serverError"
                     ?   
                     <PopUp  title="Closing"  
@@ -77,23 +75,11 @@ export const Chat = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={handledAcceptServerError}
-                            handledReject={handledRejectServerError}
+                            handledAccept={acceptServerErrorClosingHandler}
+                            handledReject={rejectedServerErrorClosingHandler}
                             key={connectionstatus}
                     />   
-                    :    
-            connectionstatus === "userClosed"
-                    ?   
-                    <PopUp  title="Closing"  
-                            message="You have close the chat"                      
-                            type="oneButton" 
-                            seconds={10}                            
-                            button2Text="OK"
-                            handledAccept={handledAcceptUserClosed}
-                            handledReject={handledRejectUserClosed}
-                            key={connectionstatus}
-                    />   
-                    :
+                    :             
             connectionstatus === "otherUserHasClosed"
                     ?   
                     <PopUp  title="Closing"  
@@ -101,8 +87,8 @@ export const Chat = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={handledAcceptOtherUserClosed}
-                            handledReject={handledRejectOtherUserClosed}
+                            handledAccept={acceptOtherUserHasClosedHandler}
+                            handledReject={rejectOtherUserHasClosedHandler}
                             key={connectionstatus}
                     />   
                     :       
