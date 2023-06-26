@@ -66,6 +66,12 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             else if(pardedMessage.error === "errorUserIsTheSame"){
                 setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
             }
+            else if(pardedMessage.error === "requesterDisconnected"){
+                setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user", "CTA": "Click OK to continue"})
+            }
+            
+            
+            
             else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
         } 
 
