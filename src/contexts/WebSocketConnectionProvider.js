@@ -13,7 +13,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
     const socketRef = useRef(null);  
     const publicKeyRef = useRef()
-
+   
+    
     useEffect(()=>{
         publicKeyRef.current = publicKeys
     },[publicKeys])
@@ -63,9 +64,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             else if(pardedMessage.error === "errorUserIsTheSame"){
                 setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
             }
-            else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})
-
-            setConnectionStatus("requestError")            
+            else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
         } 
 
         //cierre
@@ -91,10 +90,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         console.log("closed")
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
         console.log(socketRef.current.readyState)
-        const timeOut = setTimeout(()=>{
-            window.location.href = "/login"
-            clearTimeout(timeOut) 
-        },4000)         
+        window.location.href = "/login"
+        
     };
     
     const handleError = async (error) => {   
@@ -134,6 +131,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     };
 
     const closeConnection = () => {
+        socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));
         socketRef.current.close()
     }
 

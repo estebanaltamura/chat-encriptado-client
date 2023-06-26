@@ -98,7 +98,7 @@ export const Login = ()=>{
     return(
         <>
             {          
-                connectionstatus === "serverError"
+                connectionstatus === "serverError" // ver
                 ?   
                 <PopUp  title="Closing"  
                         message="Error trying to connect to the server"                      
@@ -115,7 +115,7 @@ export const Login = ()=>{
                 <PopUp  title="Nick name error"  
                         message="Nick name should have only alphanumeric characters and minimum one character"                      
                         type="oneButton" 
-                        seconds={10}                            
+                        seconds={5}                            
                         button2Text="OK"
                         handledAccept={handledAcceptNickNameError}
                         handledReject={handledRejectNickNameError}

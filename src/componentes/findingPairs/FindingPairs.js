@@ -1,10 +1,10 @@
 import { useRef, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
 import { AiFillCloseSquare, AiOutlineCopy } from "react-icons/ai";
+import { usePopUpHandler } from '../../hooks/usePopUpHandler';
 import { PopUp } from '../popUp/PopUp';
 
 
@@ -21,12 +21,26 @@ export const FindingPairs = ()=>{
     const [isLoading, setIsLoading] = useState(false)
     const [requesterNickName, setRequesterNickName] = useState() 
     const [copyPublicKeyText, setCopyPublicKeyText] = useState("Copy my public key")   
+
+    const { inactivityAcceptHandler,
+            inactivityRejectHandler,
+            requestReceivedAcceptByUserHandler,
+            requestReceivedRejectByUserHandler,
+            requestSentAcceptRejectOrExceptionHandler,
+            requestSentRejectRejectOrExceptionHandler,
+            acceptServerErrorClosingHandler,
+            rejectedServerErrorClosingHandler,
+            } = usePopUpHandler()
+
     const history = useNavigate()
     
 
     const closeConnectionHandler = ()=>{        
         closeConnection()
     }
+
+
+    
 
    
     useEffect(()=>{
@@ -61,11 +75,11 @@ export const FindingPairs = ()=>{
     }     
     ,[requesterData])
 
-
-
-
     useEffect(()=>{
         requestErrorRef.current = requestError
+        if(requestErrorRef.current !== null){
+            setConnectionStatus("requestError")
+        }        
     }     
     ,[requestError])
 
@@ -80,49 +94,14 @@ export const FindingPairs = ()=>{
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
+        setConnectionStatus("findingPair")
         setIsLoading(true)        
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
 
 
 
-    //Callback I'm Here en popUp de inactividad
-    const handledAcceptInactivity =()=>{        
-        setConnectionStatus("userRegistered")
-    }
-
-    const handledRejectInactivity = ()=>{
-        closeConnectionHandler()
-    }
-
-    const handledAcceptRequest =()=>{        
-        const confirmedRequest = {"confirmedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
-        sendWebSocketMessage(confirmedRequest)
-    }
-
-    const handledRejectRequest = ()=>{            
-        setSecondsFromLastActivity(0)    
-        const confirmedRequest = {"rejectedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
-        sendWebSocketMessage(confirmedRequest)
-        setConnectionStatus("userRegistered")
-    }
-
-
-    const handledAcceptError =()=>{        
-        setConnectionStatus("userRegistered")
-    }
-
-    const handledRejectError =()=>{            
-        setConnectionStatus("userRegistered")
-    }
-
-    const handledAcceptClosing =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectClosing =()=>{            
-        setConnectionStatus("offline")
-    }
+    
 
     const copyToClipboard = async () => {       
         await navigator.clipboard.writeText(publicKeysRef.current.from);  
@@ -156,8 +135,8 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={10}
                             button2Text="I'm here"
-                            handledAccept={handledAcceptInactivity}
-                            handledReject={handledRejectInactivity}
+                            handledAccept={inactivityAcceptHandler}
+                            handledReject={inactivityRejectHandler}
                             key={connectionstatus}
                     />                                             
                     :
@@ -170,8 +149,8 @@ export const FindingPairs = ()=>{
                             seconds={25}
                             button1Text="Reject"
                             button2Text="Start chat"
-                            handledAccept={handledAcceptRequest}
-                            handledReject={handledRejectRequest}
+                            handledAccept={requestReceivedAcceptByUserHandler}
+                            handledReject={requestReceivedRejectByUserHandler}
                             key={connectionstatus}
                     />   
                     :
@@ -183,20 +162,20 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={handledAcceptError}
-                            handledReject={handledRejectError}
+                            handledAccept={requestSentAcceptRejectOrExceptionHandler}
+                            handledReject={requestSentRejectRejectOrExceptionHandler}
                             key={connectionstatus}
                     />   
                     :
-                connectionstatus === "serverError"
+                connectionstatus === "serverError" // ver
                     ?   
                     <PopUp  title="Closing"  
                             message="Error interacting with server"                      
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={handledAcceptClosing}
-                            handledReject={handledRejectClosing}
+                            handledAccept={acceptServerErrorClosingHandler}
+                            handledReject={rejectedServerErrorClosingHandler}
                             key={connectionstatus}
                     />   
                     :    
