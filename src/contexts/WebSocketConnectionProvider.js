@@ -14,14 +14,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const socketRef = useRef(null);  
     const publicKeyRef = useRef()
    
-    useEffect(()=>{
-        
-        window.addEventListener("unload", closeConnection)
 
-        return(
-            window.removeEventListener("unload", closeConnection)
-        )
-    },[])
+    
     
     useEffect(()=>{
         publicKeyRef.current = publicKeys
@@ -77,8 +71,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         //cierre
         if(pardedMessage.hasOwnProperty("closing")){            
-            if(pardedMessage.closing === "otherUserClosed"){                
-                setConnectionStatus("otherUserClosed")
+            if(pardedMessage.closing === "otherUserHasClosed"){                
+                setConnectionStatus("otherUserHasClosed")
             }                        
         } 
 
@@ -138,14 +132,13 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }
     };
 
-    const closeConnection = () => {
-        socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));
+    const closeConnection = () => {        
         socketRef.current.close()
     }
+    
+   
 
-    const requestCloseConnection = ()=>{        
-        socketRef.current.send(JSON.stringify({"requestCloseConnection":{"publicKeyUser2": publicKeyRef.current.to}}));        
-    }
+    
     
     
     const WebSocketContextValue = {
@@ -155,8 +148,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         setConnectionStatus,
         sendWebSocketMessage,
         createUser,
-        closeConnection,
-        requestCloseConnection,
+        closeConnection,        
         tryPairing,
         requesterData
     }

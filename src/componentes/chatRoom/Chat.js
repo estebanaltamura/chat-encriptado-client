@@ -94,7 +94,7 @@ export const Chat = ()=>{
                             key={connectionstatus}
                     />   
                     :
-            connectionstatus === "otherUserClosed"
+            connectionstatus === "otherUserHasClosed"
                     ?   
                     <PopUp  title="Closing"  
                             message="The other user has close the chat"                      
