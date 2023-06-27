@@ -25,10 +25,10 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
 
     
     return(
-        <div className="popUpContainer">
+        <div className="popUpContainer"> 
             <div className={type === "oneButton" ? "popUpElementOneButton popUpElement" : "popUpElementTwoButton popUpElement"}>
                 <div className={type === "oneButton" ? "popUpGridOneButton" : "popUpGridTwoButton"}>
-                    <div className="logoPopUp">IMAGEN LOGO</div>
+                    <img src="https://i.postimg.cc/76bz30BG/logo-Miniatura.jpg" className="logoPopUp" />
                     <h2 className="tituloPopUp">{title}</h2>
                     <p className="messagePopUp">{message}</p>  
                     <p className="CTA">{CTAtext}</p>                  
@@ -47,3 +47,5 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
         </div>
     )
 }
+
+//probar con estos coloresaccept #149AD9 reject #EB5421

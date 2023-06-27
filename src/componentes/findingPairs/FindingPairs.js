@@ -133,7 +133,7 @@ export const FindingPairs = ()=>{
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButton" 
-                            seconds={10}
+                            seconds={1000}
                             button2Text="I'm here"
                             handledAccept={inactivityAcceptHandler}
                             handledReject={inactivityRejectHandler}
@@ -182,14 +182,30 @@ export const FindingPairs = ()=>{
                     isLoading   ?
                         <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
                                 :
-                        <>                    
-                            <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
-                            <div className="formContainer">                    
-                                <form className="formFindingPair">
-                                    <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                                    <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
-                                    <div className="copyPublicKeyContainer" onClick={copyToClipboard}><AiOutlineCopy className="copyIcon" /><p className="copyPublicKeyText">{copyPublicKeyText}</p></div>
-                                </form>                                        
+                        <>  <div className="closeButtonContainerFindingPair">
+                                <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
+                            </div>                  
+                            
+                            <div className="findingPairContainer">
+
+                                <div className="logoContainer">
+                                    <img className="logoImage" src="https://i.postimg.cc/bNy9QWtG/logo.jpg"/>
+                                </div>
+                                
+                                <div className="tutorialMessageContainerFindingPair">
+                                    <p className="tutorialMessageFindingPair">Share your public key by whatsapp or similar with the person you want and wait for his invitation</p>
+                                    <p className="tutorialMessageFindingPair or">or</p>
+                                    <p className="tutorialMessageFindingPair">Insert the public key which you received of the person who you want have a private talk and send his an invitation</p>
+                                </div>   
+                                
+                                <div className="formContainerFindingPair">                    
+                                    <form className="formFindingPair">
+                                        <input className="nickNameInputFindingPair" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                                        <button className="startSessionButtonFindingPair" onClick={tryPairingHandler}>Start chat</button>
+                                        <div className="copyPublicKeyContainer" onClick={copyToClipboard}><AiOutlineCopy className="copyIcon" /><p className="copyPublicKeyText">{copyPublicKeyText}</p></div>
+                                    </form>                                        
+                                </div>
+
                             </div>
                         </>
             }

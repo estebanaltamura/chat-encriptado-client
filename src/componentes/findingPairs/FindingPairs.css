@@ -1,34 +1,49 @@
-.closeConnectionButtonFindingPair{
-    margin-top: 40px;
-    margin-left: calc(50% - 27px);
+.closeButtonContainerFindingPair{
     width: 55px;
     height: 55px;
+    transform: translatex(-50%);
+    margin-top: 10px;    
+    margin-left: 50%;    
+    cursor: pointer;
+}
+.closeConnectionButtonFindingPair{     
+    width: 55px;
+    height: 55px;    
     color: rgb(20,154,217);
 }
 
-.formContainer{
+.findingPairContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;   
+    padding-top: 20px;
+    align-items: center;
+}
+
+.formContainerFindingPair{ 
     display: flex;
     position: relative;
     justify-content: center;    
     border-radius: 7px;    
     width: fit-content;
     height: fit-content;
-    margin: 0 auto;
-    top: 18%;
+    margin: 15px auto 20px auto;
 }
 
 .formFindingPair{
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100vw;
+    max-width: 360px;
     height: fit-content;
     margin: auto;
     padding: 20px;    
 }
 
 
-.nickNameInput{
-    width: 320px;
+.nickNameInputFindingPair{
+    width: 100%;    
     height: 45px;
     margin-bottom: 20px;
     font-family: Montserrat;
@@ -41,17 +56,17 @@
     
 }
 
-.nickNameInput::placeholder{
+.nickNameInputFindingPair::placeholder{
     text-align: center;
 }
 
-.nickNameInput:focus-visible{   
+.nickNameInputFindingPair:focus-visible{   
     outline: none;
     text-align: center;
 }
 
-.startSessionButton{
-    width: 320px;
+.startSessionButtonFindingPair{
+    width: 100%;   
     height: 60px;
     margin-bottom: 8px;
     font-family: Montserrat;
@@ -83,6 +98,32 @@
     display: inline;
     width: 20px;
     height: 20px;
+}
+
+.tutorialMessageContainerFindingPair{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items:center;
+    width: fit-content;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.tutorialMessageFindingPair{
+    font-family: Montserrat;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    max-width: 550px;
+    margin: 2px 0;
+}
+
+.or{
+    font-size: 24px;
+    font-weight: 900;
 }
 
 .waitingMessage{
