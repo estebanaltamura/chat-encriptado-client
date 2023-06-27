@@ -109,7 +109,7 @@ export const Chat = ()=>{
                                         }                                        
                                     </div>
                                     
-                                    <div className="chatSendMessageBar">
+                                    <div className="chatSendMessageBar" onSubmit={sendMessageHandler}>
                                         <form className="formChatSendMessageBar">
                                             <input className="inputChatSendMessageBar" placeholder="Escriba un mensaje aquí" ref={inputRef}></input>
                                             <div className="submitChatSendMessageBarContainer" onClick={sendMessageHandler}>
