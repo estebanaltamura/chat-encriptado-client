@@ -30,8 +30,18 @@ useEffect(()=>{
 
 
 //INACTIVITY TIME HANDLER
-const inactivityAcceptHandler =()=>{        
-    setConnectionStatus("userRegistered")
+const inactivityAcceptHandler =()=>{ 
+    const path = window.location.href
+    const pathInParts = path.split("/")
+    const lastPartPath = pathInParts[ pathInParts.length - 1 ]
+    
+    if(lastPartPath === "findingPair"){
+        setConnectionStatus("userRegistered")
+    } 
+    else if(lastPartPath === "chatRoom"){
+        setConnectionStatus("chating")
+    }
+    
 }
 
 const inactivityRejectHandler = ()=>{
@@ -45,8 +55,8 @@ const requestReceivedAcceptByUserHandler =()=>{
 }
 
 const requestReceivedRejectByUserHandler = ()=>{          
-    const confirmedRequest = {"rejectedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
-    sendWebSocketMessage(confirmedRequest)
+    const rejectedRequest = {"rejectedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
+    sendWebSocketMessage(rejectedRequest)
     setConnectionStatus("userRegistered")
 }
 
