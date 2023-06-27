@@ -1,11 +1,11 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { chatHistoryContext } from "../../contexts/ChatHistoryProvider";
 import { PopUp } from "../popUp/PopUp";
 import { Message } from "../message/Message";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 import { IoMdSend } from "react-icons/io";
 import { BsFillCircleFill } from "react-icons/bs";
 import { usePopUpHandler } from '../../hooks/usePopUpHandler';
@@ -19,6 +19,21 @@ export const Chat = ()=>{
     const inputRef = useRef()
     const history = useNavigate()
 
+    const [screenWidth, setScreenWidth ] = useState()
+
+    useEffect(()=>{
+        setScreenWidth(window.innerWidth)
+
+        const innerWidthChangeHandler = ()=>{
+            setScreenWidth(window.innerWidth)
+        }
+        
+        window.addEventListener("resize",innerWidthChangeHandler)
+
+        return()=> window.removeEventListener("resize",innerWidthChangeHandler)
+        
+    },[])
+
     const { inactivityAcceptHandler,
             inactivityRejectHandler,            
             acceptOtherUserHasClosedHandler,
@@ -28,8 +43,8 @@ export const Chat = ()=>{
         } = usePopUpHandler()
 
     const closeConnectionHandler = ()=>{   
-        setConnectionStatus("userClosed")      
-        requestCloseConnection()        
+             
+               
         closeConnection()
     }
 
@@ -99,8 +114,8 @@ export const Chat = ()=>{
                             <div className="chatContainer">
                                 
                                     <div className="chatHeader">
-                                        <p className="nickNameInHeaderChat">{requesterData.nickName}</p>
-                                        <AiFillCloseCircle className="closeButtonInHeaderChat" onClick={closeConnectionHandler}/>
+                                        <p className="nickNameInHeaderChat">{requesterData.nickName}</p>                                            
+                                        <AiOutlineCloseCircle className={screenWidth < 1375 ? "closeButtonInHeaderChatLessThan1375" : "closeButtonInHeaderChatMoreThan1375"} onClick={closeConnectionHandler}/>
                                     </div>
 
                                     <div className="chatMainArea">

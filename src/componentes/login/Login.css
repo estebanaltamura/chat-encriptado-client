@@ -1,3 +1,18 @@
+.loginContainer{
+    width: 100%;
+    height: 100%;   
+    padding-top: 30px;
+}
+
+.logoContainer{
+    display: flex;
+    justify-content: center;   
+}
+
+.logoImage{
+    width:160px;    
+}
+
 .formContainerLogin{
     display: flex;
     position: relative;
@@ -5,25 +20,25 @@
     border-radius: 7px;    
     width: fit-content;
     height: fit-content;
-    margin: 0 auto;
-    top: 30%;
+    margin: 25px auto 20px auto;
+    
 }
 
 
 .formLogin{
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100vw;
+    max-width: 360px;    
     height: fit-content;
     margin: auto;
     padding: 20px;    
 }
 
 
-.nickNameInput{
-    width: 320px;
+.nickNameInputLogin{
+    width: 100%;        
     height: 45px;
-    margin-bottom: 20px;
     font-family: Montserrat;
     font-size: 18px;
     border-radius: 10px;
@@ -31,37 +46,57 @@
     padding: 0 15px;
     cursor: text;
     text-align: center;
+    margin-bottom: 15px;
     
 }
 
-.nickNameInput::placeholder{
+.nickNameInputLogin::placeholder{
     text-align: center;
 }
 
-.nickNameInput:focus-visible{   
+.nickNameInputLogin:focus-visible{   
     outline: none;
     text-align: center;
 }
 
 
 
-.startSessionButton{
-    width: 320px;
+.startSessionButtonLogin{
+    width: 100%;       
     height: 60px;
     font-family: Montserrat;
-    font-size: 20px;
-    background: rgb(131,58,180);
-    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(190,29,253,1) 0%, rgba(252,176,69,1) 100%);
+    font-size: 20px;    
+    background: rgb(20,154,217);
+    background: linear-gradient(90deg, rgba(20,154,217,1) 40%, rgba(149,20,217,1) 100%);
     border: none;
     border-radius: 10px;
-    color: #56FF30;
+    color: #E5FF03;
     font-weight: 500;
     cursor: pointer;
+}
+
+.tutorialMessageContainerLogin{
+    display: flex;
+    justify-content: center;    
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.tutorialMessageLogin{
+    font-family: Montserrat;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    max-width: 450px;
 }
 
 .spinner{
     margin: auto;
 }
+
+
 
 
 

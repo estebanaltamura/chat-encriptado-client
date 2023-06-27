@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
-import { AiFillCloseSquare, AiOutlineCopy } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineCopy } from "react-icons/ai";
 import { usePopUpHandler } from '../../hooks/usePopUpHandler';
 import { PopUp } from '../popUp/PopUp';
 
@@ -183,7 +183,7 @@ export const FindingPairs = ()=>{
                         <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
                                 :
                         <>                    
-                            <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
+                            <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
                             <div className="formContainer">                    
                                 <form className="formFindingPair">
                                     <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>

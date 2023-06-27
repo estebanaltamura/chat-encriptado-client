@@ -1,10 +1,9 @@
-.closeConnectionButton{
+.closeConnectionButtonFindingPair{
     margin-top: 40px;
     margin-left: calc(50% - 27px);
     width: 55px;
     height: 55px;
-    color: #e75874 ;
-
+    color: rgb(20,154,217);
 }
 
 .formContainer{
@@ -57,11 +56,11 @@
     margin-bottom: 8px;
     font-family: Montserrat;
     font-size: 20px;
-    background: rgb(131,58,180);
-    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(190,29,253,1) 0%, rgba(252,176,69,1) 100%);
+    background: rgb(20,154,217);
+    background: linear-gradient(90deg, rgba(20,154,217,1) 40%, rgba(149,20,217,1) 100%);
     border: none;
     border-radius: 10px;
-    color: #56FF30;
+    color: #E5FF03;
     font-weight: 500;
     cursor: pointer;
 }
@@ -77,6 +76,7 @@
     font-family: Montserrat;
     font-size: 15px;
     font-weight: bold;
+    color: black;
 }
 
 .copyIcon{
