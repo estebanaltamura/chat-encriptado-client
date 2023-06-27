@@ -185,8 +185,8 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={requestSentAcceptRejectOrExceptionHandler}
-                            handledReject={requestSentRejectRejectOrExceptionHandler}
+                            handledAccept={inactivityAcceptHandler}
+                            handledReject={inactivityAcceptHandler}
                             key={connectionstatus}
                     />   
                     :                        
