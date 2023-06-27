@@ -48,12 +48,12 @@ export const FindingPairs = ()=>{
         
         if(connectionstatus==="chating"){
             history("/chatRoom") 
-            setIsLoading(false)
+            //setIsLoading(false)
         }
 
-        if(connectionstatus==="requestError"){
-            setIsLoading(false)
-        }        
+        // if(connectionstatus==="requestError"){
+        //     setIsLoading(false)
+        // }        
     }     
     ,[connectionstatus])
 
@@ -94,8 +94,7 @@ export const FindingPairs = ()=>{
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
-        setConnectionStatus("findingPair")
-        setIsLoading(true)        
+        setConnectionStatus("requestSent")                
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
 
@@ -179,9 +178,18 @@ export const FindingPairs = ()=>{
                             key={connectionstatus}
                     />   
                     :    
-                    isLoading   ?
-                        <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
-                                :
+                connectionstatus === "requestSent"
+                    ?   
+                    <PopUp  title="Request sent"  
+                            message="Waiting for response of user"                      
+                            type="oneButton" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handledAccept={requestSentAcceptRejectOrExceptionHandler}
+                            handledReject={requestSentRejectRejectOrExceptionHandler}
+                            key={connectionstatus}
+                    />   
+                    :                        
                         <>  <div className="closeButtonContainerFindingPair">
                                 <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
                             </div>                  
