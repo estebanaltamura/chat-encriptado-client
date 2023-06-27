@@ -183,7 +183,7 @@ export const FindingPairs = ()=>{
                     <PopUp  title="Request sent"  
                             message="Waiting for response of user"                      
                             type="oneButton" 
-                            seconds={10}                            
+                            seconds={100}                            
                             button2Text="OK"
                             handledAccept={inactivityAcceptHandler}
                             handledReject={inactivityAcceptHandler}
