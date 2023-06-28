@@ -59,12 +59,12 @@ export const Chat = ()=>{
 
     const sendMessageHandler = (e)=>{
         e.preventDefault()        
-        let message = inputRef.current.value.trim()
-
-        console.log(message)
+        let message = inputRef.current.value.trim()       
 
         if(message.length > 0){
             message = message[0].toUpperCase() + message.slice(1)
+
+            console.log(message)
             const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}        
             setChatHistory([...chatHistory, {type: "messageSent", "message": inputRef.current.value}])        
             sendWebSocketMessage(messageToSend)
