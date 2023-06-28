@@ -122,10 +122,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
     const sendWebSocketMessage = (message) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-            const messageHandled = message.trim()
-            messageHandled[0] = messageHandled[0].upperCase()
-            console.log("Envio mensaje", messageHandled)
-            socketRef.current.send(JSON.stringify(messageHandled));
+            console.log("Envio mensaje", message)
+            socketRef.current.send(JSON.stringify(message));
         }
     };
     
