@@ -7,8 +7,9 @@ export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
     const [ connectionstatus, setConnectionStatus ] = useState("offline")
-    const [ solicitorUserData, setSolicitorUserData ] = useState({"publicKey": null, "nickName": null})
-    const [ requiredUserData, setRequiredUserData ] = useState({"publicKey": null})
+    
+    const [ solicitorUserData, setSolicitorUserData ] = useState(null)
+    const [ requiredUserData, setRequiredUserData ] = useState(null)
 
     const [ requestError, setRequestError ] = useState(null)      
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 

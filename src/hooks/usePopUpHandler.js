@@ -11,10 +11,10 @@ export const usePopUpHandler = () =>{
 // stados para server error y cierres "serverError" "theUserHasClosed" "theOtherUserHasClosed" un boton que fuerza el cierre
 
 
-const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, requesterData } = useContext(webSocketConnectionContext)
+const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData } = useContext(webSocketConnectionContext)
 const { publicKeys } = useContext(publicKeysContext)   
 const publicKeysRef = useRef()
-const requesterDataRef = useRef()
+const solicitorUserDataDataRef = useRef()
 
 
 useEffect(()=>{
@@ -23,8 +23,8 @@ useEffect(()=>{
 
 
 useEffect(()=>{
-    requesterDataRef.current = requesterData
-},[requesterData])
+    solicitorUserDataDataRef.current = solicitorUserData
+},[solicitorUserData])
 
 
 
@@ -50,12 +50,12 @@ const inactivityRejectHandler = ()=>{
 
 //REQUEST RECEIVED USER RESPONSE HANDLER
 const requestReceivedAcceptByUserHandler =()=>{        
-    const confirmedRequest = {"confirmedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
+    const confirmedRequest = {"confirmedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(confirmedRequest)
 }
 
 const requestReceivedRejectByUserHandler = ()=>{          
-    const rejectedRequest = {"rejectedRequest": {"user1": requesterDataRef.current.publicKey, "user2": publicKeys.from}}   
+    const rejectedRequest = {"rejectedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(rejectedRequest)
     setConnectionStatus("userRegistered")
 }
