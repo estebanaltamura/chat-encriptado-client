@@ -58,15 +58,16 @@ export const Chat = ()=>{
     ,[connectionstatus])
 
     const sendMessageHandler = (e)=>{
-        e.preventDefault()
-        console.log(publicKeys.from, publicKeys.to, inputRef.current.value)
-        let message = inputRef.current.value
-        message.trim()
-        message = message[0].toUpperCase() + message.slice(1)
-        const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}        
-        setChatHistory([...chatHistory, {type: "messageSent", "message": inputRef.current.value}])
-        inputRef.current.value = ""
-        sendWebSocketMessage(messageToSend)
+        e.preventDefault()        
+        let message = inputRef.current.value.trim()
+
+        if(message > 0){
+            message = message[0].toUpperCase() + message.slice(1)
+            const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}        
+            setChatHistory([...chatHistory, {type: "messageSent", "message": inputRef.current.value}])        
+            sendWebSocketMessage(messageToSend)
+            inputRef.current.value = ""
+        }        
     }
 
 
