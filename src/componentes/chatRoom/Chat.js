@@ -37,7 +37,7 @@ export const Chat = ()=>{
     const { acceptDisconnectionByInactivityHandler,
             timeOutDisconnectionByInactivityHandler,      
             acceptOtherUserHasClosedHandler,
-            rejectOtherUserHasClosedHandler,
+            timeOutOtherUserHasClosedHandler,
             acceptServerErrorClosingHandler,
             timeOutServerErrorClosingHandler,
         } = usePopUpHandler()
@@ -108,7 +108,7 @@ export const Chat = ()=>{
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptOtherUserHasClosedHandler}
-                            handlerTimeOut={rejectOtherUserHasClosedHandler}
+                            handlerTimeOut={timeOutOtherUserHasClosedHandler}
                             key={connectionstatus}
                     />   
                     :       

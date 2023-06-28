@@ -82,7 +82,7 @@ const acceptOtherUserHasClosedHandler =()=>{
     closeConnection() // popUp explicando
 }
 
-const rejectOtherUserHasClosedHandler =()=>{            
+const timeOutOtherUserHasClosedHandler =()=>{            
     closeConnection() // popUp explicando
 }
 
@@ -104,17 +104,21 @@ const timeOutNickNameErrorHandler =()=>{
     setConnectionStatus("offline")
 }
 
+//USER INSERTED AN EMPTY ENTRY IN TRY PAIRING PROCESS
+const acceptUserInsertedAnEmptyEntry=()=>{
+    setConnectionStatus("userRegistered")
+}
 
-
-
-
-
+const timeOutUserInsertedAnEmptyEntry=()=>{
+    setConnectionStatus("userRegistered")
+}
+            
 
 
 
     return({              
         acceptOtherUserHasClosedHandler,
-        rejectOtherUserHasClosedHandler,
+        timeOutOtherUserHasClosedHandler,
         cancelRequestSentHandler,
         timeOutRequestSentHandler,
         acceptRequestErrorHandler,
@@ -127,7 +131,9 @@ const timeOutNickNameErrorHandler =()=>{
         acceptServerErrorClosingHandler,
         timeOutServerErrorClosingHandler,
         AcceptNickNameErrorHandler,
-        timeOutNickNameErrorHandler
+        timeOutNickNameErrorHandler,
+        acceptUserInsertedAnEmptyEntry,
+        timeOutUserInsertedAnEmptyEntry
     })
 }
 

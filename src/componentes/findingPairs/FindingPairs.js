@@ -34,7 +34,9 @@ export const FindingPairs = ()=>{
             cancelRequestSentHandler,
             timeOutRequestSentHandler,
             acceptServerErrorClosingHandler,
-            timeOutServerErrorClosingHandler
+            timeOutServerErrorClosingHandler,
+            acceptUserInsertedAnEmptyEntry,
+            timeOutUserInsertedAnEmptyEntry
             } = usePopUpHandler()
 
     const history = useNavigate()
@@ -197,7 +199,19 @@ export const FindingPairs = ()=>{
                             handlerTimeOut={timeOutRequestSentHandler}
                             key={connectionstatus}
                     />   
-                    :                        
+                    :     
+                connectionstatus === "userInsertedAnEmptyEntry"
+                    ?   
+                    <PopUp  title="Inserted a empty entry"  
+                            message="Please insert a valid public key"                      
+                            type="oneButton" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handlerAccept={acceptUserInsertedAnEmptyEntry}
+                            handlerTimeOut={timeOutUserInsertedAnEmptyEntry}
+                            key={connectionstatus}
+                    />
+                    :                     
                         <>  <div className="closeButtonContainerFindingPair">
                                 <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
                             </div>                  
