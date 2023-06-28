@@ -60,9 +60,9 @@ export const Chat = ()=>{
     const sendMessageHandler = (e)=>{
         e.preventDefault()
         console.log(publicKeys.from, publicKeys.to, inputRef.current.value)
-        const message = inputRef.current.value
+        let message = inputRef.current.value
         message.trim()
-        message[0] = message[0].toUpperCase()
+        message = message[0].toUpperCase() + message.slice(1)
         const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}        
         setChatHistory([...chatHistory, {type: "messageSent", "message": inputRef.current.value}])
         inputRef.current.value = ""
