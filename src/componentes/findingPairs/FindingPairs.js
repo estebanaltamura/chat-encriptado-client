@@ -60,7 +60,7 @@ export const FindingPairs = ()=>{
 
 
     useEffect(()=>{
-        requesterDataRef.current = requesterData
+        requesterDataRef.current = solicitorUserData
         
         if (solicitorUserData.nickName !== null){
             if(solicitorUserData.nickName.length < 18){
