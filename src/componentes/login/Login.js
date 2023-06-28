@@ -136,7 +136,7 @@ export const Login = ()=>{
                         </div>   
                                     
                         <div className="formContainerLogin">
-                            <form className="formLogin">                        
+                            <form className="formLogin" onSubmit={iniciarSesion}>                        
                                 <input className="nickNameInputLogin" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                                 <button className="startSessionButtonLogin" onClick={iniciarSesion}>Start session</button>
                             </form>                                        

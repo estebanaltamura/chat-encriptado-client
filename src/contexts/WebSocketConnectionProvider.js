@@ -7,7 +7,9 @@ export const webSocketConnectionContext = createContext(null)
 
 export const WebSocketConnectionContextProvider = ({children})=>{
     const [ connectionstatus, setConnectionStatus ] = useState("offline")
-    const [ requesterData, setRequesterData ] = useState({"publicKey": null, "nickName": null})
+    const [ solicitorUserData, setSolicitorUserData ] = useState({"publicKey": null, "nickName": null})
+    const [ requiredUserData, setRequiredUserData ] = useState({"publicKey": null, "nickName": null})
+
     const [ requestError, setRequestError ] = useState(null)      
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
@@ -43,10 +45,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         //Solicitud de chat de privado
         if(pardedMessage.hasOwnProperty("requestConnection")){           
-            const publicKeyRequester = pardedMessage.requestConnection.userName
-            const nickNameRequester = pardedMessage.requestConnection.nickName
-
-            setRequesterData({"publicKey": publicKeyRequester, "nickName": nickNameRequester})
+            const publicKeySolicitorUserData = pardedMessage.requestConnection.userName
+            const nickNameSolicitorUserData = pardedMessage.requestConnection.nickName            
+            setSolicitorUserData({"publicKey": publicKeySolicitorUserData, "nickName": nickNameSolicitorUserData})
             setConnectionStatus("requestReceived")             
         } 
 
@@ -137,6 +138,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const tryPairing = (publicKeyUser1, publicKeyUser2) => {        
         if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {    
             socketRef.current.send(JSON.stringify({"tryPairing":{"publicKeyUser1": publicKeyUser1, "publicKeyUser2": publicKeyUser2}}));
+            setRequiredUserData({"publicKey": publicKeyUser2})
         }
     };
 
@@ -158,7 +160,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         createUser,
         closeConnection,        
         tryPairing,
-        requesterData
+        solicitorUserData,
+        requiredUserData
     }
     
     return(

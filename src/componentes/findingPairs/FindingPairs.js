@@ -11,7 +11,7 @@ import { PopUp } from '../popUp/PopUp';
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, requesterData, sendWebSocketMessage, requestError } = useContext(webSocketConnectionContext)
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, solicitorUserData, sendWebSocketMessage, requestError } = useContext(webSocketConnectionContext)
     const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
     const { publicKeys } = useContext(publicKeysContext)     
     const input = useRef() 
@@ -62,18 +62,18 @@ export const FindingPairs = ()=>{
     useEffect(()=>{
         requesterDataRef.current = requesterData
         
-        if (requesterData.nickName !== null){
-            if(requesterData.nickName.length < 18){
-                setRequesterNickName(requesterData.nickName)
+        if (solicitorUserData.nickName !== null){
+            if(solicitorUserData.nickName.length < 18){
+                setRequesterNickName(solicitorUserData.nickName)
             } 
             else{
-                const nickNameHandled = requesterData.nickName.slice(0,18) + "..."
+                const nickNameHandled = solicitorUserData.nickName.slice(0,18) + "..."
                 setRequesterNickName(nickNameHandled)
             }
         }
         
     }     
-    ,[requesterData])
+    ,[solicitorUserData])
 
     useEffect(()=>{
         requestErrorRef.current = requestError
@@ -207,7 +207,7 @@ export const FindingPairs = ()=>{
                                 </div>   
                                 
                                 <div className="formContainerFindingPair">                    
-                                    <form className="formFindingPair">
+                                    <form className="formFindingPair" onSubmit={tryPairingHandler}>
                                         <input className="nickNameInputFindingPair" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                                         <button className="startSessionButtonFindingPair" onClick={tryPairingHandler}>Start chat</button>
                                         <div className="copyPublicKeyContainer" onClick={copyToClipboard}><AiOutlineCopy className="copyIcon" /><p className="copyPublicKeyText">{copyPublicKeyText}</p></div>

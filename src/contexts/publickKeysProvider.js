@@ -4,8 +4,7 @@ export const publicKeysContext = createContext({})
 
 export const PublicKeysProvider = ({children})=>{
 
-    const [ publicKeys, setPublicKeys ] = useState({"from":null, "to": null, "toNickName": null})
-    const [ requestSent, setRequestSent ] = useState(null) // publickKey del otro
+    const [ publicKeys, setPublicKeys ] = useState({"from":null, "to": null, "toNickName": null})    
 
 
     return(
