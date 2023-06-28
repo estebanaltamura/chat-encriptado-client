@@ -114,7 +114,7 @@ export const Chat = ()=>{
                             <div className="chatContainer">
                                 
                                     <div className="chatHeader">
-                                        <p className="nickNameInHeaderChat">{requesterData.nickName}</p>                                            
+                                        <p className="nickNameInHeaderChat">{publicKeys.toNickName}</p>                                            
                                         <AiOutlineCloseCircle className={screenWidth < 1375 ? "closeButtonInHeaderChatLessThan1375" : "closeButtonInHeaderChatMoreThan1375"} onClick={closeConnectionHandler}/>
                                     </div>
 

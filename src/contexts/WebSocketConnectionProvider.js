@@ -53,7 +53,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
-            setPublicKeys({"from": publicKeyRef.current.from, "to": to})
+            const toNickName = null
+            setPublicKeys({"from": publicKeyRef.current.from, "to": to, "toNickName": toNickName})
             setConnectionStatus("chating")
         } 
 
