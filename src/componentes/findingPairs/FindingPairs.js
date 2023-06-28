@@ -15,7 +15,9 @@ export const FindingPairs = ()=>{
     const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
     const { publicKeys } = useContext(publicKeysContext)     
     const input = useRef() 
-    const requesterDataRef = useRef()   
+    
+    
+    
     const requestErrorRef = useRef()
     const publicKeysRef = useRef()
     const [isLoading, setIsLoading] = useState(false)
@@ -60,18 +62,19 @@ export const FindingPairs = ()=>{
 
 
     useEffect(()=>{
-        requesterDataRef.current = solicitorUserData
         
-        if (solicitorUserData.nickName !== null){
-            if(solicitorUserData.nickName.length < 18){
-                setRequesterNickName(solicitorUserData.nickName)
-            } 
-            else{
-                const nickNameHandled = solicitorUserData.nickName.slice(0,18) + "..."
-                setRequesterNickName(nickNameHandled)
-            }
-        }
         
+        if(solicitorUserData !== null){
+            if(solicitorUserData.nickName !== null){
+                if(solicitorUserData.nickName.length < 18){
+                    setRequesterNickName(solicitorUserData.nickName)
+                } 
+                else{
+                    const nickNameHandled = solicitorUserData.nickName.slice(0,18) + "..."
+                    setRequesterNickName(nickNameHandled)
+                }               
+            }            
+        }        
     }     
     ,[solicitorUserData])
 
