@@ -23,7 +23,6 @@ export const Chat = ()=>{
 
     useEffect(()=>{
         setScreenWidth(window.innerWidth)
-
         const innerWidthChangeHandler = ()=>{
             setScreenWidth(window.innerWidth)
         }
@@ -129,8 +128,8 @@ export const Chat = ()=>{
                                         }                                        
                                     </div>
                                     
-                                    <div className="chatSendMessageBar" onSubmit={sendMessageHandler}>
-                                        <form className="formChatSendMessageBar">
+                                    <div className="chatSendMessageBar">
+                                        <form className="formChatSendMessageBar" onSubmit={sendMessageHandler}>
                                             <input className="inputChatSendMessageBar" placeholder="Escriba un mensaje aquí" ref={inputRef}></input>
                                             <div className="submitChatSendMessageBarContainer" onClick={sendMessageHandler}>
                                                 <BsFillCircleFill className="submitCircleChatSendMessageBar" />

@@ -4,6 +4,7 @@
     height: 46px;
     margin-right: 5px;
     color: #eae6df;  
+    cursor: pointer;
 }
 
 .closeButtonInHeaderChatMoreThan1375{
@@ -11,7 +12,8 @@
     width: 46px;
     height: 46px;
     margin-right: 5px;
-    color: rgb(20,154,217);  
+    color: rgb(20,154,217);
+    cursor: pointer;   
 }
 
 .ChatRoomContainer{
