@@ -11,15 +11,9 @@ export const usePopUpHandler = () =>{
 // stados para server error y cierres "serverError" "theUserHasClosed" "theOtherUserHasClosed" un boton que fuerza el cierre
 
 
-const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData } = useContext(webSocketConnectionContext)
+const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData, setRequestError } = useContext(webSocketConnectionContext)
 const { publicKeys } = useContext(publicKeysContext)   
-const publicKeysRef = useRef()
 const solicitorUserDataDataRef = useRef()
-
-
-useEffect(()=>{
-    publicKeysRef.current = publicKeys
-},[publicKeys])
 
 
 useEffect(()=>{
@@ -28,9 +22,8 @@ useEffect(()=>{
 
 
 
-
 //INACTIVITY TIME HANDLER
-const inactivityAcceptHandler =()=>{ 
+const acceptDisconnectionByInactivityHandler =()=>{ 
     const path = window.location.href
     const pathInParts = path.split("/")
     const lastPartPath = pathInParts[ pathInParts.length - 1 ]
@@ -40,36 +33,37 @@ const inactivityAcceptHandler =()=>{
     } 
     else if(lastPartPath === "chatRoom"){
         setConnectionStatus("chating")
-    }
-    
+    }    
 }
 
-const inactivityRejectHandler = ()=>{
+const timeOutDisconnectionByInactivityHandler = ()=>{
     closeConnection() //cierre directo
 }
 
 //REQUEST RECEIVED USER RESPONSE HANDLER
-const requestReceivedAcceptByUserHandler =()=>{        
+const acceptRequestReceivedHandler =()=>{        
     const confirmedRequest = {"confirmedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(confirmedRequest)
 }
 
-const requestReceivedRejectByUserHandler = ()=>{          
+const rejectRequestReceivedHandler = ()=>{          
     const rejectedRequest = {"rejectedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(rejectedRequest)
     setConnectionStatus("userRegistered")
 }
 
-
-//REQUEST SENT REJECTED OR EXCEPTION
-const requestSentAcceptRejectOrExceptionHandler =()=>{         
+const timeOutrequestReceivedHandler = ()=>{      
     setConnectionStatus("userRegistered")
 }
 
-const requestSentRejectRejectOrExceptionHandler =()=>{                
+//REQUEST ERROR HANDLER
+const acceptRequestErrorHandler = ()=>{      
     setConnectionStatus("userRegistered")
 }
 
+const timeOutRequestErrorHandler = ()=>{      
+    setConnectionStatus("userRegistered")
+}
 
 
 //SERVER ERROR
@@ -77,7 +71,7 @@ const acceptServerErrorClosingHandler =()=>{
     closeConnection() // ver
 }
 
-const rejectedServerErrorClosingHandler =()=>{            
+const timeOutServerErrorClosingHandler =()=>{            
     closeConnection() // ver
 }
 
@@ -92,13 +86,21 @@ const rejectOtherUserHasClosedHandler =()=>{
     closeConnection() // popUp explicando
 }
 
+//REQUEST SENT
+const cancelRequestSentHandler =()=>{         
+    setConnectionStatus("userRegistered") // popUp explicando
+}
+
+const timeOutRequestSentHandler =()=>{            
+    setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"}) 
+}
 
 //NICK NAME ERROR
-const handledAcceptNickNameError =()=>{        
+const AcceptNickNameErrorHandler =()=>{        
     setConnectionStatus("offline")
 }
 
-const handledRejectNickNameError =()=>{            
+const timeOutNickNameErrorHandler =()=>{            
     setConnectionStatus("offline")
 }
 
@@ -110,20 +112,22 @@ const handledRejectNickNameError =()=>{
 
 
 
-    return({
-        inactivityAcceptHandler,
-        inactivityRejectHandler,
-        requestReceivedAcceptByUserHandler,
-        requestReceivedRejectByUserHandler,
-        requestSentAcceptRejectOrExceptionHandler,
-        requestSentRejectRejectOrExceptionHandler,
-        acceptServerErrorClosingHandler,
-        rejectedServerErrorClosingHandler,        
+    return({              
         acceptOtherUserHasClosedHandler,
         rejectOtherUserHasClosedHandler,
-        handledAcceptNickNameError,
-        handledRejectNickNameError
-
+        cancelRequestSentHandler,
+        timeOutRequestSentHandler,
+        acceptRequestErrorHandler,
+        timeOutRequestErrorHandler,
+        acceptRequestReceivedHandler,
+        rejectRequestReceivedHandler,
+        timeOutrequestReceivedHandler,
+        acceptDisconnectionByInactivityHandler,
+        timeOutDisconnectionByInactivityHandler,
+        acceptServerErrorClosingHandler,
+        timeOutServerErrorClosingHandler,
+        AcceptNickNameErrorHandler,
+        timeOutNickNameErrorHandler
     })
 }
 

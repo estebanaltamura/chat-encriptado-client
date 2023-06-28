@@ -4,6 +4,7 @@ import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { PopUp } from "../popUp/PopUp";
+import { usePopUpHandler } from "../../hooks/usePopUpHandler";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
@@ -16,6 +17,11 @@ export const Login = ()=>{
     const user = useRef()    
     const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
+
+    const { acceptServerErrorClosingHandler,
+            timeOutServerErrorClosingHandler, 
+            AcceptNickNameErrorHandler,
+            timeOutNickNameErrorHandler} = usePopUpHandler()
 
     useEffect(()=>{        
         if(connectionstatus==="online"){                
@@ -68,23 +74,7 @@ export const Login = ()=>{
                             "lastMessageTime"   : null
                         }        
     }
-    
-
-    const handledAcceptClosing =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectClosing =()=>{            
-        setConnectionStatus("offline")
-    }
-
-    const handledAcceptNickNameError =()=>{        
-        setConnectionStatus("offline")
-    }
-
-    const handledRejectNickNameError =()=>{            
-        setConnectionStatus("offline")
-    }
+        
 
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        
@@ -105,8 +95,8 @@ export const Login = ()=>{
                         type="oneButton" 
                         seconds={10}                            
                         button2Text="OK"
-                        handledAccept={handledAcceptClosing}
-                        handledReject={handledRejectClosing}
+                        handlerAccept={acceptServerErrorClosingHandler}
+                        handlerReject={timeOutServerErrorClosingHandler}
                         key={connectionstatus}
                 />   
                 :           
@@ -117,8 +107,8 @@ export const Login = ()=>{
                         type="oneButton" 
                         seconds={5}                            
                         button2Text="OK"
-                        handledAccept={handledAcceptNickNameError}
-                        handledReject={handledRejectNickNameError}
+                        handlerAccept={AcceptNickNameErrorHandler}
+                        handlerTimeOut={timeOutNickNameErrorHandler}
                         key={connectionstatus}
                 />   
                 :             

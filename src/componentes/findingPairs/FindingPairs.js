@@ -24,14 +24,17 @@ export const FindingPairs = ()=>{
     const [requesterNickName, setRequesterNickName] = useState() 
     const [copyPublicKeyText, setCopyPublicKeyText] = useState("Copy my public key")   
 
-    const { inactivityAcceptHandler,
-            inactivityRejectHandler,
-            requestReceivedAcceptByUserHandler,
-            requestReceivedRejectByUserHandler,
-            requestSentAcceptRejectOrExceptionHandler,
-            requestSentRejectRejectOrExceptionHandler,
+    const { acceptDisconnectionByInactivityHandler,
+            timeOutDisconnectionByInactivityHandler,
+            acceptRequestReceivedHandler,
+            rejectRequestReceivedHandler,
+            timeOutrequestReceivedHandler,
+            acceptRequestErrorHandler,
+            timeOutRequestErrorHandler,
+            cancelRequestSentHandler,
+            timeOutRequestSentHandler,
             acceptServerErrorClosingHandler,
-            rejectedServerErrorClosingHandler,
+            timeOutServerErrorClosingHandler
             } = usePopUpHandler()
 
     const history = useNavigate()
@@ -137,8 +140,8 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={1000}
                             button2Text="I'm here"
-                            handledAccept={inactivityAcceptHandler}
-                            handledReject={inactivityRejectHandler}
+                            handlerAccept={acceptDisconnectionByInactivityHandler}
+                            handlerTimeOut={timeOutDisconnectionByInactivityHandler}
                             key={connectionstatus}
                     />                                             
                     :
@@ -151,8 +154,10 @@ export const FindingPairs = ()=>{
                             seconds={20}
                             button1Text="Reject"
                             button2Text="Start chat"
-                            handledAccept={requestReceivedAcceptByUserHandler}
-                            handledReject={requestReceivedRejectByUserHandler}
+                            handlerReject={rejectRequestReceivedHandler}
+                            handlerAccept={acceptRequestReceivedHandler}
+                            handlerTimeOut={timeOutrequestReceivedHandler}
+
                             key={connectionstatus}
                     />   
                     :
@@ -164,8 +169,8 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={requestSentAcceptRejectOrExceptionHandler}
-                            handledReject={requestSentRejectRejectOrExceptionHandler}
+                            handlerAccept={acceptRequestErrorHandler}
+                            handlerTimeOut={timeOutRequestErrorHandler}
                             key={connectionstatus}
                     />   
                     :
@@ -176,8 +181,8 @@ export const FindingPairs = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={acceptServerErrorClosingHandler}
-                            handledReject={rejectedServerErrorClosingHandler}
+                            handlerAccept={acceptServerErrorClosingHandler}
+                            handlerTimeOut={timeOutServerErrorClosingHandler}
                             key={connectionstatus}
                     />   
                     :    
@@ -186,10 +191,10 @@ export const FindingPairs = ()=>{
                     <PopUp  title="Request sent"  
                             message="Waiting for response of user"                      
                             type="oneButton" 
-                            seconds={20}                            
+                            seconds={100}                            
                             button2Text="CANCEL"
-                            handledAccept={inactivityAcceptHandler}
-                            handledReject={inactivityAcceptHandler}
+                            handlerAccept={cancelRequestSentHandler}
+                            handlerTimeOut={timeOutRequestSentHandler}
                             key={connectionstatus}
                     />   
                     :                        

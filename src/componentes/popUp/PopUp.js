@@ -3,7 +3,7 @@ import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionPr
 
 import "./PopUp.css"
 
-export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, seconds, handledAccept, handledReject})=>{
+export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, seconds, handlerAccept, handlerReject, handlerTimeOut})=>{
           
     const { connectionstatus } = useContext(webSocketConnectionContext)
     //const [ isMounted, setIsMounted ] = useState()
@@ -15,7 +15,7 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
       const secondsToMiliSeconds = seconds * 1000;      
       
       const timeOut = setTimeout(() => {        
-          handledReject();        
+        handlerTimeOut();        
       }, secondsToMiliSeconds);
   
       return () => {        
@@ -34,11 +34,11 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
                     <p className="CTA">{CTAtext}</p>                  
                         {
                             type === "oneButton" ?
-                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept} autoFocus>{button2Text}</button>
+                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>
                                                  :
                                 <>
-                                    <button className="button1PopUp buttonPopUp" onClick={handledReject}>{button1Text}</button>     
-                                    <button className="button2PopUp buttonPopUp" onClick={handledAccept} autoFocus>{button2Text}</button>                
+                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject}>{button1Text}</button>     
+                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>                
                                 </>
 
                         }                

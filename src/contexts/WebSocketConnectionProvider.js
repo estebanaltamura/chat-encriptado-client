@@ -71,9 +71,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             }
             else if(pardedMessage.error === "requesterDisconnected"){
                 setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user", "CTA": "Click OK to continue"})
-            }
-            
-            
+            }                    
             
             else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
         } 
@@ -156,6 +154,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         connectionstatus,           
         connectWebSocket,
         requestError,
+        setRequestError,
         setConnectionStatus,
         sendWebSocketMessage,
         createUser,

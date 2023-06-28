@@ -34,12 +34,12 @@ export const Chat = ()=>{
         
     },[])
 
-    const { inactivityAcceptHandler,
-            inactivityRejectHandler,            
+    const { acceptDisconnectionByInactivityHandler,
+            timeOutDisconnectionByInactivityHandler,      
             acceptOtherUserHasClosedHandler,
             rejectOtherUserHasClosedHandler,
             acceptServerErrorClosingHandler,
-            rejectedServerErrorClosingHandler,
+            timeOutServerErrorClosingHandler,
         } = usePopUpHandler()
 
     const closeConnectionHandler = ()=>{   
@@ -83,8 +83,8 @@ export const Chat = ()=>{
                             type="oneButton" 
                             seconds={10}
                             button2Text="I'm here"
-                            handledAccept={inactivityAcceptHandler}
-                            handledReject={inactivityRejectHandler}
+                            handlerAccept={acceptDisconnectionByInactivityHandler}
+                            handlerTimeOut={timeOutDisconnectionByInactivityHandler}
                             key={connectionstatus}
                     />                                             
                     :
@@ -95,8 +95,8 @@ export const Chat = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={acceptServerErrorClosingHandler}
-                            handledReject={rejectedServerErrorClosingHandler}
+                            handlerAccept={acceptServerErrorClosingHandler}
+                            handlerTimeOut={timeOutServerErrorClosingHandler}
                             key={connectionstatus}
                     />   
                     :             
@@ -107,8 +107,8 @@ export const Chat = ()=>{
                             type="oneButton" 
                             seconds={10}                            
                             button2Text="OK"
-                            handledAccept={acceptOtherUserHasClosedHandler}
-                            handledReject={rejectOtherUserHasClosedHandler}
+                            handlerAccept={acceptOtherUserHasClosedHandler}
+                            handlerTimeOut={rejectOtherUserHasClosedHandler}
                             key={connectionstatus}
                     />   
                     :       
