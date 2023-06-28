@@ -138,7 +138,7 @@ export const FindingPairs = ()=>{
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButton" 
-                            seconds={1000}
+                            seconds={10}
                             button2Text="I'm here"
                             handlerAccept={acceptDisconnectionByInactivityHandler}
                             handlerTimeOut={timeOutDisconnectionByInactivityHandler}
@@ -151,7 +151,7 @@ export const FindingPairs = ()=>{
                             message={`${requesterNickName} asks you to talk in a private room`}
                             CTAtext={`If you want talk with ${requesterNickName}, please press accept`}
                             type="twoButton" 
-                            seconds={20}
+                            seconds={10}
                             button1Text="Reject"
                             button2Text="Start chat"
                             handlerReject={rejectRequestReceivedHandler}
@@ -191,7 +191,7 @@ export const FindingPairs = ()=>{
                     <PopUp  title="Request sent"  
                             message="Waiting for response of user"                      
                             type="oneButton" 
-                            seconds={100}                            
+                            seconds={10}                            
                             button2Text="CANCEL"
                             handlerAccept={cancelRequestSentHandler}
                             handlerTimeOut={timeOutRequestSentHandler}
