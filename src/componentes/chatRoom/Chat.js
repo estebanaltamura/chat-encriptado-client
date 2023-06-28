@@ -61,6 +61,8 @@ export const Chat = ()=>{
         e.preventDefault()        
         let message = inputRef.current.value.trim()
 
+        console.log(message)
+
         if(message > 0){
             message = message[0].toUpperCase() + message.slice(1)
             const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}        
