@@ -184,7 +184,7 @@ export const FindingPairs = ()=>{
                             message="Waiting for response of user"                      
                             type="oneButton" 
                             seconds={10}                            
-                            button2Text="OK"
+                            button2Text="CANCEL"
                             handledAccept={inactivityAcceptHandler}
                             handledReject={inactivityAcceptHandler}
                             key={connectionstatus}
