@@ -54,16 +54,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             setSolicitorUserData({"publicKey": publicKeySolicitorUserData, "nickName": nickNameSolicitorUserData})
             setConnectionStatus("requestReceived")             
         } 
-
         
-        if(pardedMessage.hasOwnProperty("canceledRequest")){
-            setSolicitorUserData(null)  
-            setRequiredUserData(null)
-            console.log("entro en canceled")    
-            console.log(connectionStatusRef.current)       
-            connectionStatusRef.current === "requestReceived"  && setConnectionStatus("userRegistered")                       
-        } 
-
         //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             setSolicitorUserData(null)  
@@ -87,6 +78,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             }            
             else if(pardedMessage.error === "requesterIsOffline"){
                 setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
+            }  
+            else if(pardedMessage.error === "canceledRequest" && connectionStatusRef.current === "requestReceived"){
+                setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
             }             
             else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
         } 
