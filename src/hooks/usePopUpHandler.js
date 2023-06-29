@@ -87,11 +87,15 @@ const timeOutOtherUserHasClosedHandler =()=>{
 }
 
 //REQUEST SENT
-const cancelRequestSentHandler =()=>{         
+const cancelRequestSentHandler =()=>{ 
+    const cancelRequestSent = {"cancelRequestSent": {"user": publicKeys.from}}   
+    sendWebSocketMessage(cancelRequestSent)        
     setConnectionStatus("userRegistered") // popUp explicando
 }
 
-const timeOutRequestSentHandler =()=>{            
+const timeOutRequestSentHandler =()=>{          
+    const cancelRequestSent = {"cancelRequestSent": {"user": publicKeys.from}}   
+    sendWebSocketMessage(cancelRequestSent)          
     setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"}) 
 }
 
