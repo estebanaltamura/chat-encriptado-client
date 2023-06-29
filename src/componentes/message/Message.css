@@ -20,16 +20,13 @@
 
 .message{
     display: flex;    
-    border-radius: 10px;
-    border: 1px solid #cacaca;    
-    background-color: white;
-    opacity: 1;
+    border-radius: 10px;      
     width: fit-content;
     max-width: 280px;
     height: fit-content;
     font-size: 14px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: rgb(20,154,217);
+    background-color: rgb(41, 154, 206);
 }
 
 .messageLessThan440{
