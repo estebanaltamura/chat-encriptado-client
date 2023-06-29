@@ -88,7 +88,7 @@ const timeOutOtherUserHasClosedHandler =()=>{
 
 //REQUEST SENT
 const cancelRequestSentHandler =()=>{ 
-    const cancelRequestSent = {"cancelRequestSent": {"user": publicKeys.from}}   
+    const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeys.from, "user2": requiredUserData.publicKey}}   
     sendWebSocketMessage(cancelRequestSent)        
     setConnectionStatus("userRegistered") // popUp explicando
 }
