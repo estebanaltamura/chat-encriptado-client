@@ -176,7 +176,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         closeConnection,        
         tryPairing,
         solicitorUserData,
-        requiredUserData
+        requiredUserData,
+        setSolicitorUserData, 
+        setRequiredUserData
     }
     
     return(
