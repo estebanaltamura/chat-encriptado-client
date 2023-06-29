@@ -69,7 +69,7 @@ export const Login = ()=>{
                             "nickName"          : nickNameInsertedHandled,
                             "password"          : null,
                             "to"                : null,
-                            "state"             : "findingPair",
+                            "requestStatus"     : null,
                             "stateTimeStamp"    : Date.now(),
                             "lastMessageTime"   : null
                         }        
