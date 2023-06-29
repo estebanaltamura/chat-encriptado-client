@@ -109,6 +109,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const handleClose = async (e) => {         
         console.log("closed")
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
+
+        if(connectionStatusRef.current === "requestSent"){
+            const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeyRef.current.from, "user2": requiredUserData.publicKey}}   
+            sendWebSocketMessage(cancelRequestSent) 
+        }
         console.log(socketRef.current.readyState)
         window.location.href = "/login"
         
