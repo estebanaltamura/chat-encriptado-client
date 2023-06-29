@@ -153,7 +153,7 @@ export const FindingPairs = ()=>{
                             message={`${requesterNickName} asks you to talk in a private room`}
                             CTAtext={`If you want talk with ${requesterNickName}, please press accept`}
                             type="twoButton" 
-                            seconds={10}
+                            seconds={20}
                             button1Text="Reject"
                             button2Text="Start chat"
                             handlerReject={rejectRequestReceivedHandler}
@@ -193,7 +193,7 @@ export const FindingPairs = ()=>{
                     <PopUp  title="Request sent"  
                             message="Waiting for response of user"                      
                             type="oneButtonCancel" 
-                            seconds={10}                            
+                            seconds={20}                            
                             button2Text="CANCEL"
                             handlerAccept={cancelRequestSentHandler}
                             handlerTimeOut={timeOutRequestSentHandler}
