@@ -111,7 +111,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         console.log(socketRef.current.readyState)
         window.location.href = "/login"
         
-    };
+    }; 
     
     const handleError = async (error) => {   
         setConnectionStatus("serverError")                     
