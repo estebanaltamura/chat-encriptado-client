@@ -94,7 +94,7 @@ const cancelRequestSentHandler =()=>{
 }
 
 const timeOutRequestSentHandler =()=>{          
-    const cancelRequestSent = {"cancelRequestSent": {"user": publicKeys.from}}   
+    const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeys.from, "user2": requiredUserData.publicKey}}   
     sendWebSocketMessage(cancelRequestSent)          
     setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"}) 
 }
