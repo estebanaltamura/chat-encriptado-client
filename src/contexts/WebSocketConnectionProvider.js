@@ -78,11 +78,10 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             }
             else if(pardedMessage.error === "errorUserIsTheSame"){
                 setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
-            }
-            else if(pardedMessage.error === "requesterDisconnected"){
-                setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user", "CTA": "Click OK to continue"})
-            }                    
-            
+            }            
+            else if(pardedMessage.error === "requesterIsOffline"){
+                setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
+            }             
             else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
         } 
 
@@ -97,13 +96,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         if(pardedMessage.hasOwnProperty("sentMessaje")){
             const message = pardedMessage.sentMessaje.message
             console.log(message)
-            setChatHistory((chatHistory)=>[...chatHistory, {"type": "messageReceived", "message": message}])
-            
-        } 
-
-
-
-        
+            setChatHistory((chatHistory)=>[...chatHistory, {"type": "messageReceived", "message": message}])            
+        }        
     };
     
     const handleClose = async (e) => {         
