@@ -16,9 +16,12 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
     const socketRef = useRef(null);  
     const publicKeyRef = useRef()
+    const connectionStatusRef = useRef()
    
 
-    
+    useEffect(()=>{
+        connectionStatusRef.current = connectionstatus
+    },[connectionstatus])
     
     useEffect(()=>{
         publicKeyRef.current = publicKeys
@@ -54,8 +57,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         
         if(pardedMessage.hasOwnProperty("canceledRequest")){   
-            console.log("entro en canceled")        
-            connectionstatus === "requestReceived"  && setConnectionStatus("userRegistered")                       
+            console.log("entro en canceled")    
+            console.log(connectionStatusRef.current)       
+            connectionStatusRef.current === "requestReceived"  && setConnectionStatus("userRegistered")                       
         } 
 
         //Mensaje de chat confirmado

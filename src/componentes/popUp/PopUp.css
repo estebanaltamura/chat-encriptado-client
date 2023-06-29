@@ -21,13 +21,22 @@
 }
 
 
-.popUpGridOneButton{
+.popUpGridOneButtonAccept{
     display: grid;    
     height: auto;
     width: 100%;
     grid-template-columns: 100%;
     grid-template-rows: 80px 80px auto auto 60px;
     grid-template-areas: "logo" "titulo" "mensaje" "CTA" "boton2";
+}
+
+.popUpGridOneButtonCancel{
+    display: grid;    
+    height: auto;
+    width: 100%;
+    grid-template-columns: 100%;
+    grid-template-rows: 80px 80px auto auto 60px;
+    grid-template-areas: "logo" "titulo" "mensaje" "CTA" "boton1";
 }
 
 .popUpGridTwoButton{

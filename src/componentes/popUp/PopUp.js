@@ -26,8 +26,8 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
     
     return(
         <div className="popUpContainer"> 
-            <div className={type === "oneButton" ? "popUpElementOneButton popUpElement" : "popUpElementTwoButton popUpElement"}>
-                <div className={type === "oneButton" ? "popUpGridOneButton" : "popUpGridTwoButton"}>
+            <div className="popUpElement">
+                <div className={type === "oneButtonAccept" ? "popUpGridOneButtonAccept" : type === "oneButtonCancel" ? "popUpGridOneButtonCancel" : "popUpGridTwoButton"}>
                     <img src="https://i.postimg.cc/76bz30BG/logo-Miniatura.jpg" className="logoPopUp" />
                     <h2 className="tituloPopUp">{title}</h2>
                     <p className="messagePopUp">{message}</p>  
