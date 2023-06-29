@@ -52,6 +52,11 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             setConnectionStatus("requestReceived")             
         } 
 
+        
+        if(pardedMessage.hasOwnProperty("canceledRequest")){           
+            connectionstatus === "requestReceived"  && setConnectionStatus("userRegistered")                       
+        } 
+
         //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
             const to = pardedMessage.chatConfirmed.to
