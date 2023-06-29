@@ -79,7 +79,7 @@ export const Chat = ()=>{
                     <PopUp  title="The connection is shutting down" 
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}
                             button2Text="I'm here"
                             handlerAccept={acceptDisconnectionByInactivityHandler}
@@ -91,7 +91,7 @@ export const Chat = ()=>{
                     ?   
                     <PopUp  title="Closing"  
                             message="Error interacting with server"                      
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptServerErrorClosingHandler}
@@ -103,7 +103,7 @@ export const Chat = ()=>{
                     ?   
                     <PopUp  title="Closing"  
                             message="The other user has close the chat"                      
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptOtherUserHasClosedHandler}

@@ -33,8 +33,11 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
                     <p className="messagePopUp">{message}</p>  
                     <p className="CTA">{CTAtext}</p>                  
                         {
-                            type === "oneButton" ?
+                            type === "oneButtonAccept" ?
                                     <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>
+                                                 :
+                            type === "oneButtonCancel" ?
+                                     <button className="button1PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>
                                                  :
                                 <>
                                     <button className="button1PopUp buttonPopUp" onClick={handlerReject}>{button1Text}</button>     

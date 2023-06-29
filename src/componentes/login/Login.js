@@ -92,7 +92,7 @@ export const Login = ()=>{
                 ?   
                 <PopUp  title="Closing"  
                         message="Error trying to connect to the server"                      
-                        type="oneButton" 
+                        type="oneButtonAccept" 
                         seconds={10}                            
                         button2Text="OK"
                         handlerAccept={acceptServerErrorClosingHandler}
@@ -104,7 +104,7 @@ export const Login = ()=>{
                 ?   
                 <PopUp  title="Nick name error"  
                         message="Nick name should have only alphanumeric characters and minimum one character"                      
-                        type="oneButton" 
+                        type="oneButtonAccept" 
                         seconds={5}                            
                         button2Text="OK"
                         handlerAccept={AcceptNickNameErrorHandler}

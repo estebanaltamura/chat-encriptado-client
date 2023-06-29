@@ -139,7 +139,7 @@ export const FindingPairs = ()=>{
                     <PopUp  title="The connection is shutting down" 
                             message="Due to inactivity of more than 1 minute, the connection is going to be closed"
                             CTAtext="If you want to stay connected, please press the button"
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}
                             button2Text="I'm here"
                             handlerAccept={acceptDisconnectionByInactivityHandler}
@@ -168,7 +168,7 @@ export const FindingPairs = ()=>{
                     <PopUp  title={`${requestErrorRef.current.title}`}
                             message={`${requestErrorRef.current.message}`}
                             CTAtext={`${requestErrorRef.current.CTA}`}
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptRequestErrorHandler}
@@ -180,7 +180,7 @@ export const FindingPairs = ()=>{
                     ?   
                     <PopUp  title="Closing"  
                             message="Error interacting with server"                      
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptServerErrorClosingHandler}
@@ -192,7 +192,7 @@ export const FindingPairs = ()=>{
                     ?   
                     <PopUp  title="Request sent"  
                             message="Waiting for response of user"                      
-                            type="oneButton" 
+                            type="oneButtonCancel" 
                             seconds={10}                            
                             button2Text="CANCEL"
                             handlerAccept={cancelRequestSentHandler}
@@ -204,7 +204,7 @@ export const FindingPairs = ()=>{
                     ?   
                     <PopUp  title="Inserted a empty entry"  
                             message="Please insert a valid public key"                      
-                            type="oneButton" 
+                            type="oneButtonAccept" 
                             seconds={10}                            
                             button2Text="OK"
                             handlerAccept={acceptUserInsertedAnEmptyEntry}
