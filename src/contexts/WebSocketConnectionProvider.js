@@ -53,7 +53,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         } 
 
         
-        if(pardedMessage.hasOwnProperty("canceledRequest")){           
+        if(pardedMessage.hasOwnProperty("canceledRequest")){   
+            console.log("entro en canceled")        
             connectionstatus === "requestReceived"  && setConnectionStatus("userRegistered")                       
         } 
 
