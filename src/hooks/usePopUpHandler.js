@@ -48,12 +48,12 @@ const acceptRequestReceivedHandler =()=>{
     sendWebSocketMessage(confirmedRequest)
 }
 
-const rejectRequestReceivedHandler = ()=>{    
-    setSolicitorUserData(null)  
-    setRequiredUserData(null)       
+const rejectRequestReceivedHandler = ()=>{           
     const rejectedRequest = {"rejectedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(rejectedRequest)
     setConnectionStatus("userRegistered")
+    setSolicitorUserData(null)  
+    setRequiredUserData(null)    
 }
 
 const timeOutrequestReceivedHandler = ()=>{  
