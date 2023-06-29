@@ -11,7 +11,7 @@ export const usePopUpHandler = () =>{
 // stados para server error y cierres "serverError" "theUserHasClosed" "theOtherUserHasClosed" un boton que fuerza el cierre
 
 
-const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData, setRequestError, requiredUserData } = useContext(webSocketConnectionContext)
+const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData, setRequestError, requiredUserData, setSolicitorUserData, setRequiredUserData } = useContext(webSocketConnectionContext)
 const { publicKeys } = useContext(publicKeysContext)   
 const solicitorUserDataDataRef = useRef()
 
@@ -41,18 +41,24 @@ const timeOutDisconnectionByInactivityHandler = ()=>{
 }
 
 //REQUEST RECEIVED USER RESPONSE HANDLER
-const acceptRequestReceivedHandler =()=>{        
+const acceptRequestReceivedHandler =()=>{
+    setSolicitorUserData(null)  
+    setRequiredUserData(null)        
     const confirmedRequest = {"confirmedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(confirmedRequest)
 }
 
-const rejectRequestReceivedHandler = ()=>{          
+const rejectRequestReceivedHandler = ()=>{    
+    setSolicitorUserData(null)  
+    setRequiredUserData(null)       
     const rejectedRequest = {"rejectedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
     sendWebSocketMessage(rejectedRequest)
     setConnectionStatus("userRegistered")
 }
 
-const timeOutrequestReceivedHandler = ()=>{      
+const timeOutrequestReceivedHandler = ()=>{  
+    setSolicitorUserData(null)  
+    setRequiredUserData(null)     
     setConnectionStatus("userRegistered")
 }
 

@@ -56,7 +56,9 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         } 
 
         
-        if(pardedMessage.hasOwnProperty("canceledRequest")){   
+        if(pardedMessage.hasOwnProperty("canceledRequest")){
+            setSolicitorUserData(null)  
+            setRequiredUserData(null)
             console.log("entro en canceled")    
             console.log(connectionStatusRef.current)       
             connectionStatusRef.current === "requestReceived"  && setConnectionStatus("userRegistered")                       
@@ -64,6 +66,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         //Mensaje de chat confirmado
         if(pardedMessage.hasOwnProperty("chatConfirmed")){
+            setSolicitorUserData(null)  
+            setRequiredUserData(null) 
             const to = pardedMessage.chatConfirmed.to
             const toNickName = pardedMessage.chatConfirmed.toNickName
             setPublicKeys({"from": publicKeyRef.current.from, "to": to, "toNickName": toNickName})
@@ -72,6 +76,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
         //Mensaje de error
         if(pardedMessage.hasOwnProperty("error")){
+            setSolicitorUserData(null)  
+            setRequiredUserData(null)
             
             if(pardedMessage.error === "errorUserDoesntExistOrReject"){
                 setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
