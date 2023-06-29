@@ -19,6 +19,8 @@ export const Chat = ()=>{
     const inputRef = useRef()
     const history = useNavigate()
 
+    
+
     const [screenWidth, setScreenWidth ] = useState()
 
     useEffect(()=>{
@@ -56,6 +58,8 @@ export const Chat = ()=>{
     }     
     ,[connectionstatus])
 
+    
+
     const sendMessageHandler = (e)=>{
         e.preventDefault()        
         let message = inputRef.current.value.trim()       
@@ -64,7 +68,7 @@ export const Chat = ()=>{
             message = message[0].toUpperCase() + message.slice(1)          
             const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}
 
-            setChatHistory([...chatHistory, {type: "messageSent", "message": message}])        
+            setChatHistory([{type: "messageSent", "message": message}, ...chatHistory])        
             sendWebSocketMessage(messageToSend)
             inputRef.current.value = ""
         }        
@@ -99,7 +103,7 @@ export const Chat = ()=>{
                             key={connectionstatus}
                     />   
                     :             
-            connectionstatus === "otherUserHasClosed"
+            connectionstatus === "otherUserHasClosed" 
                     ?   
                     <PopUp  title="Closing"  
                             message="The other user has close the chat"                      
@@ -122,7 +126,7 @@ export const Chat = ()=>{
                                         <AiOutlineCloseCircle className={screenWidth < 1375 ? "closeButtonInHeaderChatLessThan1375" : "closeButtonInHeaderChatMoreThan1375"} onClick={closeConnectionHandler}/>
                                     </div>
 
-                                    <div className="chatMainArea">
+                                    <div className={screenWidth < 440 ? "chatMainAreaLessThan440 chatMainArea" : "chatMainAreaMoreThan440 chatMainArea"}>
                                         {
                                             chatHistory.map((element, index)=><Message key={index} type={element.type} message={element.message}/>)
                                         }                                        
@@ -153,4 +157,3 @@ export const Chat = ()=>{
     )
 }
 
-// problema consumir el requester es que solo una punta lo sabe. arreglar ese paso de informacion

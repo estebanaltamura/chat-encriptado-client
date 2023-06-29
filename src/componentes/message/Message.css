@@ -5,6 +5,7 @@
     margin-top: 7px;    
 }
 
+
 .messageReceivedContainer{       
     display: flex;  
     justify-content: left; 
@@ -17,7 +18,7 @@
     padding-right: 10px;
 }
 
-.massage{
+.message{
     display: flex;    
     border-radius: 10px;
     border: 1px solid #cacaca;    
@@ -26,6 +27,15 @@
     width: fit-content;
     max-width: 280px;
     height: fit-content;
-    padding: 6px 7px 8px 9px;    
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(20,154,217);
 }
 
+.messageLessThan440{
+    padding: 6px 7px 8px 9px; 
+}
+
+.messageMoreThan440{
+    padding: 6px 7px 8px 9px; 
+}

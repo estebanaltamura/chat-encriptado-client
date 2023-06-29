@@ -96,7 +96,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         if(pardedMessage.hasOwnProperty("sentMessaje")){
             const message = pardedMessage.sentMessaje.message
             console.log(message)
-            setChatHistory((chatHistory)=>[...chatHistory, {"type": "messageReceived", "message": message}])            
+            setChatHistory((chatHistory)=>[{"type": "messageReceived", "message": message}, ...chatHistory])            
         }        
     };
     
