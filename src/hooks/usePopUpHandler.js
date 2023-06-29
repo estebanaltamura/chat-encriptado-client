@@ -11,7 +11,7 @@ export const usePopUpHandler = () =>{
 // stados para server error y cierres "serverError" "theUserHasClosed" "theOtherUserHasClosed" un boton que fuerza el cierre
 
 
-const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData, setRequestError } = useContext(webSocketConnectionContext)
+const { connectionStatus, setConnectionStatus, sendWebSocketMessage, closeConnection, solicitorUserData, setRequestError, requiredUserData } = useContext(webSocketConnectionContext)
 const { publicKeys } = useContext(publicKeysContext)   
 const solicitorUserDataDataRef = useRef()
 
