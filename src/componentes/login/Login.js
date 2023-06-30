@@ -96,7 +96,7 @@ export const Login = ()=>{
                         seconds={10}                            
                         button2Text="OK"
                         handlerAccept={acceptServerErrorClosingHandler}
-                        handlerReject={timeOutServerErrorClosingHandler}
+                        handlerTimeOut={timeOutServerErrorClosingHandler}
                         key={connectionstatus}
                 />   
                 :           
