@@ -120,7 +120,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const connectWebSocket = () => {
         if (!socketRef.current) {
-          socketRef.current = new WebSocket('ws://localhost:8080');          
+          socketRef.current = new WebSocket('ws://localhost:4000');          
           socketRef.current.addEventListener('open', handleOpen);
           socketRef.current.addEventListener('message', handleMessage);
           socketRef.current.addEventListener('close', handleClose);
