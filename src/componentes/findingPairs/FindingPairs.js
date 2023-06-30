@@ -3,17 +3,42 @@ import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
 import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
-import { AiFillCloseSquare } from "react-icons/ai";
+import { AiOutlineCloseCircle, AiOutlineCopy } from "react-icons/ai";
+import { usePopUpHandler } from '../../hooks/usePopUpHandler';
 import { PopUp } from '../popUp/PopUp';
+
 
 import "./FindingPairs.css"
 
 export const FindingPairs = ()=>{
-    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing } = useContext(webSocketConnectionContext)
-    const { publicKeys } = useContext(publicKeysContext) 
-    const { setSecondsFromLastActivity,  secondsFromLastActivity} = useContext(lastActivityTimeContext)
-    const input = useRef()    
-    const [isLoading, setIsLoading] = useState(false)    
+    const { connectionstatus, setConnectionStatus, closeConnection, tryPairing, solicitorUserData, sendWebSocketMessage, requestError } = useContext(webSocketConnectionContext)
+    const { setSecondsFromLastActivity } = useContext(lastActivityTimeContext)
+    const { publicKeys } = useContext(publicKeysContext)     
+    const input = useRef() 
+    
+    
+    
+    const requestErrorRef = useRef()
+    const publicKeysRef = useRef()
+    const [isLoading, setIsLoading] = useState(false)
+    const [requesterNickName, setRequesterNickName] = useState() 
+    const [copyPublicKeyText, setCopyPublicKeyText] = useState("Copy my public key")   
+
+    const { acceptDisconnectionByInactivityHandler,
+            timeOutDisconnectionByInactivityHandler,
+            acceptRequestReceivedHandler,
+            rejectRequestReceivedHandler,
+            timeOutrequestReceivedHandler,
+            acceptRequestErrorHandler,
+            timeOutRequestErrorHandler,
+            cancelRequestSentHandler,
+            timeOutRequestSentHandler,
+            acceptServerErrorClosingHandler,
+            timeOutServerErrorClosingHandler,
+            acceptUserInsertedAnEmptyEntry,
+            timeOutUserInsertedAnEmptyEntry
+            } = usePopUpHandler()
+
     const history = useNavigate()
     
 
@@ -21,32 +46,80 @@ export const FindingPairs = ()=>{
         closeConnection()
     }
 
+
+    
+
    
     useEffect(()=>{
-        connectionstatus==="offline" && history("/login") 
+        if(connectionstatus==="offline") window.location.href = "/login"  
         
         if(connectionstatus==="chating"){
             history("/chatRoom") 
-            setIsLoading(false)
+            //setIsLoading(false)
         }
+
+        // if(connectionstatus==="requestError"){
+        //     setIsLoading(false)
+        // }        
     }     
     ,[connectionstatus])
+
+
+
+    useEffect(()=>{
+        
+        
+        if(solicitorUserData !== null){
+            if(solicitorUserData.nickName !== null){
+                if(solicitorUserData.nickName.length < 18){
+                    setRequesterNickName(solicitorUserData.nickName)
+                } 
+                else{
+                    const nickNameHandled = solicitorUserData.nickName.slice(0,18) + "..."
+                    setRequesterNickName(nickNameHandled)
+                }               
+            }            
+        }        
+    }     
+    ,[solicitorUserData])
+
+    useEffect(()=>{
+        requestErrorRef.current = requestError
+        if(requestErrorRef.current !== null){
+            setConnectionStatus("requestError")
+        }        
+    }     
+    ,[requestError])
+
+
+    useEffect(()=>{
+        publicKeysRef.current = publicKeys
+    }     
+    ,[publicKeys])
 
     
 
     const tryPairingHandler = (e)=>{
         e.preventDefault()
         const publicKeyUser2 = input.current.value
-        setIsLoading(true)
-        setSecondsFromLastActivity(0)
+        setConnectionStatus("requestSent")                
         tryPairing(publicKeys.from, publicKeyUser2)        
     }
 
-    //Callback I'm Here en popUp de inactividad
-    const handledAccept =()=>{
-        setSecondsFromLastActivity(0)
-        setConnectionStatus("userRegistered")
-    }
+
+
+    
+
+    const copyToClipboard = async () => {       
+        await navigator.clipboard.writeText(publicKeysRef.current.from);  
+        setCopyPublicKeyText("Copied!")
+        const timeOut = setTimeout(()=>{
+            setCopyPublicKeyText("Copy my public key")
+            clearTimeout(timeOut)
+        },1500)
+        
+    };
+
   
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{          
@@ -64,23 +137,105 @@ export const FindingPairs = ()=>{
                 connectionstatus === "disconnectionByInactivity" 
                     ?                
                     <PopUp  title="The connection is shutting down" 
-                    message="Due to inactivity of more than 1 minute, the connection is going to be closed"
-                    CTAtext="If you want to stay connected, please press the button"
-                    type="oneButton" 
-                    button2Text="I'm here"
-                    handledAccept={handledAccept}
+                            message="Due to inactivity of more than 1 minute, the connection is going to be closed"
+                            CTAtext="If you want to stay connected, please press the button"
+                            type="oneButtonAccept" 
+                            seconds={10}
+                            button2Text="I'm here"
+                            handlerAccept={acceptDisconnectionByInactivityHandler}
+                            handlerTimeOut={timeOutDisconnectionByInactivityHandler}
+                            key={connectionstatus}
                     />                                             
                     :
-                    isLoading   ?
-                        <h4 className="waitingMessage">Waiting renponse of potential pair...</h4>                 
-                                :
-                        <>                    
-                            <AiFillCloseSquare className="closeConnectionButton" onClick={closeConnectionHandler}/>
-                            <div className="formContainer">                    
-                                <form className="formFindingPair">
-                                    <input className="nickNameInput" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                                    <button className="startSessionButton" onClick={tryPairingHandler}>Start chat</button>
-                                </form>                                        
+                connectionstatus === "requestReceived" 
+                    ?   
+                    <PopUp  title="An user wants talk to you" 
+                            message={`${requesterNickName} asks you to talk in a private room`}
+                            CTAtext={`If you want talk with ${requesterNickName}, please press accept`}
+                            type="twoButton" 
+                            seconds={20}
+                            button1Text="Reject"
+                            button2Text="Start chat"
+                            handlerReject={rejectRequestReceivedHandler}
+                            handlerAccept={acceptRequestReceivedHandler}
+                            handlerTimeOut={timeOutrequestReceivedHandler}
+
+                            key={connectionstatus}
+                    />   
+                    :
+                connectionstatus === "requestError"
+                    ?   
+                    <PopUp  title={`${requestErrorRef.current.title}`}
+                            message={`${requestErrorRef.current.message}`}
+                            CTAtext={`${requestErrorRef.current.CTA}`}
+                            type="oneButtonAccept" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handlerAccept={acceptRequestErrorHandler}
+                            handlerTimeOut={timeOutRequestErrorHandler}
+                            key={connectionstatus}
+                    />   
+                    :
+                connectionstatus === "serverError" // ver
+                    ?   
+                    <PopUp  title="Closing"  
+                            message="Error interacting with server"                      
+                            type="oneButtonAccept" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handlerAccept={acceptServerErrorClosingHandler}
+                            handlerTimeOut={timeOutServerErrorClosingHandler}
+                            key={connectionstatus}
+                    />   
+                    :    
+                connectionstatus === "requestSent"
+                    ?   
+                    <PopUp  title="Request sent"  
+                            message="Waiting for response of user"                      
+                            type="oneButtonCancel" 
+                            seconds={20}                            
+                            button2Text="CANCEL"
+                            handlerAccept={cancelRequestSentHandler}
+                            handlerTimeOut={timeOutRequestSentHandler}
+                            key={connectionstatus}
+                    />   
+                    :     
+                connectionstatus === "userInsertedAnEmptyEntry"
+                    ?   
+                    <PopUp  title="Inserted a empty entry"  
+                            message="Please insert a valid public key"                      
+                            type="oneButtonAccept" 
+                            seconds={10}                            
+                            button2Text="OK"
+                            handlerAccept={acceptUserInsertedAnEmptyEntry}
+                            handlerTimeOut={timeOutUserInsertedAnEmptyEntry}
+                            key={connectionstatus}
+                    />
+                    :                     
+                        <>  <div className="closeButtonContainerFindingPair">
+                                <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler}/>
+                            </div>                  
+                            
+                            <div className="findingPairContainer">
+
+                                <div className="logoContainer">
+                                    <img className="logoImage" src="https://i.postimg.cc/bNy9QWtG/logo.jpg"/>
+                                </div>
+                                
+                                <div className="tutorialMessageContainerFindingPair">
+                                    <p className="tutorialMessageFindingPair">Share your public key by whatsapp or similar with the person you want and wait for his invitation</p>
+                                    <p className="tutorialMessageFindingPair or">or</p>
+                                    <p className="tutorialMessageFindingPair">Insert the public key which you received of the person who you want have a private talk and send his an invitation</p>
+                                </div>   
+                                
+                                <div className="formContainerFindingPair">                    
+                                    <form className="formFindingPair" onSubmit={tryPairingHandler}>
+                                        <input className="nickNameInputFindingPair" ref={input} type="text" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                                        <button className="startSessionButtonFindingPair" onClick={tryPairingHandler}>Start chat</button>
+                                        <div className="copyPublicKeyContainer" onClick={copyToClipboard}><AiOutlineCopy className="copyIcon" /><p className="copyPublicKeyText">{copyPublicKeyText}</p></div>
+                                    </form>                                        
+                                </div>
+
                             </div>
                         </>
             }
@@ -88,38 +243,4 @@ export const FindingPairs = ()=>{
     )
 }
 
-/*
-//Usuario 1 manda al servidor una direccion publica correspondiente supuestamente a usuario2. 
-    -Apenas envia el mensaje queda waiting bloqueado sin la posibilidad de manipular nada. 
-        -Si esta, manda un alert a usuario 2 
-        -Si no esta en 30 segundos alert a usuario 1 indicando que el usuario 1 no existe o no acepto la solicitud
-    
-        si acepta:
-                -1 usuario2 manda mensaje al servidor
-                -2 el servidor crea el par. 
-                -3 El servidor manda mensaje a usuario1 y a usuario2 avisando de la creacion del par
-                -4 Usuario 1 y usuario 2 son redirigidos a la ventana de chat
-        
-        si rechaza manda mensaje a usuario 1, genera un alert indicando que el usuario 1 no existe o no acepto la solicitud
 
-
-    try manda una key. 
-    usuario que envia se bloquea, 
-    si existe, manda un mensaje preguntando a esa key, si acepta se crea el par
-
-
-
-
-    cuando el par esta creado cada uno en su chat manda mensaje de from to, en el servidor se verifica si ese par existe. 
-    es el mismo par por que va a estar ordenado con sort a - b. Osea se recibe mensaje from to y su par. si el par existe y cada uno es un integrante del par se envia el mensaje al otro
-
-
-
-    nueva teoria. el server no sabe ni quien esta hablando con quien. Una vez que uno autoriza al otro queda en el front del otro. 
-    Como las claves son largas y efimeras son muy dificiles de 
-
-    chequear que el otro tenga el par completo para abrir la ventana
-
-
-
-*/

@@ -3,23 +3,28 @@ import { useNavigate } from 'react-router-dom'
 import nacl from 'tweetnacl';
 import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import { publicKeysContext } from "../../contexts/publickKeysProvider";
-import { lastActivityTimeContext } from "../../contexts/LastActivityTimeProvider";
+import { PopUp } from "../popUp/PopUp";
+import { usePopUpHandler } from "../../hooks/usePopUpHandler";
 import Spinner from 'react-bootstrap/Spinner';
 import "./Login.css"
 
 
 
 export const Login = ()=>{
-    const { connectionstatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)
+    const { connectionstatus, connectWebSocket, createUser, setConnectionStatus } = useContext(webSocketConnectionContext)
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext)    
     const input = useRef()
     const user = useRef()    
     const [isLoading, setIsLoading] = useState(false)    
     const history = useNavigate()
 
+    const { acceptServerErrorClosingHandler,
+            timeOutServerErrorClosingHandler, 
+            AcceptNickNameErrorHandler,
+            timeOutNickNameErrorHandler} = usePopUpHandler()
+
     useEffect(()=>{        
-        if(connectionstatus==="online"){      
-            setIsLoading(true)
+        if(connectionstatus==="online"){                
             createUser(user.current)          
         }
 
@@ -32,17 +37,21 @@ export const Login = ()=>{
     ,[connectionstatus])
 
     const iniciarSesion = (e)=>{
-        e.preventDefault()
-        setUserData()        
-        connectWebSocket()     
+        e.preventDefault()        
+        setUserData() 
+        if (input.current.value !== ""){
+            setIsLoading(true)   
+            connectWebSocket()   
+        }    
+          
     }  
 
 
     const setUserData = ()=>{
         //CANDIDATO A CUSTOM HOOK
         if(input.current.value === ""){
-            alert("ingresar apodo")
-            return           
+            setConnectionStatus("nickNameError")
+            return false         
         } 
 
         const nickNameInserted = input.current.value
@@ -60,12 +69,13 @@ export const Login = ()=>{
                             "nickName"          : nickNameInsertedHandled,
                             "password"          : null,
                             "to"                : null,
-                            "state"             : "findingPair",
+                            "requestStatus"     : null,
                             "stateTimeStamp"    : Date.now(),
                             "lastMessageTime"   : null
                         }        
     }
-    
+        
+
     // COMPORTAMIENTO INPUT
     const onFocusHandler = ()=>{        
         input.current.removeAttribute("placeholder")
@@ -77,16 +87,52 @@ export const Login = ()=>{
    
     return(
         <>
-            {                  
+            {          
+                connectionstatus === "serverError" // ver
+                ?   
+                <PopUp  title="Closing"  
+                        message="Error trying to connect to the server"                      
+                        type="oneButtonAccept" 
+                        seconds={10}                            
+                        button2Text="OK"
+                        handlerAccept={acceptServerErrorClosingHandler}
+                        handlerTimeOut={timeOutServerErrorClosingHandler}
+                        key={connectionstatus}
+                />   
+                :           
+                connectionstatus === "nickNameError"
+                ?   
+                <PopUp  title="Nick name error"  
+                        message="Nick name should have only alphanumeric characters and minimum one character"                      
+                        type="oneButtonAccept" 
+                        seconds={5}                            
+                        button2Text="OK"
+                        handlerAccept={AcceptNickNameErrorHandler}
+                        handlerTimeOut={timeOutNickNameErrorHandler}
+                        key={connectionstatus}
+                />   
+                :             
                 isLoading ?
                     <Spinner className="spinner" animation="border" />                 
                           :
-                    <div className="formContainerLogin">
-                        <form className="formLogin">                        
-                            <input className="nickNameInput" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
-                            <button className="startSessionButton" onClick={iniciarSesion}>Start session</button>
-                        </form>                                        
-                    </div>                
+                    <div className="loginContainer">
+                        
+                        <div className="logoContainer">
+                            <img className="logoImage" src="https://i.postimg.cc/bNy9QWtG/logo.jpg"/>
+                        </div>
+                        
+                        <div className="tutorialMessageContainerLogin">
+                            <p className="tutorialMessageLogin">Secret chat is a private chat encrypted end to end with private and public keys SHA256</p>
+                        </div>   
+                                    
+                        <div className="formContainerLogin">
+                            <form className="formLogin" onSubmit={iniciarSesion}>                        
+                                <input className="nickNameInputLogin" ref={input} type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                                <button className="startSessionButtonLogin" onClick={iniciarSesion}>Start session</button>
+                            </form>                                        
+                        </div> 
+
+                    </div>      
             }
         </>        
     )

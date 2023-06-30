@@ -1,35 +1,49 @@
-.closeConnectionButton{
-    margin-top: 40px;
-    margin-left: calc(50% - 27px);
+.closeButtonContainerFindingPair{
     width: 55px;
     height: 55px;
-    color: #e75874 ;
-
+    transform: translatex(-50%);
+    margin-top: 10px;    
+    margin-left: 50%;    
+    cursor: pointer;
+}
+.closeConnectionButtonFindingPair{     
+    width: 55px;
+    height: 55px;    
+    color: rgb(20,154,217);
 }
 
-.formContainer{
+.findingPairContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;   
+    padding-top: 20px;
+    align-items: center;
+}
+
+.formContainerFindingPair{ 
     display: flex;
     position: relative;
     justify-content: center;    
     border-radius: 7px;    
     width: fit-content;
     height: fit-content;
-    margin: 0 auto;
-    top: 18%;
+    margin: 15px auto 20px auto;
 }
 
 .formFindingPair{
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    width: 100vw;
+    max-width: 360px;
     height: fit-content;
     margin: auto;
     padding: 20px;    
 }
 
 
-.nickNameInput{
-    width: 320px;
+.nickNameInputFindingPair{
+    width: 100%;    
     height: 45px;
     margin-bottom: 20px;
     font-family: Montserrat;
@@ -42,29 +56,74 @@
     
 }
 
-.nickNameInput::placeholder{
+.nickNameInputFindingPair::placeholder{
     text-align: center;
 }
 
-.nickNameInput:focus-visible{   
+.nickNameInputFindingPair:focus-visible{   
     outline: none;
     text-align: center;
 }
 
-
-
-.startSessionButton{
-    width: 320px;
+.startSessionButtonFindingPair{
+    width: 100%;   
     height: 60px;
+    margin-bottom: 8px;
     font-family: Montserrat;
     font-size: 20px;
-    background: rgb(131,58,180);
-    background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(190,29,253,1) 0%, rgba(252,176,69,1) 100%);
+    background: rgb(20,154,217);
+    background: linear-gradient(90deg, rgba(20,154,217,1) 40%, rgba(149,20,217,1) 100%);
     border: none;
     border-radius: 10px;
-    color: #56FF30;
+    color: #E5FF03;
     font-weight: 500;
     cursor: pointer;
+}
+
+.copyPublicKeyContainer{
+    margin: auto;
+    cursor: pointer;
+}
+
+.copyPublicKeyText{
+    display: inline;
+    margin: auto;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+}
+
+.copyIcon{
+    display: inline;
+    width: 20px;
+    height: 20px;
+}
+
+.tutorialMessageContainerFindingPair{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  
+    align-items:center;
+    width: fit-content;
+    padding: 20px;
+    margin-top: 15px;
+}
+
+.tutorialMessageFindingPair{
+    font-family: Montserrat;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+    max-width: 550px;
+    margin: 2px 0;
+}
+
+.or{
+    font-size: 24px;
+    font-weight: 900;
 }
 
 .waitingMessage{

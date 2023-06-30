@@ -9,9 +9,14 @@ export const LastActivityTimeProvider = ({children})=>{
     const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0)
     
     useEffect(()=>{
-        (connectionstatus !== "offline" && secondsFromLastActivity >= 5) && setConnectionStatus("disconnectionByInactivity")
+        if(connectionstatus === "userRegistered" && secondsFromLastActivity >= 1000) setConnectionStatus("disconnectionByInactivity")     
+        if(connectionstatus === "chating" && secondsFromLastActivity >= 1000) setConnectionStatus("disconnectionByInactivity")
         
     }, [secondsFromLastActivity])
+
+    useEffect(()=>{
+        setSecondsFromLastActivity(0)        
+    }, [connectionstatus])
     
     useEffect(()=>{
         
@@ -23,8 +28,8 @@ export const LastActivityTimeProvider = ({children})=>{
             setSecondsFromLastActivity(0)
         }
 
-        const mousemoveActivityHandler = (e)=>{
-            console.log(e.offsetX)
+        const mousemoveActivityHandler = (e)=>{  
+            // no anda          
             setSecondsFromLastActivity(0)
         }
         
@@ -53,9 +58,7 @@ export const LastActivityTimeProvider = ({children})=>{
         window.removeEventListener("contextmenu", contextmenuActivityHandler)
         window.removeEventListener("mousemove", mousemoveActivityHandler)
         window.removeEventListener("scroll", scrollActivityHandler)
-        window.removeEventListener("keydown", keydownActivityHandler)
-
-        // chequear mouse move
+        window.removeEventListener("keydown", keydownActivityHandler)       
     } 
         
     },[])
