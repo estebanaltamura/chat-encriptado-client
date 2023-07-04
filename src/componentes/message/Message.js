@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react"
 import "./Message.css"
 
-export const Message = ({message, type})=>{
+export const Message = ({message, type, time})=>{
 
-    const [screenWidth, setScreenWidth ] = useState()
+    //const [screenWidth, setScreenWidth ] = useState()
 
-    useEffect(()=>{
-        setScreenWidth(window.innerWidth)
-        const innerWidthChangeHandler = ()=>{
-            setScreenWidth(window.innerWidth)
-        }
+    // useEffect(()=>{
+    //     setScreenWidth(window.innerWidth)
+    //     const innerWidthChangeHandler = ()=>{
+    //         setScreenWidth(window.innerWidth)
+    //     }
         
-        window.addEventListener("resize",innerWidthChangeHandler)
+    //     window.addEventListener("resize",innerWidthChangeHandler)
 
-        return()=> window.removeEventListener("resize",innerWidthChangeHandler)
+    //     return()=> window.removeEventListener("resize",innerWidthChangeHandler)
         
-    },[])
+    // },[])
 
     
     return(
         <div className="messageRow">
-
-        
             <div className={type === "messageReceived" ? "messageReceivedContainer" : "messageSentContainer"}>
-
-                <p className={screenWidth < 440 ? "messageLessThan440 message" : "messageMoreThan440 message"}>{message}</p>
-                
+                <div className="messageContainer">
+                    <p className="message">{message}</p>
+                    <span className="timeMessage">{time}</span>
+                </div>
             </div>
-
         </div>
     )
 }

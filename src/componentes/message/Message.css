@@ -2,37 +2,66 @@
     display: block;
     width: 100%;
     height: fit-content;
-    margin-top: 7px;    
+    margin-top: 10px;    
 }
 
-
-.messageReceivedContainer{       
-    display: flex;  
-    justify-content: left; 
-    padding-left: 10px;  
+.messageReceivedContainer{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding-left: 15px;
+    justify-content: left;
 }
 
-.messageSentContainer{       
-    display: flex;     
+.messageSentContainer{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding-right: 15px;
+    justify-content: right;
+}
+
+.messageContainer{       
+    display: flex;   
+    position: relative;  
     justify-content: right; 
-    padding-right: 10px;
+    width: fit-content;
+    height: fit-content;    
+    padding: 6px 7px 8px 9px; 
+    background-color: #7BACDD;
+    box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
+    border-radius: 10px;
 }
 
 .message{
-    display: flex;    
-    border-radius: 10px;      
-    width: fit-content;
-    max-width: 280px;
-    height: fit-content;
+    display: flex;         
     font-size: 14px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: rgb(41, 154, 206);
+    padding-bottom: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    height: auto;   
+    
+    overflow-wrap: anywhere; 
+    
+    width: fit-content;
+    max-width: 70vw;
+    max-width: min(70vw, 650px);
+     
+    
+    
+    user-select: text;
 }
 
-.messageLessThan440{
-    padding: 6px 7px 8px 9px; 
+.timeMessage{
+    position: absolute;
+    font-size: 11px;
+    bottom: 3px;
+    right: 9px;
+}
+
+/* .messageLessThan440{
+    
 }
 
 .messageMoreThan440{
-    padding: 6px 7px 8px 9px; 
-}
+    
+} */

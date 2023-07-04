@@ -65,10 +65,10 @@ export const Chat = ()=>{
         let message = inputRef.current.value.trim()       
 
         if(message.length > 0){
-            message = message[0].toUpperCase() + message.slice(1)          
+            message = message[0].toUpperCase() + message.slice(1)    
+            const now = new Date()      
             const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}
-
-            setChatHistory([{type: "messageSent", "message": message}, ...chatHistory])        
+            setChatHistory([{type: "messageSent", "message": message, "time": `${String(now.getHours())}:${String(now.getMinutes())}`}, ...chatHistory])        
             sendWebSocketMessage(messageToSend)
             inputRef.current.value = ""
         }        
@@ -114,7 +114,7 @@ export const Chat = ()=>{
                             handlerTimeOut={timeOutOtherUserHasClosedHandler}
                             key={connectionstatus}
                     />   
-                    :       
+                    :        
                     <>
                         <div className="ChatRoomContainer">
                             <div className="greenBar"></div>
@@ -123,12 +123,12 @@ export const Chat = ()=>{
                                 
                                     <div className="chatHeader">
                                         <p className="nickNameInHeaderChat">{publicKeys.toNickName}</p>                                            
-                                        <AiOutlineCloseCircle className={screenWidth < 1375 ? "closeButtonInHeaderChatLessThan1375" : "closeButtonInHeaderChatMoreThan1375"} onClick={closeConnectionHandler}/>
+                                        <AiOutlineCloseCircle className="closeButtonInHeader" onClick={closeConnectionHandler}/>
                                     </div>
 
-                                    <div className={screenWidth < 440 ? "chatMainAreaLessThan440 chatMainArea" : "chatMainAreaMoreThan440 chatMainArea"}>
+                                    <div className="chatMainArea">
                                         {
-                                            chatHistory.map((element, index)=><Message key={index} type={element.type} message={element.message}/>)
+                                            chatHistory.map((element, index)=><Message key={index} type={element.type} message={element.message} time={element.time}/>)
                                         }                                        
                                     </div>
                                     
