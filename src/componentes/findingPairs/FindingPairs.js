@@ -104,9 +104,7 @@ export const FindingPairs = ()=>{
         const publicKeyUser2 = input.current.value
         setConnectionStatus("requestSent")                
         tryPairing(publicKeys.from, publicKeyUser2)        
-    }
-
-
+    }    
 
     
 
@@ -131,6 +129,18 @@ export const FindingPairs = ()=>{
     }
 
 
+    // contexto popUp con useEffect escucha connectionStatus, Si se dispara algun estado que dispara un popUp, isPopUp true
+    // popUp data se exporta segun el estado de connectionStatus que los dispara un objeto con los datos correspondiente a ese popup
+    // Por ejemplo el estado disconnectionByInactivity dispara:
+    //     isPopUp = True popUpData =   {   "title"         :"The connection is shutting down" 
+    //                                      "message        :"Due to inactivity of more than 1 minute, the connection is going to be closed"
+    //                                      "CTAtext"       :If you want to stay connected, please press the button"
+    //                                      "type"          :oneButtonAccept" 
+    //                                      "seconds"       :{10}
+    //                                      "button2Text"   :"I'M HERE"
+    //                                      "handlerAccept" :{acceptDisconnectionByInactivityHandler}
+    //                                      "handlerTimeOut":{timeOutDisconnectionByInactivityHandler}   }
+    // Las funciones se incluyen en el contexto del popUp                         
     return(
         <>
             {
@@ -141,7 +151,7 @@ export const FindingPairs = ()=>{
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButtonAccept" 
                             seconds={10}
-                            button2Text="I'm here"
+                            button2Text="I'M HERE"
                             handlerAccept={acceptDisconnectionByInactivityHandler}
                             handlerTimeOut={timeOutDisconnectionByInactivityHandler}
                             key={connectionstatus}
@@ -154,8 +164,8 @@ export const FindingPairs = ()=>{
                             CTAtext={`If you want talk with ${requesterNickName}, please press accept`}
                             type="twoButton" 
                             seconds={20}
-                            button1Text="Reject"
-                            button2Text="Start chat"
+                            button1Text="REJECT"
+                            button2Text="START CHAT"
                             handlerReject={rejectRequestReceivedHandler}
                             handlerAccept={acceptRequestReceivedHandler}
                             handlerTimeOut={timeOutrequestReceivedHandler}

@@ -85,7 +85,7 @@ export const Chat = ()=>{
                             CTAtext="If you want to stay connected, please press the button"
                             type="oneButtonAccept" 
                             seconds={10}
-                            button2Text="I'm here"
+                            button2Text="I'M HERE"
                             handlerAccept={acceptDisconnectionByInactivityHandler}
                             handlerTimeOut={timeOutDisconnectionByInactivityHandler}
                             key={connectionstatus}
