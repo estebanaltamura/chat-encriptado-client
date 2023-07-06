@@ -4,6 +4,7 @@ import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnecti
 import { PublicKeysProvider } from './contexts/publickKeysProvider';
 import { LastActivityTimeProvider } from './contexts/LastActivityTimeProvider';
 import { ChatHistoryProvider } from './contexts/ChatHistoryProvider';
+import { PopUpContextProvider } from './contexts/PopUpContextProvider';
 import App from './App';
 import './index.css';
 
@@ -12,15 +13,17 @@ import './index.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ChatHistoryProvider>
-      <PublicKeysProvider>
+    <PublicKeysProvider>
+      <ChatHistoryProvider>
         <WebSocketConnectionContextProvider>    
-          <LastActivityTimeProvider>
-            <App />       
-          </LastActivityTimeProvider>
-        </WebSocketConnectionContextProvider>
-      </PublicKeysProvider>
-    </ChatHistoryProvider>
+          <PopUpContextProvider>
+            <LastActivityTimeProvider>
+              <App />       
+            </LastActivityTimeProvider>
+          </PopUpContextProvider>
+        </WebSocketConnectionContextProvider>      
+      </ChatHistoryProvider>
+    </PublicKeysProvider>
   </React.StrictMode>
 );
 

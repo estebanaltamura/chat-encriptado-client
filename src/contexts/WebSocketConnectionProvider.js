@@ -1,6 +1,7 @@
 import { createContext, useRef, useState, useContext, useEffect } from "react"
 import { publicKeysContext } from "./publickKeysProvider";
 import { chatHistoryContext } from "./ChatHistoryProvider";
+import { PopUpContext } from "./PopUpContextProvider";
 
 
 export const webSocketConnectionContext = createContext(null)
@@ -9,8 +10,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const [ connectionstatus, setConnectionStatus ] = useState("offline")
     
     const [ solicitorUserData, setSolicitorUserData ] = useState(null)
-    const [ requiredUserData, setRequiredUserData ] = useState(null)
-
+    const [ requiredUserData, setRequiredUserData ] = useState(null)    
     const [ requestError, setRequestError ] = useState(null)      
     const { publicKeys, setPublicKeys } = useContext(publicKeysContext) 
     const { chatHistory, setChatHistory} = useContext(chatHistoryContext)
@@ -63,6 +63,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             const toNickName = pardedMessage.chatConfirmed.toNickName
             setPublicKeys({"from": publicKeyRef.current.from, "to": to, "toNickName": toNickName})
             setConnectionStatus("chating")
+            
         } 
 
         //Mensaje de error
@@ -101,7 +102,8 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         }        
     };
     
-    const handleClose = async (e) => {         
+    const handleClose = async (e) => {  
+                   
         console.log("closed") 
         //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
 
@@ -109,13 +111,22 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeyRef.current.from, "user2": requiredUserData.publicKey}}   
             sendWebSocketMessage(cancelRequestSent) 
         }
-        console.log(socketRef.current.readyState)
-        window.location.href = "/login"
+
+        //connectionStatus que indique que fue voluntario el cierre, si no es asi server error
         
+        if(connectionStatusRef.current === "theUserHasClosed"){
+            window.location.href = "/home"            
+        }
+        else setConnectionStatus("serverError")
+        
+        console.log(socketRef.current.readyState)
+        
+        
+        socketRef.current = undefined
     }; 
     
-    const handleError = async (error) => {   
-        setConnectionStatus("serverError")                     
+    const handleError = async (error) => {                         
+        //setConnectionStatus("serverError")
         console.error('Error de conexión:', error);        
     };
     

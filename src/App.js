@@ -1,24 +1,24 @@
-
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Login } from './componentes/login/Login';
-import { FindingPairs } from './componentes/findingPairs/FindingPairs';
+import { useContext } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { webSocketConnectionContext } from './contexts/WebSocketConnectionProvider';
+import { Home } from './pages/Home';
+import { FindingPair } from './pages/FindingPair';
 import { Chat } from './componentes/chatRoom/Chat';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
 function App() {
 
-  
+  const { connectionstatus } = useContext(webSocketConnectionContext)
 
   return (
     <div className="App">      
       <BrowserRouter>
         <Routes>
-          <Route path="*" element={<Login />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/findingPair" element={<FindingPairs />} />
-          <Route path="/chatRoom" element={<Chat />} />
-          
+          <Route path="*"             element={<Navigate to="/home" />} />
+          <Route path="/home"         element={<Home />} />
+          <Route path="/findingPair"  element={connectionstatus === "offline"  ? <Navigate to = "/home" /> : <FindingPair />} />
+          <Route path="/chatRoom"     element={connectionstatus === "offline"  ? <Navigate to = "/home" /> : <Chat />} />          
         </Routes>
       </BrowserRouter>            
     </div>
@@ -26,33 +26,3 @@ function App() {
 }
 
 export default App;
-
-/*
-Offline
-userRegistered
-Chating
-
-
-Cualquier url no asignada:
-Offline: Login
-userRegistered: nada. findingPair
-Chating: nada. chating
-
-Login
-Offline: Login
-userRegistered: Login y cerrar conexion previa
-Chating: chating: Login y cerrar conexion previa
-
-
-FindingPair
-Offline: Login
-userRegistered: FindingPair
-Chating: FindingPair y borrar el par de chat
-
-
-Chating
-Offline: Login
-userRegistered: nada. FindingPair
-Chating: nada. chating
-
-*/

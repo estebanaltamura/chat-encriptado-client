@@ -1,17 +1,9 @@
-import { useState, useEffect, useRef, useContext } from "react"
-import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
-
+import { useEffect } from "react"
 import "./PopUp.css"
 
-export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, seconds, handlerAccept, handlerReject, handlerTimeOut})=>{
-          
-    const { connectionstatus } = useContext(webSocketConnectionContext)
-    //const [ isMounted, setIsMounted ] = useState()
-    //const isMountedRef = useRef(null)
-
-    
-    useEffect(() => {
-      //isMountedRef.current = true;
+export const PopUp = ({title, message, type, CTAtext, acceptButtonText, rejectButtonText, seconds, handlerAccept, handlerReject, handlerTimeOut})=>{
+               
+    useEffect(() => {      
       const secondsToMiliSeconds = seconds * 1000;      
       
       const timeOut = setTimeout(() => {        
@@ -22,28 +14,41 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
         clearTimeout(timeOut);
       };
     }, []);
-
     
     return(
         <div className="popUpContainer"> 
             <div className="popUpElement">
-                <div className={type === "oneButtonAccept" ? "popUpGridOneButtonAccept" : type === "oneButtonCancel" ? "popUpGridOneButtonCancel" : "popUpGridTwoButton"}>
+                <div className={type === "oneButtonAccept"  ? "popUpGridOneButtonAccept"    : 
+                                type === "oneButtonCancel"  ? "popUpGridOneButtonCancel"    : 
+                                type === "noButtons"        ? "popUpGridNoButtons"          : 
+                                type === "twoButtons"       ? "popUpGridTwoButton"          : ""}>
                     <img src="https://i.postimg.cc/76bz30BG/logo-Miniatura.jpg" className="logoPopUp" />
-                    <h2 className="tituloPopUp">{title}</h2>
-                    <p className="messagePopUp">{message}</p>  
-                    <p className="CTA">{CTAtext}</p>                  
-                        {
-                            type === "oneButtonAccept" ?
-                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>
-                                                 :
-                            type === "oneButtonCancel" ?
-                                     <button className="button1PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>
-                                                 :
-                                <>
-                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject}>{button1Text}</button>     
-                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus>{button2Text}</button>                
-                                </>
+                    <h2 className="tituloPopUp">{title}</h2>                    
 
+                        {
+                            message !== undefined && <p className="messagePopUp">{message}</p>
+                        }   
+
+                        {
+                            CTAtext !== undefined && <p className="CTA">{CTAtext}</p>
+                        }                      
+                        
+                        {
+                            type === "oneButtonAccept"  ?
+                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus  >{acceptButtonText}</button>
+                                                        :
+                            type === "oneButtonCancel"  ?
+                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject} autoFocus  >{rejectButtonText}</button>
+                                                        :
+                            type === "twoButtons"       ?    
+                                <>
+                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject} autoFocus  >{acceptButtonText}</button>     
+                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept}            >{rejectButtonText}</button>                
+                                </>
+                                                        :
+                            type === "noButtons"        &&    
+                                <>                
+                                </>
                         }                
                 </div>
             </div>
@@ -51,4 +56,3 @@ export const PopUp = ({title, message, type, CTAtext, button1Text, button2Text, 
     )
 }
 
-//probar con estos coloresaccept #149AD9 reject #EB5421
