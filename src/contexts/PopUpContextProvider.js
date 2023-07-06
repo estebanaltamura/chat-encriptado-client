@@ -15,7 +15,8 @@ export const PopUpContextProvider = ({children})=>{
             requiredUserData, 
             setSolicitorUserData, 
             setRequiredUserData,
-            requestError } = useContext(webSocketConnectionContext)
+            requestError,
+            closeConnection } = useContext(webSocketConnectionContext)
 
     const [ showPopUp, setShowPopUp ] = useState(false)
     const [ popUpData, setPopUpData ] = useState({})
@@ -191,8 +192,9 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutDisconnectionByInactivityHandler = ()=>{
+        closeConnection()
         setShowPopUp(false)
-        window.location.href= "./home" //cierre directo
+        //window.location.href= "./home" //cierre directo
     }
 
     //REQUEST ERROR HANDLER
