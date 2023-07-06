@@ -9,8 +9,7 @@ export const PopUpContextProvider = ({children})=>{
 
     const { connectionstatus, 
             setConnectionStatus, 
-            sendWebSocketMessage, 
-            closeConnection, 
+            sendWebSocketMessage,              
             solicitorUserData, 
             setRequestError, 
             requiredUserData, 
@@ -123,7 +122,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "requestError"){
+        if(connectionstatus === "requestError"){            
             setShowPopUp(true)
             setPopUpData({  "title"                 : `${requestErrorRef.current.title}`,
                             "message"               : `${requestErrorRef.current.message}`,

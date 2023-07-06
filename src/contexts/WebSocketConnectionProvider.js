@@ -67,7 +67,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         } 
 
         //Mensaje de error
-        if(pardedMessage.hasOwnProperty("error")){
+        if(pardedMessage.hasOwnProperty("error")){            
             setSolicitorUserData(null)  
             setRequiredUserData(null)
             
@@ -105,14 +105,15 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     const handleClose = async (e) => {  
                    
         console.log("closed") 
-        //Al usar location.href fuerza el refresh lo cual borra todos los estados y contextos
+        
 
-        if(connectionStatusRef.current === "requestSent"){
+        if(connectionStatusRef.current === "requestSent"){ 
+            console.log("intenta cancelar")           
             const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeyRef.current.from, "user2": requiredUserData.publicKey}}   
             sendWebSocketMessage(cancelRequestSent) 
         }
 
-        //connectionStatus que indique que fue voluntario el cierre, si no es asi server error
+        
         
         if(connectionStatusRef.current === "theUserHasClosed"){
             window.location.href = "/home"            
