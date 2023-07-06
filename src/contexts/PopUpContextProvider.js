@@ -192,6 +192,7 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutDisconnectionByInactivityHandler = ()=>{
+        setConnectionStatus("theUserHasClosed")
         closeConnection()
         setShowPopUp(false)
         //window.location.href= "./home" //cierre directo
