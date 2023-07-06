@@ -185,3 +185,65 @@ export const WebSocketConnectionContextProvider = ({children})=>{
         </webSocketConnectionContext.Provider>
     )   
 }
+
+/*
+Login:
+    Clickear iniciar sesion sin ingresar apodo:
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out
+
+    Clickear iniciar iniciar pero no se logra conexion con el server:
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out
+
+FindingPair:
+    Clickear iniciar chat sin ingresar apodo:
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out
+
+    PopUp inactividad:
+        -Solo aparezca en findingPair y no en ningun otro estado de connectionstatus derivado de findingPair
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out
+
+    Enviar solicitud (analisis en el usuario que solicita)
+        -PopUp correcto
+        -Accion al clickear en CANCEL
+        -Accion time out
+
+    Solicitud cancelada por que el otro clickeo en cancel (analizar el otro usuario en cuestion)
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out
+
+    Solicitud cancelada por que timeOut de solicitud (analizar el otro usuario en cuestion)
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out    
+
+    Solicitud recibida (analisis en el usuario que recibe) con la otra parte conectada
+        -PopUp correcto
+        -Accion al clickear en ACCEPT
+        -Accion al clickear en REJECT 
+        -Accion time out
+
+    Solicitud recibida (analisis en el usuario que recibe) cuando la otra parte se desconecto
+        -PopUp correcto
+        -Accion al clickear en ACCEPT
+        -Accion al clickear en REJECT 
+        -Accion time out
+    
+    Servidor se desconecta:
+        (en findingPair, enviando solicitud, recibiendo solicitud, cualquier error)
+        -PopUp correcto
+        -Accion al clickear en OK
+        -Accion time out    
+
+
+
+    VERIFICAR EN TODOS LOS ESTADOS POSIBLES QUERER ENTRAR POR BARRA DE DIRECCIONES A ALGUNA DE LAS TRES PAGINAS POSIBLES
+*/
