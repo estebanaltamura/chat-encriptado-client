@@ -83,7 +83,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             else if(pardedMessage.error === "canceledRequest" && connectionStatusRef.current === "requestReceived"){
                 setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
             }             
-            else setRequestError({"title": "Error unspecified unhandled", "message": "An unexpected error has happened", "CTA": "Click OK to continue"})                       
+                                   
         } 
 
         //cierre
