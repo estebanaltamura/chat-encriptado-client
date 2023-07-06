@@ -74,7 +74,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Nick name error",
                             "message"               : "Nick name should have only alphanumeric characters and minimum one character",                    
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 3,                           
+                            "seconds"               : 10,                           
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : AcceptNickNameErrorHandler, 
                             "handlerTimeOut"        : timeOutNickNameErrorHandler                       
@@ -86,7 +86,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "Error interacting with server",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 3,
+                            "seconds"               : 10,
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptServerErrorHandler, 
                             "handlerTimeOut"        : timeOutServerErrorHandler                                 
@@ -113,7 +113,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requesterNickName} asks you to talk in a private room`,
                             "CTAtext"               : `If you want talk with ${requesterNickName}, please press accept`,
                             "type"                  : "twoButtons", 
-                            "seconds"               : 3,
+                            "seconds"               : 10,
                             "acceptButtonText"      : "START CHAT",
                             "rejectButtonText"      : "REJECT",
                             "handlerAccept"         : acceptRequestReceivedHandler,
@@ -128,7 +128,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requestErrorRef.current.message}`,
                             "CTAtext"               : `${requestErrorRef.current.CTA}`,
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 3,                          
+                            "seconds"               : 10,                          
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptRequestErrorHandler,
                             "handlerTimeOut"        : timeOutRequestErrorHandler,                                                          
@@ -152,7 +152,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Inserted a empty entry",
                             "message"               : "Please insert a valid public key",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 3,                            
+                            "seconds"               : 10,                            
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptUserInsertedAnEmptyEntry,
                             "handlerTimeOut"        : timeOutUserInsertedAnEmptyEntry                                                
@@ -164,7 +164,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "The other user has close the chat",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 3,                           
+                            "seconds"               : 10,                           
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptOtherUserHasClosedHandler,
                             "handlerTimeOut"        : timeOutOtherUserHasClosedHandler                                                
