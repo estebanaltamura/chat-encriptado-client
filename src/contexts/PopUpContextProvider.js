@@ -100,7 +100,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : "Due to inactivity of more than 1 minute, the connection is going to be closed",
                             "CTAtext"               : "If you want to stay connected, please press the button",
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 30,
+                            "seconds"               : 5,
                             "acceptButtonText"      : "I'M HERE",
                             "handlerAccept"         : acceptDisconnectionByInactivityHandler,
                             "handlerTimeOut"        : timeOutDisconnectionByInactivityHandler
@@ -114,7 +114,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requesterNickName} asks you to talk in a private room`,
                             "CTAtext"               : `If you want talk with ${requesterNickName}, please press accept`,
                             "type"                  : "twoButtons", 
-                            "seconds"               : 10,
+                            "seconds"               : 50,
                             "acceptButtonText"      : "START CHAT",
                             "rejectButtonText"      : "REJECT",
                             "handlerAccept"         : acceptRequestReceivedHandler,
