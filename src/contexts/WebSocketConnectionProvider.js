@@ -104,16 +104,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     
     const handleClose = async (e) => {  
                    
-        console.log("closed") 
-        
-
-        if(connectionStatusRef.current === "requestSent"){ 
-            console.log("intenta cancelar")           
-            const cancelRequestSent = {"cancelRequestSent": {"user1": publicKeyRef.current.from, "user2": requiredUserData.publicKey}}   
-            sendWebSocketMessage(cancelRequestSent) 
-        }
-
-        
+        console.log("closed")        
         
         if(connectionStatusRef.current === "theUserHasClosed"){
             window.location.href = "/home"            
