@@ -116,6 +116,16 @@
     background-color: #149AD9;
 }
 
+.button1PopUp:focus-visible{   
+    outline: none;
+    text-align: center;
+}
+
+.button2PopUp:focus-visible{   
+    outline: none;
+    text-align: center;
+}
+
 
 @media (min-width: 768px) {
     .popUpElement{        

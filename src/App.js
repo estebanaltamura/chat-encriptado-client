@@ -1,7 +1,6 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { webSocketConnectionContext } from './contexts/WebSocketConnectionProvider';
-import { publicKeysContext } from './contexts/publickKeysProvider';
 import { Home } from './pages/Home';
 import { FindingPair } from './pages/FindingPair';
 import { Chat } from './componentes/chatRoom/Chat';
@@ -10,27 +9,7 @@ import './App.css';
 
 function App() {
 
-  const { connectionstatus,
-          requiredUserData,
-          sendWebSocketMessage }  = useContext(webSocketConnectionContext)
-  const { publicKey }             = useContext(publicKeysContext)
-
-  useEffect(()=>{
-
-    const beforeUnloadHandler = ()=>{
-      alert("funciona evento")
-
-      if(connectionstatus === "requestSent"){ 
-        console.log("intenta cancelar")           
-        const cancelRequestSent = {"cancelRequestSent": {"user1": publicKey.from, "user2": requiredUserData.publicKey}}   
-        sendWebSocketMessage(cancelRequestSent) 
-    }
-    }
-
-    window.addEventListener("beforeUnload", beforeUnloadHandler)
-
-    return ()=> window.removeEventListener("beforeUnload", beforeUnloadHandler)
-  },[])
+  const { connectionstatus }  = useContext(webSocketConnectionContext)
 
   return (
     <div className="App">      
