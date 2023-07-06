@@ -192,7 +192,7 @@ export const PopUpContextProvider = ({children})=>{
 
     const timeOutDisconnectionByInactivityHandler = ()=>{
         setShowPopUp(false)
-        window.location.href= "./login" //cierre directo
+        window.location.href= "./home" //cierre directo
     }
 
     //REQUEST ERROR HANDLER
