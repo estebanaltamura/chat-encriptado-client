@@ -5,12 +5,12 @@ import { PopUp } from "../componentes/popUp/PopUp";
 
 export const Home = ()=>{
 
-    const {showPupUp, popUpData} = useContext(PopUpContext)    
+    const {showPopUp, popUpData} = useContext(PopUpContext)    
    
     return(
       <>
         {          
-          showPupUp   ?   
+          showPopUp   ?   
             <PopUp  title                       = {popUpData.title}
                     message                     = {popUpData.message}                      
                     type                        = {popUpData.type}

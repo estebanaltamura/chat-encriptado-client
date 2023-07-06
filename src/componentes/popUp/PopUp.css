@@ -17,7 +17,8 @@
     width: 320px;   
     height: fit-content; 
     background-color: white;    
-    border-radius: 20px;       
+    border-radius: 20px;      
+    box-shadow: 6px 6px 10px 0px #F8BF5E;
 }
 
 .popUpGridNoButtons{
@@ -67,6 +68,9 @@
     font-weight: 500;    
     font-size: 20px;
     font-family: Montserrat;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    box-shadow: 1px 2px 5px 0px #5c5c5c;
 }
 
 .logoPopUp{  
@@ -108,12 +112,12 @@
 
 .button1PopUp{
     grid-area: boton1;
-    background-color: #EB5421;
+    background-color: #EB5421;    
 }
 
 .button2PopUp{
     grid-area: boton2;
-    background-color: #149AD9;
+    background-color: #149AD9;    
 }
 
 .button1PopUp:focus-visible{   

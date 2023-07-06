@@ -17,7 +17,7 @@ export const PopUpContextProvider = ({children})=>{
             setRequiredUserData,
             requestError } = useContext(webSocketConnectionContext)
 
-    const [ showPupUp, setShowPopUp ] = useState(false)
+    const [ showPopUp, setShowPopUp ] = useState(false)
     const [ popUpData, setPopUpData ] = useState({})
 
     const [requesterNickName, setRequesterNickName] = useState()
@@ -72,7 +72,7 @@ export const PopUpContextProvider = ({children})=>{
         if(connectionstatus === "nickNameError"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Nick name error",
-                            "message"               : "Nick name should have only alphanumeric characters and minimum one character",                    
+                            "message"               : "Nick name should have only alphanumeric characters and at least one character",                    
                             "type"                  : "oneButtonAccept", 
                             "seconds"               : 10,                           
                             "acceptButtonText"      : "OK",
@@ -138,7 +138,7 @@ export const PopUpContextProvider = ({children})=>{
         if(connectionstatus === "requestSent"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Request sent",  
-                            "message"               : "Waiting for response of user",                      
+                            "message"               : "Waiting for response of the other user",                      
                             "type"                  : "oneButtonCancel", 
                             "seconds"               : 30,                            
                             "rejectButtonText"      : "CANCEL",
@@ -162,7 +162,7 @@ export const PopUpContextProvider = ({children})=>{
         if(connectionstatus === "otherUserHasClosed"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Closing",  
-                            "message"               : "The other user has close the chat",                      
+                            "message"               : "The other user has close his/her chat",                      
                             "type"                  : "oneButtonAccept", 
                             "seconds"               : 10,                           
                             "acceptButtonText"      : "OK",
@@ -195,7 +195,34 @@ export const PopUpContextProvider = ({children})=>{
         window.location.href= "./login" //cierre directo
     }
 
-    //REQUEST RECEIVED USER RESPONSE HANDLER
+    //REQUEST ERROR HANDLER
+    const acceptRequestErrorHandler = ()=>{      
+        setConnectionStatus("userRegistered")
+        setShowPopUp(false)
+    }
+
+    const timeOutRequestErrorHandler = ()=>{      
+        setConnectionStatus("userRegistered")
+        setShowPopUp(false)
+    }
+
+    //REQUEST SENT
+    const cancelRequestSentHandler =()=>{ 
+        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
+        sendWebSocketMessage(cancelRequestSent)        
+        setConnectionStatus("userRegistered") 
+        setShowPopUp(false)
+    }
+
+    const timeOutRequestSentHandler =()=>{          
+        console.log(PublicKeysRef.current, requiredUserData.publicKey)
+        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
+        sendWebSocketMessage(cancelRequestSent)          
+        setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
+        setShowPopUp(false) 
+    }
+
+    //REQUEST RECEIVED
     const acceptRequestReceivedHandler =()=>{
         setSolicitorUserData(null)  
         setRequiredUserData(null)        
@@ -220,36 +247,6 @@ export const PopUpContextProvider = ({children})=>{
         setShowPopUp(false)
     }
 
-
-    //REQUEST ERROR HANDLER
-    const acceptRequestErrorHandler = ()=>{      
-        setConnectionStatus("userRegistered")
-        setShowPopUp(false)
-    }
-
-    const timeOutRequestErrorHandler = ()=>{      
-        setConnectionStatus("userRegistered")
-        setShowPopUp(false)
-    }
-
-    
-
-    //REQUEST SENT
-    const cancelRequestSentHandler =()=>{ 
-        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
-        sendWebSocketMessage(cancelRequestSent)        
-        setConnectionStatus("userRegistered") 
-        setShowPopUp(false)
-    }
-
-    const timeOutRequestSentHandler =()=>{          
-        console.log(PublicKeysRef.current, requiredUserData.publicKey)
-        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
-        sendWebSocketMessage(cancelRequestSent)          
-        setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
-        setShowPopUp(false) 
-    }
-
     //NICK NAME ERROR
     const AcceptNickNameErrorHandler =()=>{        
         setConnectionStatus("offline")   
@@ -260,26 +257,6 @@ export const PopUpContextProvider = ({children})=>{
         setConnectionStatus("offline")    
         setShowPopUp(false)     
     }
-
-    //SERVER ERROR
-    const acceptServerErrorHandler = ()=>{         
-        window.location.href= "./login"              
-    }
-    
-    const timeOutServerErrorHandler = ()=>{        
-        window.location.href= "./login" 
-    }
-
-    //CLOSING BY THE OTHER USER
-    const acceptOtherUserHasClosedHandler =()=>{         
-        window.location.href= "./login"        
-    }
-
-    const timeOutOtherUserHasClosedHandler =()=>{            
-        window.location.href= "./login"        
-    }
-
-    //
 
     //USER INSERTED AN EMPTY ENTRY IN TRY PAIRING PROCESS
     const acceptUserInsertedAnEmptyEntry=()=>{
@@ -292,9 +269,26 @@ export const PopUpContextProvider = ({children})=>{
         setShowPopUp(false) 
     }
 
+    //SERVER ERROR
+    const acceptServerErrorHandler = ()=>{         
+        window.location.href= "./home"              
+    }
+    
+    const timeOutServerErrorHandler = ()=>{        
+        window.location.href= "./home" 
+    }
+
+    //CLOSING BY THE OTHER USER
+    const acceptOtherUserHasClosedHandler =()=>{         
+        window.location.href= "./home"        
+    }
+
+    const timeOutOtherUserHasClosedHandler =()=>{            
+        window.location.href= "./home"        
+    }
 
     return(
-        <PopUpContext.Provider value={{showPupUp, popUpData, setShowPopUp, setPopUpData}}>
+        <PopUpContext.Provider value={{showPopUp, popUpData, setShowPopUp, setPopUpData}}>
             {children}
         </PopUpContext.Provider>
     )

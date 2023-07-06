@@ -8,13 +8,13 @@ import "./FindingPair.css"
 
 export const FindingPair = ()=>{
     
-  const { showPupUp, popUpData } = useContext(PopUpContext)   
+  const { showPopUp, popUpData } = useContext(PopUpContext)   
   const { closeConnectionHandler} = useFindingPair()  
    
   return(
     <>
       {  
-        showPupUp   ?  
+        showPopUp   ?  
 
           <PopUp  title                       = {popUpData.title}
                   message                     = {popUpData.message}                      
@@ -40,9 +40,9 @@ export const FindingPair = ()=>{
               </div>
                                             
               <div className="tutorialMessageContainerFindingPair">
-                <p className="tutorialMessageFindingPair">Share your public key by whatsapp or similar with the person you want and wait for his invitation</p>
+                <p className="tutorialMessageFindingPair">Share your public key by whatsapp or similar with the person you want and wait for his/her invitation</p>
                 <p className="tutorialMessageFindingPair or">or</p>
-                <p className="tutorialMessageFindingPair">Insert the public key which you received of the person who you want have a private talk and send his an invitation</p>
+                <p className="tutorialMessageFindingPair">Insert the public key which you received of the person who you want have a private talk and send his/her an invitation</p>
               </div>     
 
               <FindingPairForm />  
