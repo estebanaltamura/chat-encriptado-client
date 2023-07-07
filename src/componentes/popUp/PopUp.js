@@ -42,8 +42,8 @@ export const PopUp = ({title, message, type, CTAtext, acceptButtonText, rejectBu
                                                         :
                             type === "twoButtons"       ?    
                                 <>
-                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject} autoFocus  >{acceptButtonText}</button>     
-                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept}            >{rejectButtonText}</button>                
+                                    <button className="button1PopUp buttonPopUp" onClick={handlerReject}            >{rejectButtonText}</button>     
+                                    <button className="button2PopUp buttonPopUp" onClick={handlerAccept} autoFocus  >{acceptButtonText}</button>                
                                 </>
                                                         :
                             type === "noButtons"        &&    

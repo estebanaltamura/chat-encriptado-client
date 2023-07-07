@@ -189,61 +189,90 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 /*
 Login:
     Clickear iniciar sesion sin ingresar apodo:
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out (OK)
 
     Clickear iniciar iniciar pero no se logra conexion con el server:
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out (OK)
 
 FindingPair:
     Clickear iniciar chat sin ingresar apodo:
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out (OK)
 
     PopUp inactividad:
         -Solo aparezca en findingPair y no en ningun otro estado de connectionstatus derivado de findingPair
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out (OK)
 
-    Enviar solicitud (analisis en el usuario que solicita)
-        -PopUp correcto
-        -Accion al clickear en CANCEL
-        -Accion time out
 
-    Solicitud cancelada por que el otro clickeo en cancel (analizar el otro usuario en cuestion)
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out
+    SOLICITANTE:
 
-    Solicitud cancelada por que timeOut de solicitud (analizar el otro usuario en cuestion)
-        -PopUp correcto
-        -Accion al clickear en OK
-        -Accion time out    
-
-    Solicitud recibida (analisis en el usuario que recibe) con la otra parte conectada
-        -PopUp correcto
-        -Accion al clickear en ACCEPT
-        -Accion al clickear en REJECT 
-        -Accion time out
-
-    Solicitud recibida (analisis en el usuario que recibe) cuando la otra parte se desconecto
-        -PopUp correcto
-        -Accion al clickear en ACCEPT
-        -Accion al clickear en REJECT 
-        -Accion time out
+    Enviar solicitud a un usuario existente 
+        -PopUp correcto (OK)
+        -Accion al clickear en CANCEL (OK)
+        -Accion time out, analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
     
+    Enviar solicitud a un usuario inexistente 
+        -PopUp correcto (OK)
+        -Accion al clickear en CANCEL (OK)
+        -Accion time out analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
+
+    Enviar solicitud a un usuario existente pero que se desconecto en el proceso 
+        -PopUp correcto (OK)
+        -Accion al clickear en CANCEL (OK)
+        -Accion time out analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
+
+    Enviar solicitud a un usuario existente que la rechaza 
+        -PopUp correcto (OK) 
+        -Accion al clickear en CANCEL (OK)
+        -Accion time out analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
+
+    Enviar solicitud a un usuario existente que la acepta
+        -Redireccion a chatRoom (OK)
+
+
+    SOLICITADO:
+
+    Solicitud cancelada por el solicitante 
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
+
+    Solicitud cancelada por que timeOut de la solicitud del lado del solicitante 
+        -PopUp correcto (OK)
+        -Accion al clickear en OK (OK)
+        -Accion time out analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)    
+
+    Solicitud de un usuario que se desconecto luego de enviarla
+        -PopUp correcto (OK)
+        -Accion al clickear en ACCEPT analizar el nuevo popUp disparado en OK y en TIMEOUT (OK)
+        -Accion al clickear en REJECT Devolver a findingPair (OK)
+        -Accion time out Devolver a findingPair (OK)
+
+
+    Solicitud no cancelada y con la otra parte conectada
+        -PopUp correcto (OK)
+        -Accion al clickear en ACCEPT redireccionar a chatRoom (OK)
+        -Accion al clickear en REJECT Devolver a findingPair (OK)
+        -Accion time out Devolver a findingPair (OK) // analizar si no queda cargado el timeout y se ejecuta ya en chat room
+    
+
     Servidor se desconecta:
         (en findingPair, enviando solicitud, recibiendo solicitud, cualquier error)
         -PopUp correcto
         -Accion al clickear en OK
         -Accion time out    
 
-
+    estado publickey parece que esta desactualizado cuando lee nickname para chat
+    acortar con ... el nombre si es largo para el chat
+    mensaje encontrar estilo aceptable para una linea y para muchas
+    chequear server como ultima cosa
 
     VERIFICAR EN TODOS LOS ESTADOS POSIBLES QUERER ENTRAR POR BARRA DE DIRECCIONES A ALGUNA DE LAS TRES PAGINAS POSIBLES
 */
