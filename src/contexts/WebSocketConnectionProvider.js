@@ -18,8 +18,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
   const socketRef = useRef(null);     
   
   useEffect(()=>{
-    connectionStatusRef.current = connectionStatus
-    console.log(connectionStatus) // chatgpt 1
+    connectionStatusRef.current = connectionStatus    
   },[connectionStatus])
     
 
@@ -31,7 +30,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     if (!socketRef.current) {
       socketRef.current = new WebSocket('ws://localhost:4000');          
       socketRef.current.addEventListener('open', handleOpen);
-      socketRef.current.addEventListener('message', (e)=> handleMessage(e, setConnectionStatus, connectionStatus, setRequestError));
+      socketRef.current.addEventListener('message', (e)=> handleMessage(e, setConnectionStatus, connectionStatusRef.current, setRequestError));
       socketRef.current.addEventListener('close', handleClose);
       socketRef.current.addEventListener('error', handleError);
       return true

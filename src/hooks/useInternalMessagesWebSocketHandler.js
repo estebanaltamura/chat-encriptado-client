@@ -45,7 +45,8 @@ export const useInternalMessagesWebSocketHandler = ()=>{
     } 
 
     //Mensaje de error
-    if(pardedMessage.hasOwnProperty("error")){            
+    if(pardedMessage.hasOwnProperty("error")){    
+        console.log(connectionStatus)        
         setUsersData({...usersDataRef.current, "toPublicKey": null, "toNickName": null})
         
         if(pardedMessage.error === "errorUserDoesntExistOrReject"){
@@ -56,7 +57,7 @@ export const useInternalMessagesWebSocketHandler = ()=>{
         }            
         else if(pardedMessage.error === "requesterIsOffline"){
             setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
-        }  
+        }   
         else if(pardedMessage.error === "canceledRequest" && connectionStatus === "requestReceived"){
             setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
         }             
