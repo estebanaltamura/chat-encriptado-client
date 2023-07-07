@@ -9,7 +9,7 @@ import './App.css';
 
 function App() {
 
-  const { connectionstatus }  = useContext(webSocketConnectionContext)
+  const { connectionStatus }  = useContext(webSocketConnectionContext)
 
   return (
     <div className="App">      
@@ -17,8 +17,8 @@ function App() {
         <Routes>
           <Route path="*"             element={<Navigate to="/home" />} />
           <Route path="/home"         element={<Home />} />
-          <Route path="/findingPair"  element={connectionstatus === "offline"  ? <Navigate to = "/home" /> : <FindingPair />} />
-          <Route path="/chatRoom"     element={connectionstatus === "offline"  ? <Navigate to = "/home" /> : <ChatRoom />} />          
+          <Route path="/findingPair"  element={connectionStatus === "offline"  ? <Navigate to = "/home" /> : <FindingPair />} />
+          <Route path="/chatRoom"     element={connectionStatus === "offline"  ? <Navigate to = "/home" /> : <ChatRoom />} />          
         </Routes>
       </BrowserRouter>            
     </div>

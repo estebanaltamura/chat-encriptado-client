@@ -1,20 +1,18 @@
 import { useContext } from "react"
-import { publicKeysContext } from "../contexts/publickKeysProvider"
+import { usersDataContext } from "../contexts/UsersDataProvider"
 import { webSocketConnectionContext } from "../contexts/WebSocketConnectionProvider"
 import { chatHistoryContext } from "../contexts/ChatHistoryProvider"
 
 export const useChat = ()=>{
 
 	const { setConnectionStatus, closeConnection, sendWebSocketMessage} = useContext(webSocketConnectionContext)
-	const { publicKeys } = useContext(publicKeysContext)
+	const { usersData } = useContext(usersDataContext)
 	const { setChatHistory, chatHistory} = useContext(chatHistoryContext)
-	
-	
+		
 	const closeConnectionHandler = ()=>{   
 		setConnectionStatus("theUserHasClosed")             
 		closeConnection()
 	}
-
 
 	const sendMessageHandler = (e)=>{
 		e.preventDefault()        
@@ -24,7 +22,7 @@ export const useChat = ()=>{
 			message = message[0].toUpperCase() + message.slice(1)   		    
 			const now = new Date()
             const minutes = now.getMinutes() <= 10 ? "0" + String(now.getMinutes()) : String(now.getMinutes())     
-			const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}
+			const messageToSend = {"sendMessage": {"from": usersData.fromPublicKey, "to": usersData.toPublicKey, "message": message}}
 			setChatHistory([{type: "messageSent", "message": message, "time": `${String(now.getHours())}:${minutes}`}, ...chatHistory])        
 			sendWebSocketMessage(messageToSend)
 			e.target.elements.chatInput.value = ""

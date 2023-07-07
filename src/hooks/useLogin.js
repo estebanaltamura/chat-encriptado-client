@@ -1,35 +1,33 @@
 import { useRef, useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 import { webSocketConnectionContext } from "../contexts/WebSocketConnectionProvider"
-import { publicKeysContext } from "../contexts/publickKeysProvider";
 import nacl from 'tweetnacl';
 
 export const useLogin = ()=>{
 
     const [ isLoading, setIsLoading ] = useState(false)
-    const { connectionstatus, setConnectionStatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)
-    const { publicKeys, setPublicKeys } = useContext(publicKeysContext)
+    const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)    
     
-    const user = useRef()  
+    const user = useRef()   
     
     const history = useNavigate()
 
     useEffect(()=>{        
-        if(connectionstatus==="online"){                
+        if(connectionStatus==="online"){                   
             createUser(user.current)          
         }
 
-        if(connectionstatus==="userRegistered"){      
+        if(connectionStatus==="userRegistered"){      
             setIsLoading(false)
-            setPublicKeys({...publicKeys, "from": user.current.publicKey})
+            
             history("/findingPair")          
         }        
 
-        if(connectionstatus==="serverError"){      
+        if(connectionStatus==="serverError"){      
             setIsLoading(false)            
         }        
     }    
-    ,[connectionstatus])
+    ,[connectionStatus])
 
     // SET USER
     const setUserData = (inputValue)=>{        
@@ -53,7 +51,6 @@ export const useLogin = ()=>{
                             "lastMessageTime"   : null
                         }        
     }
-
     
     const startSession = (e)=>{
         e.preventDefault() 
@@ -67,7 +64,6 @@ export const useLogin = ()=>{
         else setConnectionStatus("nickNameError")
     }  
 
-
     // INPUT BEHAVIORS
     const onFocusHandler = (e)=>{       
         const element = e.target         
@@ -78,7 +74,6 @@ export const useLogin = ()=>{
         const element = e.target        
         element.setAttribute("placeholder", "Insert a nick name")
     }   
-
 
     return({
         startSession,

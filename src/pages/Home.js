@@ -1,7 +1,8 @@
 import { useContext } from "react"
 import { PopUpContext } from "../contexts/PopUpContextProvider";
-import { Login } from "../componentes/login/Login";
 import { PopUp } from "../componentes/popUp/PopUp";
+import { LoginForm } from "../componentes/loginForm/LoginForm";
+
 
 export const Home = ()=>{
 
@@ -25,7 +26,7 @@ export const Home = ()=>{
 
                       :
                       
-            <Login />                               
+            <LoginForm />                               
         }
       </>        
     )

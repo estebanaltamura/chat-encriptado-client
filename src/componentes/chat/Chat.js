@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { publicKeysContext } from "../../contexts/publickKeysProvider";
+import { usersDataContext } from "../../contexts/UsersDataProvider";
 import { chatHistoryContext } from "../../contexts/ChatHistoryProvider";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BsFillCircleFill } from "react-icons/bs";
@@ -10,10 +10,9 @@ import "./Chat.css"
 
 export const Chat = ()=>{
      
-  const { publicKeys } = useContext(publicKeysContext)
+  const { usersData } = useContext(usersDataContext)
   const { chatHistory } = useContext(chatHistoryContext)
-       
-   
+          
   const { closeConnectionHandler,
 		      sendMessageHandler } = useChat()    
 
@@ -25,7 +24,7 @@ export const Chat = ()=>{
         <div className="chatContainer">
                                         
           <div className="chatHeader">
-            <p className="nickNameInHeaderChat">{publicKeys.toNickName}</p>                                            
+            <p className="nickNameInHeaderChat">{usersData.toNickName}</p>                                            
             <AiOutlineCloseCircle className="closeButtonInHeader" onClick={closeConnectionHandler}/>
           </div>
 

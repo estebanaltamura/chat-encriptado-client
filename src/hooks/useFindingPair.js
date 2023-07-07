@@ -1,33 +1,32 @@
 import { useContext, useState, useEffect } from "react"
 import { useNavigate } from 'react-router-dom';
 import { webSocketConnectionContext } from "../contexts/WebSocketConnectionProvider"
-import { publicKeysContext } from "../contexts/publickKeysProvider"
+import { usersDataContext } from "../contexts/UsersDataProvider";
 import { PopUpContext } from "../contexts/PopUpContextProvider"
-
 
 export const useFindingPair = ()=>{
 
-  const { setConnectionStatus, connectionstatus, tryPairing, closeConnection } = useContext(webSocketConnectionContext)
-  const { publicKeys } = useContext(publicKeysContext)
+  const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } = useContext(webSocketConnectionContext)
+  const { usersData } = useContext(usersDataContext)
   const [ copyPublicKeyText, setCopyPublicKeyText ] = useState("Copy my public key") 
   const { setShowPopUp } = useContext(PopUpContext)
   const history = useNavigate()
 
   useEffect(()=>{
-    if(connectionstatus==="chating"){
+    if(connectionStatus==="chating"){
       setShowPopUp(false)
       history("/chatRoom")            
     }           
   }     
-  ,[connectionstatus])
+  ,[connectionStatus])
 
   const tryPairingHandler = (e)=>{
     e.preventDefault()
     const publicKeyUser2 = e.target.elements.findingPairInput.value
-    console.log(publicKeyUser2)      
+
     if(publicKeyUser2 !== ""){
       setConnectionStatus("requestSent")                
-      tryPairing(publicKeys.from, publicKeyUser2) 
+      tryPairing( usersData.fromPublicKey, publicKeyUser2) 
     }
     else setConnectionStatus("userInsertedAnEmptyEntry")                
   } 
@@ -38,7 +37,7 @@ export const useFindingPair = ()=>{
   }
 
   const copyToClipboard = async () => {       
-    await navigator.clipboard.writeText(publicKeys.from);  
+    await navigator.clipboard.writeText(usersData.fromPublicKey);  
     setCopyPublicKeyText("Copied!")
     const timeOut = setTimeout(()=>{
       setCopyPublicKeyText("Copy my public key")

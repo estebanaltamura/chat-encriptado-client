@@ -1,12 +1,12 @@
-import { useLogin } from "../../hooks/useLogin";
 import Spinner from 'react-bootstrap/Spinner';
-import "./Login.css"
+import { useLogin } from "../../hooks/useLogin";
+import "./LoginForm.css"
 
-export const Login = ()=>{        
+export const LoginForm = ()=>{        
 
     const { onFocusHandler,
             onBlurHandler,
-            isLoading,
+            isLoading, 
             startSession} = useLogin()    
    
     return(

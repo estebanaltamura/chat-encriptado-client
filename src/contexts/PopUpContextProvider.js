@@ -1,64 +1,28 @@
 import { useState, useEffect, useContext, createContext, useRef } from "react"
 import { webSocketConnectionContext } from "./WebSocketConnectionProvider"
-import { publicKeysContext } from "./publickKeysProvider"
+import { usersDataContext } from "./UsersDataProvider"
 
 
 export const PopUpContext = createContext({}) 
 
 export const PopUpContextProvider = ({children})=>{
 
-    const { connectionstatus, 
+    const { connectionStatus, 
             setConnectionStatus, 
-            sendWebSocketMessage,              
-            solicitorUserData, 
-            setRequestError, 
-            requiredUserData, 
-            setSolicitorUserData, 
-            setRequiredUserData,
-            requestError,
-            closeConnection } = useContext(webSocketConnectionContext)
+            sendWebSocketMessage,  
+            requestError, 
+            setRequestError} = useContext(webSocketConnectionContext)
 
     const [ showPopUp, setShowPopUp ] = useState(false)
     const [ popUpData, setPopUpData ] = useState({})
 
-    const [requesterNickName, setRequesterNickName] = useState()
-    const requestErrorRef = useRef()
-    
-
-    const { publicKeys } = useContext(publicKeysContext)    
-    const PublicKeysRef = useRef()
-
+    const { usersData, setUsersData } = useContext( usersDataContext ) 
+    const usersDataRef = useRef()
     useEffect(()=>{
-        PublicKeysRef.current = publicKeys
-        console.log(PublicKeysRef.current)
-    },[publicKeys])
+        usersDataRef.current = usersData        
+    },[usersData])  
 
-
-    const solicitorUserDataDataRef = useRef()
-    useEffect(()=>{
-        solicitorUserDataDataRef.current = solicitorUserData
-    },[solicitorUserData])
-
-
-
-
-    useEffect(()=>{
-        
-        
-        if(solicitorUserData !== null){
-            if(solicitorUserData.nickName !== null){
-                if(solicitorUserData.nickName.length < 18){
-                    setRequesterNickName(solicitorUserData.nickName)
-                } 
-                else{
-                    const nickNameHandled = solicitorUserData.nickName.slice(0,18) + "..."
-                    setRequesterNickName(nickNameHandled)
-                }               
-            }            
-        }        
-    }     
-    ,[solicitorUserData])
-
+    const requestErrorRef = useRef() 
     useEffect(()=>{
         requestErrorRef.current = requestError
         if(requestErrorRef.current !== null){
@@ -70,7 +34,7 @@ export const PopUpContextProvider = ({children})=>{
 
     useEffect(()=>{
         
-        if(connectionstatus === "nickNameError"){
+        if(connectionStatus === "nickNameError"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Nick name error",
                             "message"               : "Nick name should have only alphanumeric characters and at least one character",                    
@@ -82,7 +46,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "serverError"){
+        if(connectionStatus === "serverError"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "Error interacting with server",                      
@@ -94,7 +58,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "disconnectionByInactivity"){
+        if(connectionStatus === "disconnectionByInactivity"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "The connection is shutting down",
                             "message"               : "Due to inactivity of more than 1 minute, the connection is going to be closed",
@@ -108,11 +72,11 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "requestReceived"){
+        if(connectionStatus === "requestReceived"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "An user wants talk to you",
-                            "message"               : `${requesterNickName} asks you to talk in a private room`,
-                            "CTAtext"               : `If you want talk with ${requesterNickName}, please press accept`,
+                            "message"               : `${usersDataRef.current.toNickName} asks you to talk in a private room`,
+                            "CTAtext"               : `If you want talk with ${usersDataRef.current.toNickName}, please press accept`,
                             "type"                  : "twoButtons", 
                             "seconds"               : 50,
                             "acceptButtonText"      : "START CHAT",
@@ -123,7 +87,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "requestError"){            
+        if(connectionStatus === "requestError"){            
             setShowPopUp(true)
             setPopUpData({  "title"                 : `${requestErrorRef.current.title}`,
                             "message"               : `${requestErrorRef.current.message}`,
@@ -136,7 +100,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "requestSent"){
+        if(connectionStatus === "requestSent"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Request sent",  
                             "message"               : "Waiting for response of the other user",                      
@@ -148,7 +112,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "userInsertedAnEmptyEntry"){
+        if(connectionStatus === "userInsertedAnEmptyEntry"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Inserted a empty entry",
                             "message"               : "Please insert a valid public key",                      
@@ -160,7 +124,7 @@ export const PopUpContextProvider = ({children})=>{
                         })
         }
 
-        if(connectionstatus === "otherUserHasClosed"){
+        if(connectionStatus === "otherUserHasClosed"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "The other user has close his/her chat",                      
@@ -171,15 +135,13 @@ export const PopUpContextProvider = ({children})=>{
                             "handlerTimeOut"        : timeOutOtherUserHasClosedHandler                                                
                         })
         }
-    },[connectionstatus])
+    },[connectionStatus])
 
     //INACTIVITY TIME HANDLER
     const acceptDisconnectionByInactivityHandler =()=>{ 
         const path = window.location.pathname        
         const pathInParts = path.split("/")
-        const lastPartPath = pathInParts[ pathInParts.length - 1 ]
-        
-        console.log(lastPartPath)
+        const lastPartPath = pathInParts[ pathInParts.length - 1 ]       
 
         if(lastPartPath === "findingPair"){
             setConnectionStatus("userRegistered")
@@ -208,41 +170,38 @@ export const PopUpContextProvider = ({children})=>{
 
     //REQUEST SENT
     const cancelRequestSentHandler =()=>{ 
-        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
+        const cancelRequestSent = {"cancelRequestSent": {"user1": usersDataRef.current.fromPublicKey, "user2": usersDataRef.current.toPublicKey}}  
+        setUsersData({...usersData, "toPublicKey": null, "toNickName": null}) 
         sendWebSocketMessage(cancelRequestSent)        
         setConnectionStatus("userRegistered") 
         setShowPopUp(false)
     }
 
-    const timeOutRequestSentHandler =()=>{          
-        console.log(PublicKeysRef.current, requiredUserData.publicKey)
-        const cancelRequestSent = {"cancelRequestSent": {"user1": PublicKeysRef.current.from, "user2": requiredUserData.publicKey}}   
+    const timeOutRequestSentHandler =()=>{         
+        const cancelRequestSent = {"cancelRequestSent": {"user1": usersDataRef.current.fromPublicKey, "user2": usersDataRef.current.toPublicKey}} 
+        setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
         sendWebSocketMessage(cancelRequestSent)          
         setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
         setShowPopUp(false) 
     }
 
     //REQUEST RECEIVED
-    const acceptRequestReceivedHandler =()=>{
-        setSolicitorUserData(null)  
-        setRequiredUserData(null)        
-        const confirmedRequest = {"confirmedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
+    const acceptRequestReceivedHandler =()=>{               
+        const confirmedRequest = {"confirmedRequest": {"user1": usersDataRef.current.toPublicKey, "user2": usersDataRef.current.fromPublicKey}}   
         sendWebSocketMessage(confirmedRequest)
         setShowPopUp(false)
     }
 
     const rejectRequestReceivedHandler = ()=>{           
-        const rejectedRequest = {"rejectedRequest": {"user1": solicitorUserDataDataRef.current.publicKey, "user2": publicKeys.from}}   
+        const rejectedRequest = {"rejectedRequest": {"user1": usersDataRef.current.toPublicKey, "user2": usersDataRef.current.fromPublicKey}}   
         sendWebSocketMessage(rejectedRequest)
         setConnectionStatus("userRegistered")
-        setSolicitorUserData(null)  
-        setRequiredUserData(null)  
+        setUsersData({...usersData, "toPublicKey": null, "toNickName": null})
         setShowPopUp(false)  
     }
 
     const timeOutrequestReceivedHandler = ()=>{  
-        setSolicitorUserData(null)  
-        setRequiredUserData(null)     
+        setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
         setConnectionStatus("userRegistered")
         setShowPopUp(false)
     }

@@ -8,13 +8,7 @@ export const FindingPairForm = ()=>{
           onBlurHandler,
           tryPairingHandler,
           copyToClipboard,
-          copyPublicKeyText} = useFindingPair()
-
-  // useEffect(()=>{
-  //   publicKeysRef.current = publicKeys
-  // }     
-  // ,[publicKeys])
-  
+          copyPublicKeyText} = useFindingPair() 
                      
   return( 
 
