@@ -2,7 +2,7 @@
     display: block;
     width: 100%;
     height: fit-content;
-    margin-top: 10px;    
+    margin-top: 15px;    
 }
 
 .messageReceivedContainer{
@@ -27,7 +27,7 @@
     justify-content: right; 
     width: fit-content;
     height: fit-content;    
-    padding: 6px 17px 10px 8px; 
+    padding: 6px 17px 15px 8px; 
     background-color: #7BACDD;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
     border-radius: 10px;
@@ -50,7 +50,7 @@
     position: absolute;
     height: fit-content;
     width: fit-content;
-    bottom: 0px;
+    bottom: 1px;
     right: 5px;
     font-size: 11px;
     
