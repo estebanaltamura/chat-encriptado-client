@@ -21,10 +21,11 @@ export const useChat = ()=>{
 		let message = e.target.elements.chatInput.value      
 
 		if(message.length > 0){
-			message = message[0].toUpperCase() + message.slice(1)    
-			const now = new Date()      
+			message = message[0].toUpperCase() + message.slice(1)   		    
+			const now = new Date()
+            const minutes = now.getMinutes() <= 10 ? "0" + String(now.getMinutes()) : String(now.getMinutes())     
 			const messageToSend = {"sendMessage": {"from": publicKeys.from, "to": publicKeys.to, "message": message}}
-			setChatHistory([{type: "messageSent", "message": message, "time": `${String(now.getHours())}:${String(now.getMinutes())}`}, ...chatHistory])        
+			setChatHistory([{type: "messageSent", "message": message, "time": `${String(now.getHours())}:${minutes}`}, ...chatHistory])        
 			sendWebSocketMessage(messageToSend)
 			e.target.elements.chatInput.value = ""
 		}        

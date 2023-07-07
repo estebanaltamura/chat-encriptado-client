@@ -98,9 +98,10 @@ export const WebSocketConnectionContextProvider = ({children})=>{
             const message = pardedMessage.sentMessaje.message
             console.log(message)
             const now = new Date()
-            setChatHistory((chatHistory)=>[{"type": "messageReceived", "message": message, "time": `${String(now.getHours())}:${String(now.getMinutes())}`}, ...chatHistory])            
+            const minutes = now.getMinutes() <= 10 ? "0" + String(now.getMinutes()) : String(now.getMinutes())           
+            setChatHistory((chatHistory)=>[{"type": "messageReceived", "message": message, "time": `${String(now.getHours())}:${minutes}`}, ...chatHistory])            
         }        
-    };
+    }; 
     
     const handleClose = async (e) => {  
                    

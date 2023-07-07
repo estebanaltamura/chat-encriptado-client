@@ -27,35 +27,33 @@
     justify-content: right; 
     width: fit-content;
     height: fit-content;    
-    padding: 6px 7px 8px 9px; 
+    padding: 6px 17px 10px 8px; 
     background-color: #7BACDD;
     box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.75);
     border-radius: 10px;
 }
 
 .message{
-    display: flex;         
-    font-size: 14px;
-    padding-bottom: 18px;
+    display: inline-block;         
+    font-size: 14px;    
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-    height: auto;   
-    
-    overflow-wrap: anywhere; 
-    
+    height: auto;       
+    overflow-wrap: anywhere;     
     width: fit-content;
     max-width: 70vw;
-    max-width: min(70vw, 650px);
-     
-    
-    
+    max-width: min(70vw, 650px);   
     user-select: text;
 }
 
 .timeMessage{
+    
     position: absolute;
+    height: fit-content;
+    width: fit-content;
+    bottom: 0px;
+    right: 5px;
     font-size: 11px;
-    bottom: 3px;
-    right: 9px;
+    
 }
 
 /* .messageLessThan440{
