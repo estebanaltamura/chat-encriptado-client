@@ -190,4 +190,7 @@ FindingPair:
     chequear server como ultima cosa
 
     VERIFICAR EN TODOS LOS ESTADOS POSIBLES QUERER ENTRAR POR BARRA DE DIRECCIONES A ALGUNA DE LAS TRES PAGINAS POSIBLES
+
+    Revisar para cada combinacion connectionStatus, usersData y parpadeos. tambien esta requestError, showPopUp y lastActivity
+
 */

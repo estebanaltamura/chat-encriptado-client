@@ -44,6 +44,7 @@
 /* ------ HEADER ------ */
 .chatHeader{
     grid-area: chatRoomHeader;
+    
     display: grid;
     position:relative;
     grid-template-columns: 1fr 60px;
@@ -56,11 +57,19 @@
 }
 
 .nickNameInHeaderChat{
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    width: 100vw;
+    display: block;
+    position: relative;
+    width: 95%;
+    height: 100%;
+    top: 6px;
+    
+    
+    
+
+   
     overflow: hidden;
+    text-overflow: ellipsis;
+
     font-family: Montserrat;
     font-size: 24px;
     font-weight: 500;
