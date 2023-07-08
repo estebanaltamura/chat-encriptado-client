@@ -193,4 +193,5 @@ FindingPair:
 
     Revisar para cada combinacion connectionStatus, usersData y parpadeos. tambien esta requestError, showPopUp y lastActivity
 
+    Pedirle a Lu El logo con naranja y azul
 */

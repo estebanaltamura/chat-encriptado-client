@@ -73,10 +73,11 @@ export const PopUpContextProvider = ({children})=>{
         }
 
         if(connectionStatus === "requestReceived"){
+            const nickNameHandled = usersDataRef.current.toNickName.slice(0,28) + "..."
             setShowPopUp(true)
             setPopUpData({  "title"                 : "An user wants talk to you",
-                            "message"               : `${usersDataRef.current.toNickName} asks you to talk in a private room`,
-                            "CTAtext"               : `If you want talk with ${usersDataRef.current.toNickName}, please press accept`,
+                            "message"               : `${nickNameHandled} asks you to talk in a private room`,
+                            "CTAtext"               : `If you want talk with ${nickNameHandled}, please press accept`,
                             "type"                  : "twoButtons", 
                             "seconds"               : 50,
                             "acceptButtonText"      : "START CHAT",

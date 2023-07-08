@@ -18,7 +18,7 @@ export const PopUp = ({title, message, type, CTAtext, acceptButtonText, rejectBu
     return(
         <div className="popUpContainer"> 
             <div className="popUpElement">
-                <div className={type === "oneButtonAccept"  ? "popUpGridOneButtonAccept"    : 
+                <div className={type === "oneButtonAccept"  ? "popUpGridOneButtonAccept"    :  
                                 type === "oneButtonCancel"  ? "popUpGridOneButtonCancel"    : 
                                 type === "noButtons"        ? "popUpGridNoButtons"          : 
                                 type === "twoButtons"       ? "popUpGridTwoButton"          : ""}>

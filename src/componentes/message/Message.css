@@ -33,6 +33,14 @@
     border-radius: 10px;
 }
 
+.messageContainersent{
+    background-color: #7BACDD;
+}
+
+.messageContainerReceived{
+    background-color: #b9b9b9;
+}
+
 .message{
     display: inline-block;         
     font-size: 14px;    

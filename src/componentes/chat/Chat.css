@@ -62,14 +62,9 @@
     width: 95%;
     height: 100%;
     top: 6px;
-    
-    
-    
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
     font-family: Montserrat;
     font-size: 24px;
     font-weight: 500;
@@ -162,7 +157,7 @@
     grid-area: submit;
     position: relative;
     border: none;
-    
+    background-color: #e9e9e9;
 }
 
 

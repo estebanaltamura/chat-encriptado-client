@@ -16,7 +16,7 @@ export const Home = ()=>{
                     message                     = {popUpData.message}                      
                     type                        = {popUpData.type}
                     seconds                     = {popUpData.seconds}  
-                    CTAtext                     = {popUpData.CTA}    
+                    CTAtext                     = {popUpData.CTAtext}    
                     acceptButtonText            = {popUpData.acceptButtonText}                
                     rejectButtonText            = {popUpData.rejectButtonText}                       
                     handlerAccept               = {popUpData.handlerAccept}
