@@ -6,6 +6,9 @@ export const webSocketConnectionContext = createContext({})
 
 export const WebSocketConnectionContextProvider = ({children})=>{
   const [ connectionStatus, setConnectionStatus ] = useState("offline")    
+  const socketRef = useRef(null);     
+
+
   const [ requestError, setRequestError ] = useState(null) 
 
   const { handleMessage } = useInternalMessagesWebSocketHandler()
@@ -15,7 +18,6 @@ export const WebSocketConnectionContextProvider = ({children})=>{
   const usersDataRef = useRef()
   const connectionStatusRef = useRef() 
 
-  const socketRef = useRef(null);     
   
   useEffect(()=>{
     connectionStatusRef.current = connectionStatus    
@@ -82,7 +84,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     socketRef.current.close()
   }   
     
-  const WebSocketContextValue = {
+  const WebSocketContextValue = {    
     connectWebSocket,    
     connectionStatus, 
     setConnectionStatus,

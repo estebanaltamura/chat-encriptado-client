@@ -39,7 +39,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Nick name error",
                             "message"               : "Nick name should have only alphanumeric characters and at least one character",                    
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,                           
+                            "seconds"               : 20,                           
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : AcceptNickNameErrorHandler, 
                             "handlerTimeOut"        : timeOutNickNameErrorHandler                       
@@ -51,7 +51,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "Error interacting with server",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,
+                            "seconds"               : 20,
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptServerErrorHandler, 
                             "handlerTimeOut"        : timeOutServerErrorHandler                                 
@@ -64,7 +64,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : "Due to inactivity of more than 1 minute, the connection is going to be closed",
                             "CTAtext"               : "If you want to stay connected, please press the button",
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 5,
+                            "seconds"               : 20,
                             "acceptButtonText"      : "I'M HERE",
                             "handlerAccept"         : acceptDisconnectionByInactivityHandler,
                             "handlerTimeOut"        : timeOutDisconnectionByInactivityHandler
@@ -94,7 +94,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requestErrorRef.current.message}`,
                             "CTAtext"               : `${requestErrorRef.current.CTA}`,
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,                          
+                            "seconds"               : 20,                          
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptRequestErrorHandler,
                             "handlerTimeOut"        : timeOutRequestErrorHandler,                                                          
@@ -106,7 +106,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Request sent",  
                             "message"               : "Waiting for response of the other user",                      
                             "type"                  : "oneButtonCancel", 
-                            "seconds"               : 30,                            
+                            "seconds"               : 20,                            
                             "rejectButtonText"      : "CANCEL",
                             "handlerReject"         : cancelRequestSentHandler, 
                             "handlerTimeOut"        : timeOutRequestSentHandler                                                     
@@ -118,7 +118,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Inserted a empty entry",
                             "message"               : "Please insert a valid public key",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,                            
+                            "seconds"               : 20,                            
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptUserInsertedAnEmptyEntry,
                             "handlerTimeOut"        : timeOutUserInsertedAnEmptyEntry                                                
@@ -130,7 +130,7 @@ export const PopUpContextProvider = ({children})=>{
             setPopUpData({  "title"                 : "Closing",  
                             "message"               : "The other user has close his/her chat",                      
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,                           
+                            "seconds"               : 20,                           
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptOtherUserHasClosedHandler,
                             "handlerTimeOut"        : timeOutOtherUserHasClosedHandler                                                
