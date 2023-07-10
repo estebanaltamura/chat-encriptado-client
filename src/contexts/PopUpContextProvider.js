@@ -101,7 +101,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requestErrorRef.current.message}`,
                             "CTAtext"               : `${requestErrorRef.current.CTA}`,
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 10,                          
+                            "seconds"               : 30,                          
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptRequestErrorHandler,
                             "handlerTimeOut"        : timeOutRequestErrorHandler,                                                          
@@ -228,9 +228,11 @@ export const PopUpContextProvider = ({children})=>{
         setShowPopUp(false) 
     }
 
-    const timeOutNickNameErrorHandler =()=>{   
+    const timeOutNickNameErrorHandler =()=>{ 
+        if(connectionStatusRef.current === "nickNameError") {     
         setConnectionStatus("offline")    
-        setShowPopUp(false)     
+        setShowPopUp(false) 
+        }    
     }
 
     //USER INSERTED AN EMPTY ENTRY IN TRY PAIRING PROCESS
@@ -240,8 +242,10 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutUserInsertedAnEmptyEntry=()=>{
+        if(connectionStatusRef.current === "userInsertedAnEmptyEntry") {        
         setConnectionStatus("userRegistered")
-        setShowPopUp(false) 
+        setShowPopUp(false)
+        } 
     }
 
     //SERVER ERROR
