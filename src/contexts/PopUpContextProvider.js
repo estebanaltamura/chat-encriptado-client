@@ -38,7 +38,8 @@ export const PopUpContextProvider = ({children})=>{
 
     useEffect(()=>{
         
-        connectionStatusRef.current = connectionStatus   
+        connectionStatusRef.current = connectionStatus 
+        console.log(connectionStatusRef.current)  
 
         if(connectionStatus === "nickNameError"){
             setShowPopUp(true)
@@ -165,8 +166,7 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     //REQUEST ERROR HANDLER
-    const acceptRequestErrorHandler = ()=>{     
-        console.log("entro por ok") 
+    const acceptRequestErrorHandler = ()=>{            
         setConnectionStatus("userRegistered")
         setRequestError(null)
         setShowPopUp(false)
@@ -189,15 +189,14 @@ export const PopUpContextProvider = ({children})=>{
         setShowPopUp(false)
     }
 
-    const timeOutRequestSentHandler =()=>{    
+    const timeOutRequestSentHandler =()=>{            
         if(connectionStatusRef.current === "requestSent") {
             const cancelRequestSent = {"cancelRequestSent": {"user1": usersDataRef.current.fromPublicKey, "user2": usersDataRef.current.toPublicKey}} 
             setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
             sendWebSocketMessage(cancelRequestSent)          
             setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
             setShowPopUp(false) 
-        } 
-        else return undefined      
+        }             
     }
 
     //REQUEST RECEIVED
@@ -220,8 +219,7 @@ export const PopUpContextProvider = ({children})=>{
             setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
             setConnectionStatus("userRegistered")
             setShowPopUp(false)
-        }        
-        else return undefined
+        }            
     }
 
     //NICK NAME ERROR
@@ -251,7 +249,7 @@ export const PopUpContextProvider = ({children})=>{
         window.location.href= "./home"              
     }
     
-    const timeOutServerErrorHandler = ()=>{        
+    const timeOutServerErrorHandler = ()=>{           
         window.location.href= "./home" 
     }
 
