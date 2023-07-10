@@ -167,12 +167,14 @@ export const PopUpContextProvider = ({children})=>{
     //REQUEST ERROR HANDLER
     const acceptRequestErrorHandler = ()=>{      
         setConnectionStatus("userRegistered")
+        setRequestError(null)
         setShowPopUp(false)
     }
 
     const timeOutRequestErrorHandler = ()=>{ 
-        if(connectionStatus !== "serverError"()) {
+        if(connectionStatus !== "serverError") {
             setConnectionStatus("userRegistered")
+            setRequestError(null)
             setShowPopUp(false)
         }        
     }
