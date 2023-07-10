@@ -195,7 +195,7 @@ export const PopUpContextProvider = ({children})=>{
             setShowPopUp(false) 
         }
           
-           
+        else window.location.href = "./home" 
     }
 
     //REQUEST RECEIVED
