@@ -50,16 +50,16 @@ export const useInternalMessagesWebSocketHandler = ()=>{
         setUsersData({...usersDataRef.current, "toPublicKey": null, "toNickName": null})
         
         if(pardedMessage.error === "errorUserDoesntExistOrReject"){
-            setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
+          setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
         }
         else if(pardedMessage.error === "errorUserIsTheSame"){
-            setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
+          setRequestError({"title": "User searched  is the same as you", "message": "Enter a valid public key different to your public key", "CTA": "Click OK to continue"})
         }            
         else if(pardedMessage.error === "requesterIsOffline"){
-            setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
+          setRequestError({"title": "Requester is disconnected", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
         }   
         else if(pardedMessage.error === "canceledRequest" && connectionStatus === "requestReceived"){
-            setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
+          setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
         }             
                                
     } 

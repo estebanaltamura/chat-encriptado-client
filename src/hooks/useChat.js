@@ -9,8 +9,7 @@ export const useChat = ()=>{
 	const { usersData } = useContext(usersDataContext)
 	const { setChatHistory, chatHistory} = useContext(chatHistoryContext)
 		
-	const closeConnectionHandler = ()=>{   
-		setConnectionStatus("theUserHasClosed")             
+	const closeConnectionHandler = ()=>{ 		           
 		closeConnection()
 	}
 
