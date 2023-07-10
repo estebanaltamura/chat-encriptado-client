@@ -51,7 +51,10 @@ export const WebSocketConnectionContextProvider = ({children})=>{
     if(connectionStatusRef.current === "theUserHasClosed"){
       window.location.href = "/home"            
     }
-    else setConnectionStatus("serverError")        
+    else{      
+      setUsersData({"fromPublicKey":null, "fromNickName": null, "toPublicKey": null, "toNickName": null})      
+      setConnectionStatus("serverError")
+    }         
         
     socketRef.current = undefined
   }; 
