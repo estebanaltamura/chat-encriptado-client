@@ -26,6 +26,7 @@ export const FindingPair = ()=>{
                   handlerAccept               = {popUpData.handlerAccept}
                   handlerReject               = {popUpData.handlerReject}
                   handlerTimeOut              = {popUpData.handlerTimeOut}
+                  index                       = {Math.random()}
           />  
                     :        
                     

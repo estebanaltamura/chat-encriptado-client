@@ -100,7 +100,7 @@ export const PopUpContextProvider = ({children})=>{
                             "message"               : `${requestErrorRef.current.message}`,
                             "CTAtext"               : `${requestErrorRef.current.CTA}`,
                             "type"                  : "oneButtonAccept", 
-                            "seconds"               : 30,                          
+                            "seconds"               : 10,                          
                             "acceptButtonText"      : "OK",
                             "handlerAccept"         : acceptRequestErrorHandler,
                             "handlerTimeOut"        : timeOutRequestErrorHandler,                                                          
@@ -165,14 +165,15 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     //REQUEST ERROR HANDLER
-    const acceptRequestErrorHandler = ()=>{      
+    const acceptRequestErrorHandler = ()=>{     
+        console.log("entro por ok") 
         setConnectionStatus("userRegistered")
         setRequestError(null)
         setShowPopUp(false)
     }
-
-    const timeOutRequestErrorHandler = ()=>{ 
-        if(connectionStatus !== "serverError") {
+    
+    const timeOutRequestErrorHandler = ()=>{        
+        if(connectionStatusRef.current === "requestError") {
             setConnectionStatus("userRegistered")
             setRequestError(null)
             setShowPopUp(false)
@@ -189,15 +190,14 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutRequestSentHandler =()=>{    
-        if(connectionStatusRef.current !== "serverError") {
+        if(connectionStatusRef.current === "requestSent") {
             const cancelRequestSent = {"cancelRequestSent": {"user1": usersDataRef.current.fromPublicKey, "user2": usersDataRef.current.toPublicKey}} 
             setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
             sendWebSocketMessage(cancelRequestSent)          
             setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
             setShowPopUp(false) 
-        }
-          
-        else window.location.href = "./home" 
+        } 
+        else return undefined      
     }
 
     //REQUEST RECEIVED
@@ -216,12 +216,12 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutrequestReceivedHandler = ()=>{  
-        if(connectionStatusRef.current !== "serverError") {
+        if(connectionStatusRef.current === "requestReceived") {
             setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
             setConnectionStatus("userRegistered")
             setShowPopUp(false)
         }        
-        else window.location.href = "./home"
+        else return undefined
     }
 
     //NICK NAME ERROR
