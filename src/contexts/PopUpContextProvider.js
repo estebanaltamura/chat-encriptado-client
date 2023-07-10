@@ -17,11 +17,15 @@ export const PopUpContextProvider = ({children})=>{
     const [ popUpData, setPopUpData ] = useState({})
 
     const { usersData, setUsersData } = useContext( usersDataContext ) 
+
+
     const usersDataRef = useRef()
     useEffect(()=>{
         usersDataRef.current = usersData        
     },[usersData])  
 
+    const connectionStatusRef = useRef()
+   
     const requestErrorRef = useRef() 
     useEffect(()=>{
         requestErrorRef.current = requestError
@@ -34,6 +38,8 @@ export const PopUpContextProvider = ({children})=>{
 
     useEffect(()=>{
         
+        connectionStatusRef.current = connectionStatus   
+
         if(connectionStatus === "nickNameError"){
             setShowPopUp(true)
             setPopUpData({  "title"                 : "Nick name error",
@@ -181,13 +187,15 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutRequestSentHandler =()=>{    
-        if(connectionStatus !== "serverError"()) {
+        if(connectionStatusRef.current !== "serverError") {
             const cancelRequestSent = {"cancelRequestSent": {"user1": usersDataRef.current.fromPublicKey, "user2": usersDataRef.current.toPublicKey}} 
             setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
             sendWebSocketMessage(cancelRequestSent)          
             setRequestError({"title": "Error finding user", "message": "User doesn't exist or rejected your request", "CTA": "Click OK to continue"})
             setShowPopUp(false) 
-        }        
+        }
+          
+           
     }
 
     //REQUEST RECEIVED
@@ -206,9 +214,12 @@ export const PopUpContextProvider = ({children})=>{
     }
 
     const timeOutrequestReceivedHandler = ()=>{  
-        setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
-        setConnectionStatus("userRegistered")
-        setShowPopUp(false)
+        if(connectionStatusRef.current !== "serverError") {
+            setUsersData({...usersData, "toPublicKey": null, "toNickName": null})  
+            setConnectionStatus("userRegistered")
+            setShowPopUp(false)
+        }        
+        else window.location.href = "./home"
     }
 
     //NICK NAME ERROR
