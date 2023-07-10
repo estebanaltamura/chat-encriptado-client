@@ -6,11 +6,10 @@ import { chatHistoryContext } from "../contexts/ChatHistoryProvider"
 export const useChat = ()=>{
 
 	const { setConnectionStatus, closeConnection, sendWebSocketMessage} = useContext(webSocketConnectionContext)
-	const { usersData, setUsersData } = useContext(usersDataContext)
+	const { usersData } = useContext(usersDataContext)
 	const { setChatHistory, chatHistory} = useContext(chatHistoryContext)
 		
-	const closeConnectionHandler = ()=>{   
-		setUsersData({"fromPublicKey":null, "fromNickName": null, "toPublicKey": null, "toNickName": null})
+	const closeConnectionHandler = ()=>{   		
 		setConnectionStatus("theUserHasClosed")             
 		closeConnection()
 	}

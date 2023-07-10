@@ -66,7 +66,8 @@ export const useInternalMessagesWebSocketHandler = ()=>{
 
     //cierre
     if(pardedMessage.hasOwnProperty("closing")){            
-      if(pardedMessage.closing === "otherUserHasClosed"){                
+      if(pardedMessage.closing === "otherUserHasClosed"){  
+        setUsersData({"fromPublicKey":null, "fromNickName": null, "toPublicKey": null, "toNickName": null})              
         setConnectionStatus("otherUserHasClosed")
       }                        
     }  
