@@ -1,13 +1,16 @@
-import { useEffect } from "react"
+import { useEffect, useContext } from "react"
+import { webSocketConnectionContext } from "../../contexts/WebSocketConnectionProvider";
 import "./PopUp.css"
 
 export const PopUp = ({title, message, type, CTAtext, acceptButtonText, rejectButtonText, seconds, handlerAccept, handlerReject, handlerTimeOut})=>{
-               
+
+    const{ connectionStatus } = useContext(webSocketConnectionContext)
+    
     useEffect(() => {      
       const secondsToMiliSeconds = seconds * 1000;      
       
       const timeOut = setTimeout(() => {        
-        handlerTimeOut();        
+        connectionStatus !== "serverError" && handlerTimeOut();        
       }, secondsToMiliSeconds);
   
       return () => {        
