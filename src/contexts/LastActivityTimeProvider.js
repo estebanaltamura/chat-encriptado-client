@@ -5,18 +5,18 @@ export const lastActivityTimeContext = createContext()
 
 export const LastActivityTimeProvider = ({children})=>{
 
-    const { connectionsStatus, setConnectionStatus } = useContext(webSocketConnectionContext)
+    const { connectionStatus, setConnectionStatus } = useContext(webSocketConnectionContext)
     const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0)
     
     useEffect(()=>{
-        if(connectionsStatus === "userRegistered" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")     
-        if(connectionsStatus === "chating" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")
+        if(connectionStatus === "userRegistered" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")     
+        if(connectionStatus === "chating" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")
         
     }, [secondsFromLastActivity])
 
     useEffect(()=>{
         setSecondsFromLastActivity(0)        
-    }, [connectionsStatus])
+    }, [connectionStatus])
     
     useEffect(()=>{
         
