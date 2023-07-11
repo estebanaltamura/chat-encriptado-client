@@ -30,7 +30,7 @@ export const WebSocketConnectionContextProvider = ({children})=>{
 
   const connectWebSocket = () => {
     if (!socketRef.current) {
-      socketRef.current = new WebSocket('ws://localhost:4000');          
+      socketRef.current = new WebSocket('ws://www.encrypted-chat-backend.online:3000/');          
       socketRef.current.addEventListener('open', handleOpen);
       socketRef.current.addEventListener('message', (e)=> handleMessage(e, setConnectionStatus, connectionStatusRef.current, setRequestError));
       socketRef.current.addEventListener('close', handleClose);
