@@ -1,0 +1,8 @@
+.loginContainer{
+  position:relative;
+  min-height: 100vh;
+  height: fit-content;
+  width: 100vw;
+  padding-top: 30px;
+} 
+

@@ -18,8 +18,7 @@ export const useLogin = ()=>{
         }
 
         if(connectionStatus==="userRegistered"){      
-            setIsLoading(false)
-            
+            setIsLoading(false)            
             history("/findingPair")          
         }        
 

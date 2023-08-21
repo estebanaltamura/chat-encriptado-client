@@ -5,10 +5,12 @@
   box-sizing: border-box;
 }
 
-
-.App{    
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;  
+.spinner{
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  margin: auto;
 }
+

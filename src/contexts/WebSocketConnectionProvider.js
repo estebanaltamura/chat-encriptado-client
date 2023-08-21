@@ -17,7 +17,6 @@ export const WebSocketConnectionContextProvider = ({children})=>{
       
   const usersDataRef = useRef()
   const connectionStatusRef = useRef() 
-
   
   useEffect(()=>{
     connectionStatusRef.current = connectionStatus    

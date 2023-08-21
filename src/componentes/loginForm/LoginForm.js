@@ -17,7 +17,7 @@ export const LoginForm = ()=>{
 
                       :
 
-            <div className="loginContainer">
+            <>
                             
                 <div className="logoContainer">
                   <img className="logoImage" src="https://i.postimg.cc/bNy9QWtG/logo.jpg"/>
@@ -34,7 +34,7 @@ export const LoginForm = ()=>{
                   </form>                                        
                 </div> 
 
-            </div>      
+            </>      
         }
       </>        
     )
