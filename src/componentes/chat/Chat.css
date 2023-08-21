@@ -4,7 +4,7 @@
     margin: auto;    
     width: 100%;
     max-width: 1375px;
-    height: calc(100vh - 62px);
+    height: 100%;
     top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62px;
