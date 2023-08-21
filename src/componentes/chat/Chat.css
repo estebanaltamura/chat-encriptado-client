@@ -30,7 +30,7 @@
 /* ------ HEADER ------ */
 .chatHeader{       
     display: grid;
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     grid-template-columns: 1fr 60px;
