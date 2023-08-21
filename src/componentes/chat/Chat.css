@@ -72,11 +72,12 @@
 
 /* ------ MAIN ------ */
 
-.chatMainArea{
-    grid-area: chatRoomArea;    
+.chatMainArea{      
     display: flex;
     flex-direction: column-reverse;    
-    width: 100%;          
+    justify-content: baseline;
+    width: 100%;  
+    height: 100%;        
     padding-bottom: 5px;    
     overflow-y: auto;    
     overflow-x: hidden;
