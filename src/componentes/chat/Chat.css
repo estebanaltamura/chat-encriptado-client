@@ -4,7 +4,7 @@
     margin: auto;    
     width: 100%;
     max-width: 1375px;
-    min-height: calc(100% - 62px);
+    min-height: 100%;
     top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62px;
@@ -22,11 +22,8 @@
     cursor: pointer;
 }
 
-
-
-
-
 .greenBar{
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -34,9 +31,6 @@
     height: 127px;
     background: #0F4478
 }
-
-
-
 
 /* ------ HEADER ------ */
 .chatHeader{
