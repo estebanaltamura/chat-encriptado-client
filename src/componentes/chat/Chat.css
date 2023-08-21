@@ -30,8 +30,9 @@
 /* ------ HEADER ------ */
 .chatHeader{       
     display: grid;
-    position:absolute;
+    position: fixed;
     top: 0;
+    left: 0;
     grid-template-columns: 1fr 60px;
     grid-template-rows: 45px;
     grid-template-areas: "nickName closeButton";
