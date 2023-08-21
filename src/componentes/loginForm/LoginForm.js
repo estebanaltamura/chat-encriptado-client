@@ -29,7 +29,7 @@ export const LoginForm = ()=>{
                                           
                 <div className="formContainerLogin">
                   <form className="formLogin" onSubmit={startSession}>                        
-                    <input className="nickNameInputLogin" name="nickNameInput" type="text" placeholder="Insert a nick name" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
+                    <input className="nickNameInputLogin" name="nickNameInput" type="text" placeholder="Insert a nick name" autoComplete="off" autoCapitalize="none"  onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
                     <button className="startSessionButtonLogin" type="submit">Start session</button>
                   </form>                                        
                 </div> 
