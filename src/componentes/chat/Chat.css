@@ -2,7 +2,7 @@
     margin: auto;       
     width: 100%;
     max-width: 1375px;
-    height: calc(100vh - 62px);    
+    min-height: calc(100vh - 62px);    
     top: 0px;    
     background-color: #e9e9e9;     
 }
