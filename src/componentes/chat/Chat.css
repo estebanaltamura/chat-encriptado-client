@@ -4,7 +4,7 @@
     margin: auto;    
     width: 100%;
     max-width: 1375px;
-    height: calc(100vh - 122px);
+    height: 100vh;
     top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62px;
@@ -45,10 +45,10 @@
 
 /* ------ HEADER ------ */
 .chatHeader{
-    grid-area: chatRoomHeader;
-    
+    grid-area: chatRoomHeader;    
     display: grid;
-    position:relative;
+    position:absolute;
+    top: 0;
     grid-template-columns: 1fr 60px;
     grid-template-rows: 45px;
     grid-template-areas: "nickName closeButton";
@@ -93,7 +93,8 @@
     grid-area: chatRoomArea;    
     display: flex;
     flex-direction: column-reverse;    
-    width: 100%;         
+    width: 100%;    
+    height: calc(100vh - 122px);     
     padding-bottom: 5px;    
     overflow-y: auto;    
     overflow-x: hidden;
@@ -122,6 +123,8 @@
 
 /* ------ SEND MESSAGE AREA ------*/
 .chatSendMessageBar{
+    position: absolute;
+    bottom: 0;
     grid-area: chatRoomSendMessageBar;
     display: flex;
     align-items: center;
