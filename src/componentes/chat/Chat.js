@@ -11,7 +11,7 @@ import "./Chat.css"
 export const Chat = ()=>{
      
   const { usersData } = useContext(usersDataContext)
-  const { chatHistory } = useContext(chatHistoryContext)
+  const { chatHistory } = useContext(chatHistoryContext)  
           
   const { closeConnectionHandler,
 		      sendMessageHandler } = useChat()    

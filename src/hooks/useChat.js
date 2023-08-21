@@ -15,7 +15,8 @@ export const useChat = ()=>{
 	}
 
 	const sendMessageHandler = (e)=>{
-		e.preventDefault()        
+		e.preventDefault() 
+		e.target.current.focus()       
 		let message = e.target.elements.chatInput.value      
 
 		if(message.length > 0){
