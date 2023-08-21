@@ -34,7 +34,11 @@ export const Chat = ()=>{
             }                                        
           </div>
                                             
-          <div className="chatSendMessageBar">
+          
+                                        
+        </div>  
+
+        <div className="chatSendMessageBar">
             <form className="formChatSendMessageBar" onSubmit={sendMessageHandler}>
               <input className="inputChatSendMessageBar" placeholder="Escriba un mensaje aquí" name="chatInput" autoComplete="off"></input>
               <button className="submitChatSendMessageBarContainer" type="submit">
@@ -42,9 +46,7 @@ export const Chat = ()=>{
                 <IoMdSend  className="submitArrowIconChatSendMessageBar" />
               </button>                              
             </form>
-          </div>
-                                        
-        </div>              
+          </div>            
       </div>
     </>         
   )
