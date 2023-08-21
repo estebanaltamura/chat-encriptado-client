@@ -123,8 +123,7 @@
 
 /* ------ SEND MESSAGE AREA ------*/
 .chatSendMessageBar{
-    position: absolute;
-    bottom: 0;
+    position: relative;
     grid-area: chatRoomSendMessageBar;
     display: flex;
     align-items: center;
@@ -136,6 +135,8 @@
 }
 
 .formChatSendMessageBar{
+    position: absolute;
+    bottom: 0;
     display:grid;
     padding: 7px 8px 7px 10px;
     width: 100%;
