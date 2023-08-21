@@ -1,18 +1,10 @@
 .ChatRoomContainer{
-    width: 100vw;
-    
-    min-height: calc(100% - 62px);    
-    background-color: #ffffff;
-    
-}
-
-.chatContainer{
     display: grid;
     position: relative;    
     margin: auto;    
     width: 100%;
     max-width: 1375px;
-    height: 100%;
+    min-height: calc(100% - 62px);
     top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62px;
@@ -137,9 +129,7 @@
     
 }
 
-.formChatSendMessageBar{
-    position: absolute;
-    bottom: 0;
+.formChatSendMessageBar{   
     display:grid;
     padding: 7px 8px 7px 10px;
     width: 100%;

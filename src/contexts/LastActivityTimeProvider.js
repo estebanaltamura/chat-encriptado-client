@@ -9,8 +9,8 @@ export const LastActivityTimeProvider = ({children})=>{
     const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0)
     
     useEffect(()=>{
-        if(connectionStatus === "userRegistered" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")     
-        if(connectionStatus === "chating" && secondsFromLastActivity >= 30) setConnectionStatus("disconnectionByInactivity")
+        if(connectionStatus === "userRegistered" && secondsFromLastActivity >= 600) setConnectionStatus("disconnectionByInactivity")     
+        if(connectionStatus === "chating" && secondsFromLastActivity >= 600) setConnectionStatus("disconnectionByInactivity")
         
     }, [secondsFromLastActivity])
 

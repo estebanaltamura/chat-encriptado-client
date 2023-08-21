@@ -19,9 +19,7 @@ export const Chat = ()=>{
   return(
     <>
       <div className="ChatRoomContainer">
-        <div className="greenBar"></div>
-
-        <div className="chatContainer">
+        <div className="greenBar"></div>       
                                         
           <div className="chatHeader">
             <p className="nickNameInHeaderChat">{usersData.toNickName}</p>                                            
@@ -33,15 +31,8 @@ export const Chat = ()=>{
               chatHistory.map((element, index)=><Message key={index} type={element.type} message={element.message} time={element.time}/>)
             }                                        
           </div>
-                                            
-          
-                                        
-        </div>  
 
-        
-      </div>
-
-      <div className="chatSendMessageBar">
+          <div className="chatSendMessageBar">
             <form className="formChatSendMessageBar" onSubmit={sendMessageHandler}>
               <input className="inputChatSendMessageBar" placeholder="Escriba un mensaje aquí" name="chatInput" autoComplete="off"></input>
               <button className="submitChatSendMessageBarContainer" type="submit">
@@ -49,7 +40,9 @@ export const Chat = ()=>{
                 <IoMdSend  className="submitArrowIconChatSendMessageBar" />
               </button>                              
             </form>
-          </div>            
+          </div> 
+        
+        </div>      
     </>         
   )
 }
