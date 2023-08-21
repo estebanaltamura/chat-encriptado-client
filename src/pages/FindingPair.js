@@ -31,11 +31,12 @@ export const FindingPair = ()=>{
                     :        
                     
           <>
-            <div className="closeButtonContainerFindingPair">
-              <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler} />
-            </div>   
+            
 
             <div className="findingPairContainer">
+              <div className="closeButtonContainerFindingPair">
+                <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler} />
+              </div>   
               <div className="logoContainer">
                 <img className="logoImage" src="https://i.postimg.cc/bNy9QWtG/logo.jpg"/>
               </div>

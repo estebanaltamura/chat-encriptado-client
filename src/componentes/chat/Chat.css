@@ -4,8 +4,8 @@
     margin: auto;    
     width: 100%;
     max-width: 1375px;
-    min-height: calc(100vh - 160px);
-    height: fit-content;
+    height: 100vh;
+    
     top: 0px;
     grid-template-columns: 1fr;
     grid-template-rows: 60px 1fr 62px;

@@ -1,11 +1,17 @@
-.closeButtonContainerFindingPair{
-    width: 55px;
-    height: 55px;
-    transform: translatex(-50%);
-    margin-top: 10px;    
-    margin-left: 50%;    
+.findingPairContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100vw; 
+    min-height: 100vh;   
+    padding-top: 20px;
+    align-items: center;
+}
+
+.closeButtonContainerFindingPair{   
+    margin-top: 10px;        
     cursor: pointer;
 }
+
 .closeConnectionButtonFindingPair{     
     width: 55px;
     height: 55px;    
@@ -13,21 +19,13 @@
 }
 
 .logoContainer{
+    margin-top: 20px;  
     display: flex;
     justify-content: center;   
 }
 
 .logoImage{
     width:160px;    
-}
-
-.findingPairContainer{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;   
-    padding-top: 20px;
-    align-items: center;
 }
 
 .tutorialMessageContainerFindingPair{

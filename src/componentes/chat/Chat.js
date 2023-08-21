@@ -19,7 +19,7 @@ export const Chat = ()=>{
   return(
     <>
       <div className="ChatRoomContainer">
-        <div className="greenBar"></div>       
+        <div className="greenBar"></div>        
                                         
           <div className="chatHeader">
             <p className="nickNameInHeaderChat">{usersData.toNickName}</p>                                            
