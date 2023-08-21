@@ -1,6 +1,5 @@
 .ChatRoomContainer{        
-    margin: auto;  
-    padding-top: 60px;  
+    margin: auto;       
     width: 100%;
     max-width: 1375px;
     height: calc(100vh - 62px);    
@@ -30,7 +29,7 @@
 /* ------ HEADER ------ */
 .chatHeader{       
     display: grid;
-    position: fixed;
+    position: sticky;    
     top: 0;
     left: 0;
     grid-template-columns: 1fr 60px;
