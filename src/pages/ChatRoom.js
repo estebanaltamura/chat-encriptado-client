@@ -3,9 +3,7 @@ import { PopUpContext } from "../contexts/PopUpContextProvider"
 import { PopUp } from "../componentes/popUp/PopUp"
 import { Chat } from "../componentes/chat/Chat"
 
-
 export const ChatRoom = ()=>{
-
   const { showPopUp, popUpData } = useContext(PopUpContext)
   
   return(

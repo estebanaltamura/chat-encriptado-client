@@ -26,6 +26,3 @@ root.render(
     </UsersDataProvider>
   </React.StrictMode>
 );
-
-
-//quiza isloading no tenga que ser un context

@@ -4,7 +4,6 @@ import { webSocketConnectionContext } from "../contexts/WebSocketConnectionProvi
 import { chatHistoryContext } from "../contexts/ChatHistoryProvider"
 
 export const useChat = ()=>{
-
 	const { setConnectionStatus, closeConnection, sendWebSocketMessage} = useContext(webSocketConnectionContext)
 	const { usersData } = useContext(usersDataContext)
 	const { setChatHistory, chatHistory} = useContext(chatHistoryContext)

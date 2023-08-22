@@ -1,98 +1,86 @@
-
 .logoContainer{
-    display: flex;
-    justify-content: center;   
+  display: flex;
+  justify-content: center;   
 }
 
 .logoImage{
-    width:160px;    
+  width:160px;    
 }
 
 .formContainerLogin{
-    display: flex;
-    position: relative;
-    justify-content: center;    
-    border-radius: 7px;    
-    width: fit-content;
-    height: fit-content;
-    margin: 25px auto 20px auto;
-    
+  display: flex;
+  position: relative;
+  justify-content: center;    
+  border-radius: 7px;    
+  width: fit-content;
+  height: fit-content;
+  margin: 25px auto 20px auto;    
 }
-
 
 .formLogin{
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    max-width: 360px;    
-    height: fit-content;
-    margin: auto;
-    padding: 20px;    
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 360px;    
+  height: fit-content;
+  margin: auto;
+  padding: 20px;    
 }
 
-
 .nickNameInputLogin{
-    width: 100%;        
-    height: 45px;
-    font-family: Montserrat;
-    font-size: 18px;    
-    padding: 0 15px;
-    cursor: text;
-    text-align: center;
-    margin-bottom: 15px;
-    border: 1px solid #e9e9e9;
-    border-radius: 10px;
-    box-shadow: 1px 2px 5px 0px #0F4478;
-    
+  width: 100%;        
+  height: 45px;
+  font-family: Montserrat;
+  font-size: 18px;    
+  padding: 0 15px;
+  cursor: text;
+  text-align: center;
+  margin-bottom: 15px;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 0px #0F4478;    
 }
 
 .nickNameInputLogin::placeholder{
-    text-align: center;
+  text-align: center;
 }
 
 .nickNameInputLogin:focus-visible{   
-    outline: none;
-    text-align: center;
+  outline: none;
+  text-align: center;
 }
 
-
-
 .startSessionButtonLogin{
-    width: 100%;       
-    height: 60px;
-    font-family: Montserrat;
-    font-size: 22px; 
-    font-weight: 500;   
-    background: #0F4478;      
-    color: #F8BF5E;    
-    border: 1px solid transparent;
-    border-radius: 10px;
-    box-shadow: 1px 2px 5px 0px #0F4478;
-    cursor: pointer;
+  width: 100%;       
+  height: 60px;
+  font-family: Montserrat;
+  font-size: 22px; 
+  font-weight: 500;   
+  background: #0F4478;      
+  color: #F8BF5E;    
+  border: 1px solid transparent;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 0px #0F4478;
+  cursor: pointer;
 }
 
 .tutorialMessageContainerLogin{
-    display: flex;
-    justify-content: center;    
-    padding: 20px;
-    margin-top: 25px;
+  display: flex;
+  justify-content: center;    
+  padding: 20px;
+  margin-top: 25px;
 }
 
 .tutorialMessageLogin{
-    font-family: Montserrat;
-    font-size: 17px;
-    font-weight: 700;
-    font-style: italic;
-    text-align: center;
-    width: 100%;
-    max-width: 450px;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  max-width: 450px;
 }
 
 .spinner{
-    margin: auto;
+  margin: auto;
 }
-
-
-
-
-

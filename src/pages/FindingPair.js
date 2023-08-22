@@ -1,13 +1,12 @@
 import { useContext } from "react"
-import { useFindingPair } from "../hooks/useFindingPair";
 import { PopUpContext } from "../contexts/PopUpContextProvider";
+import { useFindingPair } from "../hooks/useFindingPair";
 import { PopUp } from "../componentes/popUp/PopUp";
-import { FindingPairForm } from "../componentes/findingPairForm/FindingPairForm";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { FindingPairForm } from "../componentes/findingPairForm/FindingPairForm";
 import "./FindingPair.css"
 
-export const FindingPair = ()=>{
-    
+export const FindingPair = ()=>{    
   const { showPopUp, popUpData } = useContext(PopUpContext)   
   const { closeConnectionHandler} = useFindingPair()  
    
@@ -28,11 +27,8 @@ export const FindingPair = ()=>{
                   handlerTimeOut              = {popUpData.handlerTimeOut}
                   key                         = {Math.random()}
           />  
-                    :        
-                    
-          <>
-            
-
+                    :                      
+          <>   
             <div className="findingPairContainer">
               <div className="closeButtonContainerFindingPair">
                 <AiOutlineCloseCircle className="closeConnectionButtonFindingPair" onClick={closeConnectionHandler} />
@@ -49,7 +45,6 @@ export const FindingPair = ()=>{
 
               <FindingPairForm />  
             </div>
-
           </>   
       }
     </>        

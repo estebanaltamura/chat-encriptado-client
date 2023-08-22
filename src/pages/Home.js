@@ -23,9 +23,7 @@ export const Home = ()=>{
                     handlerReject               = {popUpData.handlerReject}
                     handlerTimeOut              = {popUpData.handlerTimeOut}
             />  
-
-                      :
-                      
+                      :                      
             <LoginForm />                               
         }
       </div>        

@@ -1,9 +1,8 @@
-import { AiOutlineCopy } from "react-icons/ai";
 import { useFindingPair } from '../../hooks/useFindingPair';
+import { AiOutlineCopy } from "react-icons/ai";
 import "./FindingPairForm.css"
  
 export const FindingPairForm = ()=>{ 
-
   const { onFocusHandler,
           onBlurHandler,
           tryPairingHandler,
@@ -11,7 +10,6 @@ export const FindingPairForm = ()=>{
           copyPublicKeyText} = useFindingPair() 
                      
   return( 
-
     <div className="formContainerFindingPair">                    
       <form className="formFindingPair" onSubmit={tryPairingHandler}>
       <input className="nickNameInputFindingPair" type="text" name="findingPairInput" placeholder="Insert a public key of your peer" autoComplete="off" onFocus={onFocusHandler} onBlur={onBlurHandler}></input>
@@ -24,5 +22,3 @@ export const FindingPairForm = ()=>{
     </div>             
   )
 }
-
-

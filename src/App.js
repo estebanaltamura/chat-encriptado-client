@@ -26,9 +26,3 @@ function App() {
 }
 
 export default App;
-
-//SOLUCION: Cuando alguien entra por la barra de direcciones a una direccion se borran todos los estados si existen. 
-//Por los condicionales definidos:
-//                                  -Cuando el usuario entra por primera vez a cualquier sub dominio se reenvia a home
-//                                  -Cuando el usuario estaba usando la aplicacion y por barra de direcciones ingresa cualquier subdominio se resetea automaticamente 
-//                                   todos los estados por defecto y connectionstatus vuelve a "offline" por que tambien cualquier subdominio es redireccionado a home

@@ -1,15 +1,14 @@
 import { useContext } from "react";
 import { usersDataContext } from "../../contexts/UsersDataProvider";
 import { chatHistoryContext } from "../../contexts/ChatHistoryProvider";
+import { useChat } from "../../hooks/useChat";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { Message } from "../message/Message";
 import { BsFillCircleFill } from "react-icons/bs";
 import { IoMdSend } from "react-icons/io";
-import { Message } from "../message/Message";
-import { useChat } from "../../hooks/useChat";
 import "./Chat.css"
 
-export const Chat = ()=>{
-     
+export const Chat = ()=>{     
   const { usersData } = useContext(usersDataContext)
   const { chatHistory } = useContext(chatHistoryContext)  
           
@@ -47,31 +46,3 @@ export const Chat = ()=>{
     </>         
   )
 }
-
-
-
-
-
-
-// ver que cuando entra en una ruta no contemplada vaya a login
-
-
-    //caso 1: Entra al login y no hay servidor NO GESTIONAR
-    //caso 2: Estando en login el servidor se apaga NO GESTIONAR
-
-    //GESTIONAR CAIDAS DEL SERVER:
-    //caso 3: Clickeando en iniciar sesion no hay servidor. IDEA: Dispare serverError que es un popUp que al cerrarlo o timeOut redirecciona a login. EVENTO CLOSE XXX
-    //caso 4: En findingPair se desconecta el server. IDEA: Dispare serverError que es un popUp que al cerrarlo o timeOut redirecciona a login. EVENTO CLOSE XXX
-    //caso 5: En chatRoom se desconecta el server. IDEA: Dispare serverError que es un popUp que al cerrarlo o timeOut redirecciona a login. EVENTO CLOSE XXX
-    //EVENTO CLOSE  NO REDIRECCIONA A LOGIN SIN POPUP
-
-
-    
-    //GESTIONAR ACCIONES DEL USUARIO:
-    //caso 6: cierre chat CLOSE CONNECTION XXX
-    //caso 7: el otro cierra el chat OTHER USER HAS CLOSED XXX
-    //caso 7: el otro estando en chatRoom se desconecta VER XXX
-
-
-    //Que genere un shutting down que al aceptar o timeout haga close connection
-

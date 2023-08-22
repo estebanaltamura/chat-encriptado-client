@@ -1,59 +1,59 @@
 .findingPairContainer{
-    display: flex;
-    flex-direction: column;
-    width: 100vw; 
-    min-height: 100vh;   
-    padding-top: 20px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100vw; 
+  min-height: 100vh;   
+  padding-top: 20px;
+  align-items: center;
 }
 
 .closeButtonContainerFindingPair{   
-    margin-top: 10px;        
-    cursor: pointer;
+  margin-top: 10px;        
+  cursor: pointer;
 }
 
 .closeConnectionButtonFindingPair{     
-    width: 55px;
-    height: 55px;    
-    color: #0F4478;
+  width: 55px;
+  height: 55px;    
+  color: #0F4478;
 }
 
 .logoContainer{
-    margin-top: 20px;  
-    display: flex;
-    justify-content: center;   
+  margin-top: 20px;  
+  display: flex;
+  justify-content: center;   
 }
 
 .logoImage{
-    width:160px;    
+  width:160px;    
 }
 
 .tutorialMessageContainerFindingPair{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;  
-    align-items:center;
-    width: fit-content;
-    padding: 20px;
-    margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items:center;
+  width: fit-content;
+  padding: 20px;
+  margin-top: 15px;
 }
 
 .tutorialMessageFindingPair{
-    font-family: Montserrat;
-    font-size: 17px;
-    font-weight: 700;
-    font-style: italic;
-    text-align: center;
-    width: 100%;
-    max-width: 550px;
-    margin: 2px 0;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-weight: 700;
+  font-style: italic;
+  text-align: center;
+  width: 100%;
+  max-width: 550px;
+  margin: 2px 0;
 }
 
 .or{
-    font-size: 24px;
-    font-weight: 900;
+  font-size: 24px;
+  font-weight: 900;
 }
 
 .waitingMessage{
-    margin: auto;
+  margin: auto;
 }

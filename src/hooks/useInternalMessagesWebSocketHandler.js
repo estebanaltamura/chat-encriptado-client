@@ -3,7 +3,6 @@ import { chatHistoryContext } from "../contexts/ChatHistoryProvider";
 import { usersDataContext } from "../contexts/UsersDataProvider";
 
 export const useInternalMessagesWebSocketHandler = ()=>{
-
   const { setChatHistory } = useContext(chatHistoryContext)
   const { usersData, setUsersData } = useContext(usersDataContext)
   
@@ -60,8 +59,7 @@ export const useInternalMessagesWebSocketHandler = ()=>{
         }   
         else if(pardedMessage.error === "canceledRequest" && connectionStatus === "requestReceived"){
           setRequestError({"title": "Requester cancel the request", "message": "Enter a valid public key of an online user or wait for a request", "CTA": "Click OK to continue"})
-        }             
-                               
+        }                                 
     } 
 
     //cierre
@@ -88,7 +86,3 @@ export const useInternalMessagesWebSocketHandler = ()=>{
     }
   )
 }
-
-
-
-

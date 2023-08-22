@@ -3,7 +3,6 @@ import { createContext, useState } from "react"
 export const chatHistoryContext = createContext()
 
 export const ChatHistoryProvider = ({ children })=>{
-
     const  [chatHistory, setChatHistory] = useState([])
 
     return(

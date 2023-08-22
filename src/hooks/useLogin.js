@@ -4,12 +4,9 @@ import { webSocketConnectionContext } from "../contexts/WebSocketConnectionProvi
 import nacl from 'tweetnacl';
 
 export const useLogin = ()=>{
-
     const [ isLoading, setIsLoading ] = useState(false)
-    const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)    
-    
-    const user = useRef()   
-    
+    const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } = useContext(webSocketConnectionContext)       
+    const user = useRef()      
     const history = useNavigate()
 
     useEffect(()=>{        
@@ -37,7 +34,6 @@ export const useLogin = ()=>{
         const keyPair = nacl.box.keyPair();
         const publicKey = keyPair.publicKey;
         const privateKey = keyPair.secretKey;
-
 
         const publicKeyString = String(publicKey)
         user.current = {

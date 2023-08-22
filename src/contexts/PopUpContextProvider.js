@@ -2,11 +2,9 @@ import { useState, useEffect, useContext, createContext, useRef } from "react"
 import { webSocketConnectionContext } from "./WebSocketConnectionProvider"
 import { usersDataContext } from "./UsersDataProvider"
 
-
 export const PopUpContext = createContext({}) 
 
 export const PopUpContextProvider = ({children})=>{
-
     const { connectionStatus, 
             setConnectionStatus, 
             sendWebSocketMessage,  
@@ -17,7 +15,6 @@ export const PopUpContextProvider = ({children})=>{
     const [ popUpData, setPopUpData ] = useState({})
 
     const { usersData, setUsersData } = useContext( usersDataContext ) 
-
 
     const usersDataRef = useRef()
     useEffect(()=>{
@@ -35,9 +32,7 @@ export const PopUpContextProvider = ({children})=>{
     }     
     ,[requestError])
 
-
-    useEffect(()=>{
-        
+    useEffect(()=>{        
         connectionStatusRef.current = connectionStatus 
         console.log(connectionStatusRef.current)  
 

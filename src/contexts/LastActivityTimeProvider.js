@@ -4,7 +4,6 @@ import { webSocketConnectionContext } from "./WebSocketConnectionProvider"
 export const lastActivityTimeContext = createContext()
 
 export const LastActivityTimeProvider = ({children})=>{
-
     const { connectionStatus, setConnectionStatus } = useContext(webSocketConnectionContext)
     const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0)
     
@@ -69,5 +68,3 @@ export const LastActivityTimeProvider = ({children})=>{
         </lastActivityTimeContext.Provider>
     )
 }
-
-

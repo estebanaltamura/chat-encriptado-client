@@ -5,7 +5,6 @@ import { usersDataContext } from "../contexts/UsersDataProvider";
 import { PopUpContext } from "../contexts/PopUpContextProvider"
 
 export const useFindingPair = ()=>{
-
   const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } = useContext(webSocketConnectionContext)
   const { usersData } = useContext(usersDataContext)
   const [ copyPublicKeyText, setCopyPublicKeyText ] = useState("Copy my public key") 
@@ -44,7 +43,6 @@ export const useFindingPair = ()=>{
       clearTimeout(timeOut)
     },1500)        
   };
-
 
   // BEHAVIOR INPUT
   const onFocusHandler = (e)=>{    
