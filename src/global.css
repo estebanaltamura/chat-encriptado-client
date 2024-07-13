@@ -1,15 +1,31 @@
-*, h1, h2, h3, h4, h5, h6, p, span{
+*,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span {
   padding: 0;
   margin: 0;
   user-select: none;
   box-sizing: border-box;
 }
 
-.spinner{
+.spinner {
   position: absolute;
   width: 40px;
   height: 40px;
   top: calc(50% - 20px);
   left: calc(50% - 20px);
   margin: auto;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }

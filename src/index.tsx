@@ -1,28 +1,35 @@
-import React from 'react';
+// ** React Imports
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom/client';
+
+// ** Contexts Imports
 import { UsersDataProvider } from './contexts/UsersDataProvider';
 import { ChatHistoryProvider } from './contexts/ChatHistoryProvider';
-import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnectionProvider';
 import { PopUpContextProvider } from './contexts/PopUpContextProvider';
 import { LastActivityTimeProvider } from './contexts/LastActivityTimeProvider';
+
+// ** Web socket provider
+import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnectionProvider';
+
+// ** Cpmponent Imports
 import App from './App';
-import './index.css';
 
+import './global.css';
 
+const root: ReactDOM.Root = ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <UsersDataProvider>
       <ChatHistoryProvider>
-        <WebSocketConnectionContextProvider>    
+        <WebSocketConnectionContextProvider>
           <PopUpContextProvider>
             <LastActivityTimeProvider>
-              <App />       
+              <App />
             </LastActivityTimeProvider>
           </PopUpContextProvider>
-        </WebSocketConnectionContextProvider>      
+        </WebSocketConnectionContextProvider>
       </ChatHistoryProvider>
     </UsersDataProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

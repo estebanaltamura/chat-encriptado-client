@@ -1,6 +1,12 @@
 import "./Message.css"
 
-export const Message = ({message, type, time})=>{    
+interface MessageProps {
+  message: string;
+  type: string;
+  time: string;
+}
+
+export const Message = ({message, type, time}: MessageProps)=>{
   return(
     <div className="messageRow">
       <div className={type === "messageReceived" ? "messageReceivedContainer" : "messageSentContainer"}>   
