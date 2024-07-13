@@ -11,34 +11,29 @@ import './Chat.css';
 export const Chat = () => {
   const { usersData } = useContext(UsersDataContext);
   const { chatHistory } = useContext(ChatHistoryContext);
-
   const { closeConnectionHandler, sendMessageHandler } = useChat();
 
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowHeight(window.innerHeight);
+    const updateViewportHeight = () => {
+      setViewportHeight(window.visualViewport ? window.visualViewport.height : window.innerHeight);
     };
 
-    const handleFocus = () => {
-      setTimeout(() => {
-        setWindowHeight(window.innerHeight);
-      }, 300);
-    };
+    updateViewportHeight(); // Set initial height
 
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('focusin', handleFocus);
+    window.visualViewport?.addEventListener('resize', updateViewportHeight);
+    window.visualViewport?.addEventListener('scroll', updateViewportHeight);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('focusin', handleFocus);
+      window.visualViewport?.removeEventListener('resize', updateViewportHeight);
+      window.visualViewport?.removeEventListener('scroll', updateViewportHeight);
     };
   }, []);
 
   return (
     <>
-      <div className="ChatRoomContainer" style={{ height: windowHeight, overflowY: 'auto', width: '100%' }}>
+      <div className="ChatRoomContainer" style={{ height: viewportHeight, overflowY: 'auto', width: '100%' }}>
         <div className="greenBar"></div>
 
         <div className="chatHeader">
