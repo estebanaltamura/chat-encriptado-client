@@ -22,6 +22,14 @@ function App() {
   const { connectionStatus } = useContext(WebSocketConnectionContext);
   const { showPopUp, popUpData } = useContext(PopUpContext);
 
+  const handleFullScreen = () => {
+    const elem = document.documentElement; // O puedes seleccionar un elemento específico
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    }
+  };
+
   return (
     <div className="app">
       {showPopUp && popUpData && (
@@ -54,6 +62,10 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
+
+      <button onClick={handleFullScreen} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        Go Fullscreen
+      </button>
     </div>
   );
 }
