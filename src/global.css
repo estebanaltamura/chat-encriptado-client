@@ -1,3 +1,4 @@
+/* Global styles */
 *,
 h1,
 h2,
@@ -13,19 +14,162 @@ span {
   box-sizing: border-box;
 }
 
-.spinner {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  top: calc(50% - 20px);
-  left: calc(50% - 20px);
-  margin: auto;
-}
-
-.app {
+/* Login styles */
+.formLogin {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  width: 100vw;
+  max-width: 360px;
+  height: fit-content;
+  margin: auto;
+  padding: 20px;
+}
+
+.nickNameInputLogin {
+  width: 100%;
+  height: 45px;
+  font-family: Montserrat;
+  font-size: 18px;
+  padding: 0 15px;
+  cursor: text;
+  text-align: center;
+  margin-bottom: 15px;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 0px #0f4478;
+}
+
+.nickNameInputLogin::placeholder {
+  text-align: center;
+}
+
+.nickNameInputLogin:focus-visible {
+  outline: none;
+  text-align: center;
+}
+
+/* Finding pair styles */
+.formFindingPair {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 360px;
+  height: fit-content;
+  margin: auto;
+  padding: 20px;
+}
+
+.nickNameInputFindingPair {
+  width: 100%;
+  height: 45px;
+  margin-bottom: 20px;
+  font-family: Montserrat;
+  font-size: 18px;
+  padding: 0 15px;
+  cursor: text;
+  text-align: center;
+  border: 1px solid #e9e9e9;
+  border-radius: 10px;
+  box-shadow: 1px 2px 5px 0px #0f4478;
+}
+
+.nickNameInputFindingPair::placeholder {
+  text-align: center;
+}
+
+.nickNameInputFindingPair:focus-visible {
+  outline: none;
+  text-align: center;
+}
+
+.copyIcon {
+  display: inline;
+  width: 20px;
+  height: 20px;
+}
+
+.findingPairLogoImage {
+  width: 160px;
+}
+
+.closeConnectionButtonFindingPair {
+  width: 55px;
+  height: 55px;
+  color: #0f4478;
+}
+
+/* Chat styles */
+.formChatSendMessageBar {
+  display: grid;
+  padding: 7px 8px 7px 10px;
+  width: 100%;
+  height: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  grid-template-columns: 1fr 60px;
+  grid-template-rows: 1fr;
+  grid-template-areas: 'input submit';
+}
+
+.inputChatSendMessageBar {
+  grid-area: input;
+  padding: 9px 12px;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid #c4c4c4;
+  background-color: #e9e9e9;
+}
+
+.inputChatSendMessageBar:focus-visible {
+  outline: none;
+}
+
+.closeButtonInHeader {
+  margin: auto;
+  width: 46px;
+  height: 46px;
+  margin-right: 5px;
+  color: #e9e9e9;
+  cursor: pointer;
+}
+
+.submitCircleChatSendMessageBar {
+  position: absolute;
+  top: 2px;
+  left: 8px;
+  display: flex;
+  margin: auto;
+  width: 44px;
+  height: 44px;
+  color: 'black';
+}
+
+.submitArrowIconChatSendMessageBar {
+  position: absolute;
+  top: 6px;
+  left: 16px;
+  z-index: 2;
+  color: white;
+  width: 35px;
+  height: 35px;
+}
+
+/* Scrollbar styles */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e9e9e9;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: rgba(0, 60, 116, 0.7);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(0, 96, 185);
 }

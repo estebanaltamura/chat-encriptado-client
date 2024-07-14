@@ -14,6 +14,7 @@ import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnecti
 // ** Cpmponent Imports
 import App from './App';
 
+// ** CSS Import
 import './global.css';
 
 const root: ReactDOM.Root = ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container);

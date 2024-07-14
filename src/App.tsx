@@ -2,36 +2,68 @@
 import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-// ** Web socket connection
+// ** Contexts Imports
+import { PopUpContext } from './contexts/PopUpContextProvider';
+
+// ** Web socket connection context import
 import { WebSocketConnectionContext } from './contexts/WebSocketConnectionProvider';
+
+// ** Material UI Imports
+import { Box, Typography, useMediaQuery } from '@mui/material';
 
 // ** Pages Imports
 import { Home } from './pages/Home';
 import { FindingPair } from './pages/FindingPair';
 import { ChatRoom } from './pages/ChatRoom';
 
-// ** Bootstrap Import
-import 'bootstrap/dist/css/bootstrap.css';
+// ** Pop up component import
+import { PopUp } from './componentes/popUp/PopUp';
 
 // ** CSS Import
 import './global.css';
-import { PopUp } from './componentes/popUp/PopUp';
-import { PopUpContext } from './contexts/PopUpContextProvider';
 
-function App() {
+const App: React.FC = () => {
+  // ** Contexts
   const { connectionStatus } = useContext(WebSocketConnectionContext);
   const { showPopUp, popUpData } = useContext(PopUpContext);
 
-  const handleFullScreen = () => {
-    const elem = document.documentElement; // O puedes seleccionar un elemento específico
+  const isDesktop = useMediaQuery('(min-width: 1200px)');
 
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    }
-  };
+  if (!isDesktop)
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          padding: '0 20px',
+          height: '100vh',
+          width: '100vw',
+        }}
+      >
+        <Typography sx={{ fontSize: '22px', fontWeight: '600', lineHeight: '28px' }}>
+          Only available on desktop
+        </Typography>
+        <Typography sx={{ fontSize: '18px', fontWeight: '600', lineHeight: '22px' }}>
+          Please use a desktop to use this app
+        </Typography>
+        <Typography sx={{ fontSize: '14px', marginTop: '15px' }}>
+          Soon It will be available a mobile version developped in React Native
+        </Typography>
+      </Box>
+    );
 
   return (
-    <div className="app">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '100vh',
+      }}
+    >
       {showPopUp && popUpData && (
         <PopUp
           title={popUpData.title}
@@ -62,12 +94,8 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-
-      <button onClick={handleFullScreen} style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        Go Fullscreen
-      </button>
-    </div>
+    </Box>
   );
-}
+};
 
 export default App;

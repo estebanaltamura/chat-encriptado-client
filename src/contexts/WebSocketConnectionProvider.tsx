@@ -12,7 +12,7 @@ interface IWebSocketConnectionContextType {
   connectionStatus: string | null;
   setConnectionStatus: React.Dispatch<React.SetStateAction<string | null>>;
   sendWebSocketMessage: (message: unknown) => void;
-  createUser: (message: string) => void;
+  createUser: (message: unknown) => void;
   closeConnection: () => void;
   tryPairing: (publicKeyUser1: string, publicKeyUser2: string) => void;
   setRequestError: React.Dispatch<
@@ -114,7 +114,7 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
     }
   };
 
-  const createUser = (message: string) => {
+  const createUser = (message: unknown) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
       socketRef.current.send(JSON.stringify({ createUserData: message }));
     }
