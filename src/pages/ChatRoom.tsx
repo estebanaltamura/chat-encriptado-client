@@ -28,6 +28,30 @@ export const ChatRoom: React.FC = () => {
     <>
       <Box
         sx={{
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100vh',
+          backgroundColor: 'black',
+          opacity: '0.5',
+        }}
+      >
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '130px',
+            backgroundColor: 'green',
+            opacity: '0.5',
+          }}
+        ></Box>
+      </Box>
+
+      <Box
+        sx={{
           margin: '35px 0 35px 0',
           width: '70%',
           maxWidth: '1700px',
@@ -35,6 +59,7 @@ export const ChatRoom: React.FC = () => {
           backgroundColor: '#e9e9e9',
           borderRadius: '5px',
           border: 'none',
+          zIndex: '1',
         }}
       >
         <Box
