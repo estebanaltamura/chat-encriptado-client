@@ -11,7 +11,7 @@ import { LastActivityTimeProvider } from './contexts/LastActivityTimeProvider';
 // ** Web socket provider
 import { WebSocketConnectionContextProvider } from './contexts/WebSocketConnectionProvider';
 
-// ** Cpmponent Imports
+// ** Component Imports
 import App from './App';
 
 // ** CSS Import

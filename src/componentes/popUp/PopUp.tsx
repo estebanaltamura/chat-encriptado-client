@@ -1,4 +1,7 @@
+// ** React Imports
 import { useEffect } from 'react';
+
+// ** Styles Imports
 import './PopUp.css';
 
 interface PopUpProps {

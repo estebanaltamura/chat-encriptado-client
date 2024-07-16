@@ -1,4 +1,7 @@
+// ** React Imports
 import { useState, useEffect, useContext, createContext, useRef } from 'react';
+
+// ** Contexts Imports
 import { WebSocketConnectionContext } from './WebSocketConnectionProvider';
 import { UsersDataContext } from './UsersDataProvider';
 

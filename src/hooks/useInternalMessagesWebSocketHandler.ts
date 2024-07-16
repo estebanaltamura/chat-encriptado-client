@@ -1,4 +1,7 @@
+// ** React Imports
 import { useContext, useEffect, useRef } from 'react';
+
+// ** Contexts Imports
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 

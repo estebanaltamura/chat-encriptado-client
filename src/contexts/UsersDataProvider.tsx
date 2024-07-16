@@ -1,3 +1,4 @@
+// ** React Imports
 import { createContext, useState } from 'react';
 
 interface IUsersDataContextType {
@@ -25,6 +26,7 @@ const UsersDataContextInitialValue: IUsersDataContextType = {
 export const UsersDataContext = createContext(UsersDataContextInitialValue);
 
 export const UsersDataProvider = ({ children }: { children: React.ReactNode }) => {
+  // ** States
   const [usersData, setUsersData] = useState<{
     fromPublicKey: string | null;
     fromNickName: string | null;

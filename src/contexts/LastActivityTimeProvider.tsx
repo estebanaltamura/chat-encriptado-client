@@ -1,4 +1,7 @@
+// ** React Imports
 import { createContext, useEffect, useState, useContext } from 'react';
+
+// ** Contexts Imports
 import { WebSocketConnectionContext } from './WebSocketConnectionProvider';
 
 interface ILastActivityTimeContextType {
@@ -14,7 +17,10 @@ const lastActivityTimeContextInitialValue: ILastActivityTimeContextType = {
 export const LastActivityTimeContext = createContext(lastActivityTimeContextInitialValue);
 
 export const LastActivityTimeProvider = ({ children }: { children: React.ReactNode }) => {
+  // ** Contexts
   const { connectionStatus, setConnectionStatus } = useContext(WebSocketConnectionContext);
+
+  // ** States
   const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0);
 
   useEffect(() => {

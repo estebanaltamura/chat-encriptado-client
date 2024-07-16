@@ -16,12 +16,15 @@ import { useChat } from '../hooks/useChat';
 // ** Component Imports
 import { Message } from '../componentes/message/Message';
 
+// ** Material UI Imports
 import { Box, Typography, Button } from '@mui/material';
 
 export const ChatRoom: React.FC = () => {
+  // ** Contexts
   const { usersData } = useContext(UsersDataContext);
   const { chatHistory } = useContext(ChatHistoryContext);
 
+  // ** Hooks
   const { closeConnectionHandler, sendMessageHandler } = useChat();
 
   return (

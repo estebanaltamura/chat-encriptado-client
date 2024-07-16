@@ -8,6 +8,7 @@ import { Box, Typography, Button } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export const LoginForm: React.FC = () => {
+  // ** Hooks
   const { onFocusHandler, onBlurHandler, isLoading, startSession } = useLogin();
 
   if (isLoading)

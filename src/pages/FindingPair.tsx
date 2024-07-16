@@ -1,6 +1,3 @@
-// ** React Imports
-import { useContext } from 'react';
-
 // Hooks Imports
 import { useFindingPair } from '../hooks/useFindingPair';
 
@@ -14,6 +11,7 @@ import { FindingPairForm } from '../componentes/findingPairForm/FindingPairForm'
 import { Box, Typography } from '@mui/material';
 
 export const FindingPair: React.FC = () => {
+  // ** Hooks
   const { closeConnectionHandler } = useFindingPair();
 
   return (

@@ -1,4 +1,7 @@
+// ** React Imports
 import { FormEvent, useContext } from 'react';
+
+// ** Contexts Imports
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
