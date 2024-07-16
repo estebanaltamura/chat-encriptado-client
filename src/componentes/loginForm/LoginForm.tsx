@@ -6,24 +6,13 @@ import { Box, Typography, Button } from '@mui/material';
 
 // ** Component Imports
 import CircularProgress from '@mui/material/CircularProgress';
+import Spinner from '../spinner/Spinner';
 
 export const LoginForm: React.FC = () => {
   // ** Hooks
   const { onFocusHandler, onBlurHandler, isLoading, startSession } = useLogin();
 
-  if (isLoading)
-    return (
-      <CircularProgress
-        sx={{
-          position: 'absolute',
-          width: '40px',
-          height: '40px',
-          top: 'calc(50% - 20px)',
-          left: 'calc(50% - 20px)',
-          margin: 'auto',
-        }}
-      />
-    );
+  if (isLoading) return <Spinner />;
 
   return (
     <>
@@ -76,15 +65,16 @@ export const LoginForm: React.FC = () => {
               fontFamily: 'Montserrat',
               fontSize: '22px',
               textTransform: 'none',
-              background: '#0f4478',
-              color: '#f8bf5e',
+              backgroundColor: '#0f4478',
+              color: '#F09F18',
+
               border: '1px solid transparent',
               borderRadius: '10px',
               boxShadow: '1px 2px 5px 0px #0f4478',
               cursor: 'pointer',
               '&:hover': {
-                background: '#3D007A',
-                color: '#f8bf5e',
+                backgroundColor: '#0f4478',
+                color: '#F09F18',
               },
             }}
             type="submit"

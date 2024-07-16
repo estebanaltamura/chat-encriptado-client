@@ -27,62 +27,24 @@ export const PopUp = ({
   handlerReject,
   handlerTimeOut,
 }: PopUpProps) => {
-  const isDesktop = useMediaQuery('(min-width: 768px)');
-
-  const gridStyles = {
-    oneButtonAccept: {
-      display: 'grid',
-      height: 'auto',
-      width: '100%',
-      gridTemplateColumns: '100%',
-      gridTemplateRows: isDesktop ? '80px 50px auto auto 60px' : '80px 80px auto auto 60px',
-      gridTemplateAreas: `
-        "logo"
-        "titulo"
-        "mensaje"
-        "CTA"
-        "boton2"
-      `,
+  const buttonStyles = {
+    height: '50px',
+    width: '270px',
+    marginTop: '20px',
+    fontSize: '20px',
+    fontWeight: '500',
+    fontFamily: 'Montserrat',
+    color: 'black',
+    border: '1px solid transparent',
+    borderRadius: '10px',
+    boxShadow: '1px 2px 5px 0px #5c5c5c',
+    '&:hover': {
+      backgroundColor: '#0f4478',
+      color: '#F09F18',
     },
-    oneButtonCancel: {
-      display: 'grid',
-      height: 'auto',
-      width: '100%',
-      gridTemplateRows: isDesktop ? '80px 50px auto auto 60px' : '80px 80px auto auto 60px',
-      gridTemplateAreas: `
-        "logo"
-        "titulo"
-        "mensaje"
-        "CTA"
-        "boton1"
-      `,
-    },
-    noButtons: {
-      display: 'grid',
-      height: 'auto',
-      width: '100%',
-      gridTemplateColumns: '100%',
-      gridTemplateRows: isDesktop ? '80px 50px auto' : '80px 80px auto',
-      gridTemplateAreas: `
-        "logo"
-        "titulo"
-        "mensaje"
-      `,
-    },
-    twoButtons: {
-      display: 'grid',
-      height: 'auto',
-      width: '100%',
-      gridTemplateColumns: '100%',
-      gridTemplateRows: isDesktop ? '80px 50px auto auto 60px 60px' : '80px 80px auto auto 60px 60px',
-      gridTemplateAreas: `
-        "logo"
-        "titulo"
-        "mensaje"
-        "CTA"
-        "boton1"
-        "boton2"
-      `,
+    '&:focus-visible': {
+      outline: 'none',
+      textAlign: 'center',
     },
   };
 
@@ -110,35 +72,54 @@ export const PopUp = ({
       <Box
         sx={{
           position: 'relative',
-          zIndex: '2',
-          margin: 'auto',
-          padding: '20px',
           top: '20%',
-          maxWidth: '100%',
-          width: '320px',
+          width: '520px',
           height: 'fit-content',
-          backgroundolor: 'white',
+          padding: '30px 20px',
+          margin: 'auto',
+          backgroundColor: 'white',
           borderRadius: '20px',
-          boxShadow: '6px 6px 10px 0px #f8bf5e',
+          boxShadow: '2px 2px 8px 0px #F09F18',
+          zIndex: '20',
           '&:@media (min-width: 768px)': {
             width: '460px',
           },
         }}
       >
-        <Box sx={gridStyles[type]}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: 'auto',
+            width: '100%',
+          }}
+        >
           <img src="https://i.postimg.cc/76bz30BG/logo-Miniatura.jpg" className="logoPopUp" />
-          <Typography sx={{}}>{title}</Typography>
+          <Typography
+            sx={{
+              display: 'flex',
+              marginTop: '20px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+              fontSize: '22px',
+              fontWeight: '600',
+            }}
+          >
+            {title}
+          </Typography>
 
           {message !== undefined && (
             <Typography
               sx={{
-                gridArea: 'mensaje',
                 display: 'flex',
-                whiteSpace: 'pre-line',
-                textAlign: 'center',
+                marginTop: '10px',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '10px 0',
+                whiteSpace: 'pre-line',
+                textAlign: 'center',
               }}
             >
               {message}
@@ -148,14 +129,14 @@ export const PopUp = ({
           {CTAtext !== undefined && (
             <Typography
               sx={{
-                gridArea: 'CTA',
                 display: 'flex',
-                whiteSpace: 'pre-line',
-                textAlign: 'center',
+                marginTop: '10px',
                 alignItems: 'center',
                 justifyContent: 'center',
+                textAlign: 'center',
+                fontSize: '16px',
                 fontWeight: '700',
-                padding: '5px 0 10px 0',
+                whiteSpace: 'pre-line',
               }}
             >
               {CTAtext}
@@ -165,22 +146,8 @@ export const PopUp = ({
           {type === 'oneButtonAccept' ? (
             <Button
               sx={{
-                gridArea: 'boton2',
+                ...buttonStyles,
                 backgroundColor: '#149ad9',
-                margin: 'auto',
-                height: '50px',
-                width: '100%',
-                maxWidth: '270px',
-                fontWeight: '500',
-                fontSize: '20px',
-                fontFamily: 'Montserrat',
-                border: '1px solid transparent',
-                borderRadius: '10px',
-                boxShadow: '1px 2px 5px 0px #5c5c5c',
-                '&:focus-visible': {
-                  outline: 'none',
-                  textAlign: 'center',
-                },
               }}
               onClick={handlerAccept}
               autoFocus
@@ -190,22 +157,8 @@ export const PopUp = ({
           ) : type === 'oneButtonCancel' ? (
             <Button
               sx={{
-                gridArea: 'boton1',
+                ...buttonStyles,
                 backgroundColor: '#eb5421',
-                margin: 'auto',
-                height: '50px',
-                width: '100%',
-                maxWidth: '270px',
-                fontWeight: '500',
-                fontSize: '20px',
-                fontFamily: 'Montserrat',
-                border: '1px solid transparent',
-                borderRadius: '10px',
-                boxShadow: '1px 2px 5px 0px #5c5c5c',
-                '&:focus-visible': {
-                  outline: 'none',
-                  textAlign: 'center',
-                },
               }}
               onClick={handlerReject}
               autoFocus
@@ -216,50 +169,22 @@ export const PopUp = ({
             <>
               <Button
                 sx={{
-                  gridArea: 'boton1',
-                  backgroundColor: '#eb5421',
-                  margin: 'auto',
-                  height: '50px',
-                  width: '100%',
-                  maxWidth: '270px',
-                  fontWeight: '500',
-                  fontSize: '20px',
-                  fontFamily: 'Montserrat',
-                  border: '1px solid transparent',
-                  borderRadius: '10px',
-                  boxShadow: '1px 2px 5px 0px #5c5c5c',
-                  '&:focus-visible': {
-                    outline: 'none',
-                    textAlign: 'center',
-                  },
-                }}
-                onClick={handlerReject}
-              >
-                {rejectButtonText}
-              </Button>
-              <Button
-                sx={{
-                  gridArea: 'boton2',
+                  ...buttonStyles,
                   backgroundColor: '#149ad9',
-                  margin: 'auto',
-                  height: '50px',
-                  width: '100%',
-                  maxWidth: '270px',
-                  fontWeight: '500',
-                  fontSize: '20px',
-                  fontFamily: 'Montserrat',
-                  border: '1px solid transparent',
-                  borderRadius: '10px',
-                  boxShadow: '1px 2px 5px 0px #5c5c5c',
-                  '&:focus-visible': {
-                    outline: 'none',
-                    textAlign: 'center',
-                  },
                 }}
                 onClick={handlerAccept}
                 autoFocus
               >
                 {acceptButtonText}
+              </Button>
+              <Button
+                sx={{
+                  ...buttonStyles,
+                  backgroundColor: '#eb5421',
+                }}
+                onClick={handlerReject}
+              >
+                {rejectButtonText}
               </Button>
             </>
           ) : (

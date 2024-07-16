@@ -40,13 +40,18 @@ export const FindingPairForm = () => {
             marginBottom: '8px',
             fontFamily: 'Montserrat',
             fontSize: '22px',
-            background: '#0f4478',
-            color: '#f8bf5e',
+            backgroundColor: '#0f4478',
+            color: '#F09F18',
             border: '1px solid transparent',
             borderRadius: '10px',
             boxShadow: '1px 2px 5px 0px #0f4478',
             fontWeight: '500',
             cursor: 'pointer',
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: '#0f4478',
+              color: '#F09F18',
+            },
           }}
           type="submit"
         >
