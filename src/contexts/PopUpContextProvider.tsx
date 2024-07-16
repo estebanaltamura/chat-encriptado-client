@@ -124,7 +124,7 @@ export const PopUpContextProvider = ({ children }: { children: React.ReactNode }
         message: 'Due to inactivity of more than 1 minute, the connection is going to be closed',
         CTAtext: 'If you want to stay connected, please press the button',
         type: 'oneButtonAccept',
-        seconds: 30,
+        seconds: 30000,
         acceptButtonText: "I'M HERE",
         handlerAccept: acceptDisconnectionByInactivityHandler,
         handlerTimeOut: timeOutDisconnectionByInactivityHandler,
