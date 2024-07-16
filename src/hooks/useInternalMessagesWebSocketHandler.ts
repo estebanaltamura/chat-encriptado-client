@@ -6,9 +6,11 @@ import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 
 export const useInternalMessagesWebSocketHandler = () => {
+  //  ** Contexts
   const { setChatHistory } = useContext(ChatHistoryContext);
   const { usersData, setUsersData } = useContext(UsersDataContext);
 
+  //  ** Refs
   const usersDataRef = useRef<{
     fromPublicKey: string | null;
     fromNickName: string | null;

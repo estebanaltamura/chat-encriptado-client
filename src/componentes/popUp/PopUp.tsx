@@ -1,7 +1,8 @@
 // ** React Imports
-import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import { useEffect } from 'react';
 
+// ** Material UI Imports
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 interface PopUpProps {
   title: string;
   message: string;

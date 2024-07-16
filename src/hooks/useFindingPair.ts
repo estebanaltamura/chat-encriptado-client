@@ -8,11 +8,16 @@ import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { PopUpContext } from '../contexts/PopUpContextProvider';
 
 export const useFindingPair = () => {
+  // ** Contexts
   const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } =
     useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
-  const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
   const { setShowPopUp } = useContext(PopUpContext);
+
+  // ** States
+  const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
+
+  // ** Hooks
   const history = useNavigate();
 
   useEffect(() => {
