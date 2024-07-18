@@ -29,6 +29,7 @@ export const useFindingPair = () => {
 
   const tryPairingHandler = (e) => {
     e.preventDefault();
+    console.log(e.target.elements.findingPairInput);
     const publicKeyUser2 = e.target.elements.findingPairInput.value;
 
     if (publicKeyUser2 !== '' && usersData.fromPublicKey) {

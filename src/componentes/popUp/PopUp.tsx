@@ -34,7 +34,7 @@ export const PopUp = ({
     marginTop: '20px',
     fontSize: '20px',
     fontWeight: '500',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Inter',
     color: 'black',
     border: '1px solid transparent',
     borderRadius: '10px',

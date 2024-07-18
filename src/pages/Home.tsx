@@ -2,36 +2,59 @@
 import { useLogin } from '../hooks/useLogin';
 
 // ** Material UI Imports
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, TextField } from '@mui/material';
 
 // ** Spinner Import
 import Spinner from '../componentes/spinner/Spinner';
+import { useEffect, useState } from 'react';
 
 export const Home: React.FC = () => {
   // ** Hooks
   const { onFocusHandler, onBlurHandler, isLoading, startSession } = useLogin();
+  const [focused, setFocused] = useState<boolean>(false);
+  const [value, setValue] = useState<string>('');
+
+  useEffect(() => {
+    console.log(value);
+  }, [focused, value]);
 
   if (isLoading) return <Spinner />;
 
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '80px' }}>
-        <img style={{ width: '160px' }} src="https://i.postimg.cc/bNy9QWtG/logo.jpg" />
+        <img style={{ width: '140px' }} src="https://i.postimg.cc/bNy9QWtG/logo.jpg" />
       </Box>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', padding: '20px', marginTop: '25px' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '15px' }}>
         <Typography
           sx={{
-            fontFamily: 'Montserrat',
-            fontSize: '17px',
-            fontWeight: '700',
-            fontStyle: 'italic',
+            fontFamily: 'Inter',
+            fontSize: '18px',
+            lineHeight: '22px',
+            fontWeight: '400',
             textAlign: 'center',
             width: '100%',
-            maxWidth: '450px',
+            maxWidth: '400px',
+            marginTop: '0px',
           }}
         >
-          Secret chat is a private chat encrypted end to end with private and public keys SHA256
+          Secret chat is a private chat encrypted end to end with private and public keys SHA256.
+        </Typography>
+
+        <Typography
+          sx={{
+            fontFamily: 'Inter',
+            fontSize: '18px',
+            lineHeight: '22px',
+            fontWeight: '700',
+            textAlign: 'center',
+            width: '100%',
+            maxWidth: '600px',
+            marginTop: '65px',
+          }}
+        >
+          Please enter a nickname and then click start session button
         </Typography>
       </Box>
 
@@ -43,37 +66,78 @@ export const Home: React.FC = () => {
           borderRadius: '7px',
           width: 'fit-content',
           height: 'fit-content',
-          margin: '25px auto 20px auto',
+          margin: '0px auto 20px auto',
         }}
       >
         <form className="formLogin" onSubmit={startSession}>
-          <input
-            className="nickNameInputLogin"
+          <TextField
             name="nickNameInput"
             type="text"
-            placeholder="Insert a nick name"
+            placeholder={!focused && value === '' ? 'Insert a nick name' : ''}
+            variant="outlined"
             autoComplete="off"
             autoCapitalize="none"
-            onFocus={onFocusHandler}
-            onBlur={onBlurHandler}
-          ></input>
+            onChange={(e) => setValue(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            fullWidth
+            InputLabelProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            inputProps={{
+              style: {
+                textAlign: 'center',
+              },
+            }}
+            sx={{
+              borderRadius: '10px',
+              color: 'black !important',
+
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderRadius: '10px',
+
+                  borderColor: 'gray', // Color del borde por defecto
+                },
+                '&:hover fieldset': {
+                  borderColor: '#8F9FB8', // Color del borde en hover
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#8F9FB8', // Color del borde en focus
+                },
+                '&.Mui-focused.Mui-focusedVisible fieldset': {
+                  borderColor: '#8F9FB8', // Color del borde en focusVisible
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: 'black', // Color del label por defecto
+                '&.Mui-focused': {
+                  color: 'green', // Color del label en focus
+                },
+              },
+              '& input::placeholder': {
+                textAlign: 'center', // Centrar el placeholder
+              },
+            }}
+          />
           <Button
             sx={{
               width: '100%',
-              height: '60px',
-              fontFamily: 'Montserrat',
-              fontSize: '22px',
+              height: '58px',
+              fontFamily: 'Inter',
+              fontSize: '16px',
               textTransform: 'none',
               backgroundColor: '#0f4478',
-              color: '#F09F18',
-
+              color: 'white',
+              marginTop: '12px',
               border: '1px solid transparent',
               borderRadius: '10px',
-              boxShadow: '1px 2px 5px 0px #0f4478',
               cursor: 'pointer',
               '&:hover': {
                 backgroundColor: '#0f4478',
-                color: '#F09F18',
+                color: '#34B9FA',
               },
             }}
             type="submit"

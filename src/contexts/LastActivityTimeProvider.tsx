@@ -26,7 +26,7 @@ export const LastActivityTimeProvider = ({ children }: { children: React.ReactNo
   useEffect(() => {
     if (connectionStatus === 'userRegistered' && secondsFromLastActivity >= 120)
       setConnectionStatus('disconnectionByInactivity');
-    if (connectionStatus === 'chating' && secondsFromLastActivity >= 120)
+    if (connectionStatus === 'chating' && secondsFromLastActivity >= 30000)
       setConnectionStatus('disconnectionByInactivity');
   }, [secondsFromLastActivity]);
 
