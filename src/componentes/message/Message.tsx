@@ -25,8 +25,8 @@ export const Message: React.FC<IMessageProps> = ({ message, type, time }) => {
           display: 'flex',
           width: '100%',
           height: '100%',
-          paddingLeft: type === 'messageReceived' ? '15px' : '',
-          paddingRight: type === 'messageSent' ? '15px' : '',
+          paddingLeft: type === 'messageReceived' ? '35px' : '',
+          paddingRight: type === 'messageSent' ? '35px' : '',
           justifyContent: type === 'messageReceived' ? 'left' : 'right',
         }}
       >
@@ -46,7 +46,7 @@ export const Message: React.FC<IMessageProps> = ({ message, type, time }) => {
             sx={{
               display: 'inline-block',
               fontSize: '14px',
-              fontFamily: 'Segoe UI, Tahoma, Geneva, Verdana, sans-serif',
+              fontFamily: 'Roboto, sans-serif',
               height: 'auto',
               overflowWrap: 'anywhere',
               width: '100%',

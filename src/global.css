@@ -117,9 +117,9 @@ span {
   width: 98%;
   height: 49px;
   border-radius: 10px;
-  border: 1px solid #2a3942;
-  background-color: #2a3942;
-  color: white;
+  border: 1px solid #ffffff;
+  background-color: #ffffff;
+  color: #9a9a9a;
   line-height: 21px;
   font-size: 18px;
   font-weight: 500;
@@ -139,7 +139,7 @@ span {
   min-width: 38px;
   min-height: 38px;
   margin-right: 5px;
-  color: #8696a0;
+  color: #353535;
   cursor: pointer;
 }
 

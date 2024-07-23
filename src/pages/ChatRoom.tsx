@@ -43,7 +43,7 @@ export const ChatRoom: React.FC = () => {
         justifyContent: 'center',
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#444444',
+        backgroundColor: '#5C67DB',
       }}
     >
       <Box
@@ -67,7 +67,7 @@ export const ChatRoom: React.FC = () => {
             borderTopLeftRadius: '5px',
             borderTopRightRadius: '5px',
             gridTemplateColumns: '1fr 60px',
-            backgroundColor: '#202C33',
+            backgroundColor: '#EFEFEF',
           }}
         >
           <img src="/avatar.svg" className="avatar" />
@@ -80,7 +80,7 @@ export const ChatRoom: React.FC = () => {
               lineHeight: '24px',
               fontSize: '20px',
               fontWeight: '700',
-              color: 'white',
+              color: '#353535',
               flexGrow: '1',
             }}
           >
@@ -124,7 +124,7 @@ export const ChatRoom: React.FC = () => {
             borderBottomRightRadius: '5px',
             height: '72px',
             flex: '0 0',
-            backgroundColor: '#202C33',
+            backgroundColor: '#E7E7E5',
           }}
         >
           <form className="formChatSendMessageBar" onSubmit={sendMessageHandler}>
@@ -136,7 +136,7 @@ export const ChatRoom: React.FC = () => {
                 autoComplete="off"
               ></input>
             </Box>
-            <Button sx={{ border: 'none', backgroundColor: '#202C33' }} type="submit">
+            <Button sx={{ border: 'none', backgroundColor: '#E7E7E5' }} type="submit">
               <img src="/sendMessageIcon.svg" className="sendMessageIconMessageBar" />
             </Button>
           </form>
