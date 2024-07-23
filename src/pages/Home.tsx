@@ -6,17 +6,22 @@ import { Box, Typography, Button, TextField } from '@mui/material';
 
 // ** Spinner Import
 import Spinner from '../componentes/spinner/Spinner';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes } from '../types';
 
 export const Home: React.FC = () => {
   // ** Hooks
-  const { onFocusHandler, onBlurHandler, isLoading, startSession } = useLogin();
+  const { isLoading, startSession } = useLogin();
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
+  const { error, setError } = useContext(ErrorContext);
 
   useEffect(() => {
-    console.log(value);
-  }, [focused, value]);
+    setTimeout(() => {
+      setError(ErrorTypes.NickNameError);
+    }, 1000);
+  }, []);
 
   if (isLoading) return <Spinner />;
 

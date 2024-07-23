@@ -6,6 +6,9 @@ import { UsersDataContext } from './UsersDataProvider';
 
 // ** Hooks Imports
 import { useInternalMessagesWebSocketHandler } from '../hooks/useInternalMessagesWebSocketHandler';
+import { LifeCycleContext } from './LifeCycleProvider';
+import { ErrorTypes } from '../types';
+import { ErrorContext } from './ErrorContextProvider';
 
 interface IWebSocketConnectionContextType {
   connectWebSocket: () => boolean | null;
@@ -38,6 +41,8 @@ export const WebSocketConnectionContext = createContext(WebSocketConnectionConte
 export const WebSocketConnectionContextProvider = ({ children }: { children: React.ReactNode }) => {
   // ** Contexts
   const { usersData, setUsersData } = useContext(UsersDataContext);
+  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { error, setError } = useContext(ErrorContext);
 
   // ** States
   const [connectionStatus, setConnectionStatus] = useState<string | null>('offline');
@@ -53,14 +58,19 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
     toPublicKey: string | null;
     toNickName: string | null;
   } | null>(null);
-  const connectionStatusRef = useRef<string | null>();
+  const lifeCycleRef = useRef<string | null>();
+  const errorRef = useRef<ErrorTypes | null>();
 
   // ** Hooks
   const { handleMessage } = useInternalMessagesWebSocketHandler();
 
   useEffect(() => {
-    connectionStatusRef.current = connectionStatus;
-  }, [connectionStatus]);
+    lifeCycleRef.current = connectionStatus;
+  }, [lifeCycle]);
+
+  useEffect(() => {
+    errorRef.current = error;
+  }, [error]);
 
   useEffect(() => {
     usersDataRef.current = usersData;
@@ -70,8 +80,9 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
     if (!socketRef.current) {
       socketRef.current = new WebSocket('wss://www.internal-server-projects.xyz:4000/');
       socketRef.current.addEventListener('open', handleOpen);
-      socketRef.current.addEventListener('message', (e) =>
-        handleMessage(e, setConnectionStatus, connectionStatusRef.current, setRequestError),
+      socketRef.current.addEventListener(
+        'message',
+        (e) => handleMessage(e, setLifeCycle, lifeCycleRef.current, setError), // REVISAR EN EL SERVER
       );
       socketRef.current.addEventListener('close', handleClose);
       socketRef.current.addEventListener('error', handleError);
@@ -82,13 +93,13 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
 
   const handleOpen = () => {
     console.log('connected');
-    setConnectionStatus('online');
+    setLifeCycle('online');
   };
 
   const handleClose = () => {
     console.log('closed');
 
-    if (connectionStatusRef.current === 'theUserHasClosed') {
+    if (errorRef.current === ErrorTypes.TheUserHasClosed) {
       window.location.href = '/home';
     } else {
       setUsersData({
@@ -97,7 +108,7 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
         toPublicKey: null,
         toNickName: null,
       });
-      setConnectionStatus('serverError');
+      setError(ErrorTypes.ServerError);
     }
 
     socketRef.current = undefined;

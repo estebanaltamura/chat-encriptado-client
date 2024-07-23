@@ -8,19 +8,12 @@ import { AiOutlineCopy } from 'react-icons/ai';
 import { Box, Button, TextField, Typography } from '@mui/material';
 
 // Icons Imports
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useState } from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 export const FindingPair: React.FC = () => {
   // ** Hooks
-  const {
-    onFocusHandler,
-    onBlurHandler,
-    tryPairingHandler,
-    copyToClipboard,
-    copyPublicKeyText,
-    closeConnectionHandler,
-  } = useFindingPair();
+  const { tryPairingHandler, copyToClipboard, copyPublicKeyText, closeConnectionHandler } = useFindingPair();
 
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');

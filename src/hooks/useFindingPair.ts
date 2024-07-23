@@ -5,14 +5,17 @@ import { useNavigate } from 'react-router-dom';
 // ** Contexts Imports
 import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
-import { PopUpContext } from '../contexts/PopUpContextProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes, lifeCycle } from '../types';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
 
 export const useFindingPair = () => {
   // ** Contexts
   const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } =
     useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
-  const { setShowPopUp } = useContext(PopUpContext);
+  const { setError } = useContext(ErrorContext);
+  const { lifeCycle } = useContext(LifeCycleContext);
 
   // ** States
   const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
@@ -21,25 +24,24 @@ export const useFindingPair = () => {
   const history = useNavigate();
 
   useEffect(() => {
-    if (connectionStatus === 'chating') {
-      setShowPopUp(false);
+    if (lifeCycle === 'chating') {
+      setError(null);
       history('/chatRoom');
     }
-  }, [connectionStatus]);
+  }, [lifeCycle]);
 
   const tryPairingHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.elements.findingPairInput);
     const publicKeyUser2 = e.target.elements.findingPairInput.value;
 
     if (publicKeyUser2 !== '' && usersData.fromPublicKey) {
-      setConnectionStatus('requestSent');
+      setError(ErrorTypes.RequestSent);
       tryPairing(usersData.fromPublicKey, publicKeyUser2);
-    } else setConnectionStatus('userInsertedAnEmptyEntry');
+    } else setError(ErrorTypes.UserInsertedAnEmptyEntry);
   };
 
   const closeConnectionHandler = () => {
-    setConnectionStatus('theUserHasClosed');
+    setError(ErrorTypes.TheUserHasClosed);
     closeConnection();
   };
 

@@ -7,6 +7,9 @@ import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvi
 
 // ** Crypto codes Imports
 import nacl from 'tweetnacl';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes } from '../types';
 
 interface IUser {
   publicKey: string | null;
@@ -36,24 +39,26 @@ export const useLogin = () => {
   // ** Contexts
   const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } =
     useContext(WebSocketConnectionContext);
+  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { error, setError } = useContext(ErrorContext);
 
   // ** Refs
   const user = useRef<IUser>();
 
   useEffect(() => {
-    if (connectionStatus === 'online') {
+    if (lifeCycle === 'online') {
       createUser(user.current);
     }
 
-    if (connectionStatus === 'userRegistered') {
+    if (lifeCycle === 'userRegistered') {
       setIsLoading(false);
       history('/findingPair');
     }
 
-    if (connectionStatus === 'serverError') {
+    if (error === 'serverError') {
       setIsLoading(false);
     }
-  }, [connectionStatus]);
+  }, [lifeCycle, error]);
 
   // SET USER
   const setUserData = (inputValue: string) => {
@@ -85,7 +90,7 @@ export const useLogin = () => {
       setUserData(inputValue);
       setIsLoading(true);
       connectWebSocket();
-    } else setConnectionStatus('nickNameError');
+    } else setError(ErrorTypes.NickNameError);
   };
 
   // INPUT BEHAVIORS

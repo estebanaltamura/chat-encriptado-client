@@ -3,12 +3,17 @@ import { useContext, useEffect, useRef } from 'react';
 
 // ** Contexts Imports
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
+import { ErrorTypes } from '../types';
 
 export const useInternalMessagesWebSocketHandler = () => {
   //  ** Contexts
   const { setChatHistory } = useContext(ChatHistoryContext);
   const { usersData, setUsersData } = useContext(UsersDataContext);
+  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { error, setError } = useContext(ErrorContext);
 
   //  ** Refs
   const usersDataRef = useRef<{
@@ -26,15 +31,11 @@ export const useInternalMessagesWebSocketHandler = () => {
 
   const handleMessage = (
     event: MessageEvent<any>,
-    setConnectionStatus: React.Dispatch<React.SetStateAction<string | null>>,
-    connectionStatus: string | null | undefined,
-    setRequestError: React.Dispatch<
-      React.SetStateAction<{
-        title: string;
-        message: string;
-        CTA: string;
-      } | null>
+    setLifeCycle: React.Dispatch<
+      React.SetStateAction<'offline' | 'online' | 'userRegistered' | 'chating' | null>
     >,
+    connectionStatus: string | null | undefined,
+    setError: React.Dispatch<React.SetStateAction<ErrorTypes | null>>,
   ) => {
     const message = event.data;
     const pardedMessage = JSON.parse(message);
@@ -46,7 +47,7 @@ export const useInternalMessagesWebSocketHandler = () => {
     if (pardedMessage.hasOwnProperty('userCreated') && usersDataRef.current) {
       const userName = pardedMessage.userCreated.userName;
       const nickName = pardedMessage.userCreated.nickName;
-      setConnectionStatus('userRegistered');
+      setLifeCycle('userRegistered');
       setUsersData({ ...usersDataRef.current, fromPublicKey: userName, fromNickName: nickName });
     }
 
@@ -59,7 +60,7 @@ export const useInternalMessagesWebSocketHandler = () => {
         toPublicKey: publicKeySolicitorUserData,
         toNickName: nickNameSolicitorUserData,
       });
-      setConnectionStatus('requestReceived');
+      setError(ErrorTypes.RequestReceived);
     }
 
     //Mensaje de chat confirmado
@@ -67,7 +68,7 @@ export const useInternalMessagesWebSocketHandler = () => {
       const toPublicKey = pardedMessage.chatConfirmed.to;
       const toNickName = pardedMessage.chatConfirmed.toNickName;
       setUsersData({ ...usersDataRef.current, toPublicKey: toPublicKey, toNickName: toNickName });
-      setConnectionStatus('chating');
+      setLifeCycle('chating');
     }
 
     //Mensaje de error
@@ -76,29 +77,12 @@ export const useInternalMessagesWebSocketHandler = () => {
       setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
 
       if (pardedMessage.error === 'errorUserDoesntExistOrReject') {
-        setRequestError({
-          title: 'Error finding user',
-          message: "User doesn't exist or rejected your request",
-          CTA: 'Click OK to continue',
-        });
+        setError(ErrorTypes.ErrorUserDoesntExistOrReject);
       } else if (pardedMessage.error === 'errorUserIsTheSame') {
-        setRequestError({
-          title: 'User searched  is the same as you',
-          message: 'Enter a valid public key different to your public key',
-          CTA: 'Click OK to continue',
-        });
+        setError(ErrorTypes.ErrorUserIsTheSame);
       } else if (pardedMessage.error === 'requesterIsOffline') {
-        setRequestError({
-          title: 'Requester is disconnected',
-          message: 'Enter a valid public key of an online user or wait for a request',
-          CTA: 'Click OK to continue',
-        });
+        setError(ErrorTypes.RequesterIsOffline);
       } else if (pardedMessage.error === 'canceledRequest' && connectionStatus === 'requestReceived') {
-        setRequestError({
-          title: 'Requester cancel the request',
-          message: 'Enter a valid public key of an online user or wait for a request',
-          CTA: 'Click OK to continue',
-        });
       }
     }
 
@@ -106,7 +90,7 @@ export const useInternalMessagesWebSocketHandler = () => {
     if (pardedMessage.hasOwnProperty('closing')) {
       if (pardedMessage.closing === 'otherUserHasClosed') {
         setUsersData({ fromPublicKey: null, fromNickName: null, toPublicKey: null, toNickName: null });
-        setConnectionStatus('otherUserHasClosed');
+        setError(ErrorTypes.OtherUserHasClosed);
       }
     }
 

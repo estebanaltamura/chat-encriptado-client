@@ -5,6 +5,8 @@ import { FormEvent, useContext } from 'react';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes } from '../types';
 
 interface ChatFormElements extends HTMLFormControlsCollection {
   chatInput: HTMLInputElement;
@@ -20,9 +22,10 @@ export const useChat = () => {
     useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
   const { setChatHistory, chatHistory } = useContext(ChatHistoryContext);
+  const { setError } = useContext(ErrorContext);
 
   const closeConnectionHandler = () => {
-    setConnectionStatus('theUserHasClosed');
+    setError(ErrorTypes.TheUserHasClosed);
     closeConnection();
   };
 
