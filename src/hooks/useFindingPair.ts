@@ -8,14 +8,15 @@ import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { ErrorContext } from '../contexts/ErrorContextProvider';
 import { ErrorTypes, lifeCycle } from '../types';
 import { LifeCycleContext } from '../contexts/LifeCycleProvider';
+import { RequestStatusContext } from '../contexts/RequestStatusProvider';
 
 export const useFindingPair = () => {
   // ** Contexts
-  const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } =
-    useContext(WebSocketConnectionContext);
+  const { tryPairing, closeConnection } = useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
   const { setError } = useContext(ErrorContext);
   const { lifeCycle } = useContext(LifeCycleContext);
+  const { setRequestStatus } = useContext(RequestStatusContext);
 
   // ** States
   const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
@@ -36,12 +37,13 @@ export const useFindingPair = () => {
 
     if (publicKeyUser2 !== '' && usersData.fromPublicKey) {
       setError(ErrorTypes.RequestSent);
+      setRequestStatus('requestSent');
       tryPairing(usersData.fromPublicKey, publicKeyUser2);
     } else setError(ErrorTypes.UserInsertedAnEmptyEntry);
   };
 
   const closeConnectionHandler = () => {
-    setError(ErrorTypes.TheUserHasClosed);
+    setError(ErrorTypes.TheUserHasClosed); // Se disparaba cuando el propio usuario cierra la conexion
     closeConnection();
   };
 

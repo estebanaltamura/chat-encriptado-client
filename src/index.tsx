@@ -17,23 +17,26 @@ import App from './App';
 import './global.css';
 import ErrorProvider from './contexts/ErrorContextProvider';
 import { LifeCycleProvider } from './contexts/LifeCycleProvider';
+import { RequestStatusProvider } from './contexts/RequestStatusProvider';
 
 const root: ReactDOM.Root = ReactDOM.createRoot(document.getElementById('root') as ReactDOM.Container);
 
 root.render(
   <React.StrictMode>
-    <LifeCycleProvider>
-      <ErrorProvider>
-        <UsersDataProvider>
-          <ChatHistoryProvider>
-            <WebSocketConnectionContextProvider>
-              <LastActivityTimeProvider>
-                <App />
-              </LastActivityTimeProvider>
-            </WebSocketConnectionContextProvider>
-          </ChatHistoryProvider>
-        </UsersDataProvider>
-      </ErrorProvider>
-    </LifeCycleProvider>
+    <RequestStatusProvider>
+      <LifeCycleProvider>
+        <ErrorProvider>
+          <UsersDataProvider>
+            <ChatHistoryProvider>
+              <WebSocketConnectionContextProvider>
+                <LastActivityTimeProvider>
+                  <App />
+                </LastActivityTimeProvider>
+              </WebSocketConnectionContextProvider>
+            </ChatHistoryProvider>
+          </UsersDataProvider>
+        </ErrorProvider>
+      </LifeCycleProvider>
+    </RequestStatusProvider>
   </React.StrictMode>,
 );

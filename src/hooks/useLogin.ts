@@ -37,8 +37,7 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // ** Contexts
-  const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } =
-    useContext(WebSocketConnectionContext);
+  const { connectWebSocket, createUser } = useContext(WebSocketConnectionContext);
   const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
   const { error, setError } = useContext(ErrorContext);
 
@@ -53,10 +52,6 @@ export const useLogin = () => {
     if (lifeCycle === 'userRegistered') {
       setIsLoading(false);
       history('/findingPair');
-    }
-
-    if (error === 'serverError') {
-      setIsLoading(false);
     }
   }, [lifeCycle, error]);
 

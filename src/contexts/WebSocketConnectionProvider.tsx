@@ -9,31 +9,22 @@ import { useInternalMessagesWebSocketHandler } from '../hooks/useInternalMessage
 import { LifeCycleContext } from './LifeCycleProvider';
 import { ErrorTypes } from '../types';
 import { ErrorContext } from './ErrorContextProvider';
+import { RequestStatusContext } from './RequestStatusProvider';
 
 interface IWebSocketConnectionContextType {
   connectWebSocket: () => boolean | null;
-  connectionStatus: string | null;
-  setConnectionStatus: React.Dispatch<React.SetStateAction<string | null>>;
   sendWebSocketMessage: (message: unknown) => void;
   createUser: (message: unknown) => void;
   closeConnection: () => void;
   tryPairing: (publicKeyUser1: string, publicKeyUser2: string) => void;
-  setRequestError: React.Dispatch<
-    React.SetStateAction<{ title: string; message: string; CTA: string } | null>
-  >;
-  requestError: { title: string; message: string; CTA: string } | null;
 }
 
 const WebSocketConnectionContextInitialValue: IWebSocketConnectionContextType = {
   connectWebSocket: () => null,
-  connectionStatus: null,
-  setConnectionStatus: () => null,
   sendWebSocketMessage: () => null,
   createUser: () => null,
   closeConnection: () => null,
   tryPairing: () => null,
-  setRequestError: () => null,
-  requestError: null,
 };
 
 export const WebSocketConnectionContext = createContext(WebSocketConnectionContextInitialValue);
@@ -42,13 +33,8 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
   // ** Contexts
   const { usersData, setUsersData } = useContext(UsersDataContext);
   const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { requestStatus, setRequestStatus } = useContext(RequestStatusContext);
   const { error, setError } = useContext(ErrorContext);
-
-  // ** States
-  const [connectionStatus, setConnectionStatus] = useState<string | null>('offline');
-  const [requestError, setRequestError] = useState<{ title: string; message: string; CTA: string } | null>(
-    null,
-  );
 
   // ** Refs
   const socketRef = useRef<WebSocket | undefined | null>(null);
@@ -60,12 +46,15 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
   } | null>(null);
   const lifeCycleRef = useRef<string | null>();
   const errorRef = useRef<ErrorTypes | null>();
+  const requestStatusRef = useRef<
+    'requestSent' | 'requestReceived' | 'requestConfirmed' | null | undefined
+  >();
 
   // ** Hooks
   const { handleMessage } = useInternalMessagesWebSocketHandler();
 
   useEffect(() => {
-    lifeCycleRef.current = connectionStatus;
+    lifeCycleRef.current = lifeCycle;
   }, [lifeCycle]);
 
   useEffect(() => {
@@ -76,13 +65,22 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
     usersDataRef.current = usersData;
   }, [usersData]);
 
+  useEffect(() => {
+    requestStatusRef.current = requestStatus;
+  }, [requestStatus]);
+
   const connectWebSocket = () => {
     if (!socketRef.current) {
       socketRef.current = new WebSocket('wss://www.internal-server-projects.xyz:4000/');
       socketRef.current.addEventListener('open', handleOpen);
-      socketRef.current.addEventListener(
-        'message',
-        (e) => handleMessage(e, setLifeCycle, lifeCycleRef.current, setError), // REVISAR EN EL SERVER
+      socketRef.current.addEventListener('message', (e) =>
+        handleMessage(
+          e,
+          setLifeCycle,
+          setRequestStatus,
+          requestStatusRef.current && requestStatusRef.current,
+          setError,
+        ),
       );
       socketRef.current.addEventListener('close', handleClose);
       socketRef.current.addEventListener('error', handleError);
@@ -92,13 +90,10 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
   };
 
   const handleOpen = () => {
-    console.log('connected');
     setLifeCycle('online');
   };
 
   const handleClose = () => {
-    console.log('closed');
-
     if (errorRef.current === ErrorTypes.TheUserHasClosed) {
       window.location.href = '/home';
     } else {
@@ -118,9 +113,9 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
     console.error('Error de conexión:', error);
   };
 
+  // 3
   const sendWebSocketMessage = (message: unknown) => {
     if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
-      console.log('Envio mensaje', message);
       socketRef.current.send(JSON.stringify(message));
     }
   };
@@ -151,14 +146,10 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
 
   const WebSocketContextValue = {
     connectWebSocket,
-    connectionStatus,
-    setConnectionStatus,
     sendWebSocketMessage,
     createUser,
     closeConnection,
     tryPairing,
-    setRequestError,
-    requestError,
   };
 
   return (

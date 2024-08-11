@@ -18,11 +18,14 @@ import { Message } from '../componentes/message/Message';
 
 // ** Material UI Imports
 import { Box, Typography, Button } from '@mui/material';
+import { Navigate } from 'react-router-dom';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
 
 export const ChatRoom: React.FC = () => {
   // ** Contexts
   const { usersData } = useContext(UsersDataContext);
   const { chatHistory } = useContext(ChatHistoryContext);
+  const { lifeCycle } = useContext(LifeCycleContext);
 
   // ** Hooks
   const { closeConnectionHandler, sendMessageHandler } = useChat();
@@ -35,6 +38,8 @@ export const ChatRoom: React.FC = () => {
       chatMainRef.current.scrollTop = chatMainRef.current.scrollHeight;
     }
   }, [chatHistory]);
+
+  if (lifeCycle === 'userRegistered') return <Navigate to="/findingPair" />;
 
   return (
     <Box

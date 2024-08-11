@@ -1,6 +1,6 @@
 // ** React Imports
-import { useContext, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 // ** Web socket connection context import
 import { WebSocketConnectionContext } from './contexts/WebSocketConnectionProvider';
@@ -9,28 +9,28 @@ import { WebSocketConnectionContext } from './contexts/WebSocketConnectionProvid
 import { Box, Typography, useMediaQuery } from '@mui/material';
 
 // ** Pages Imports
-import { Home } from './pages/Home';
-import { FindingPair } from './pages/FindingPair';
 import { ChatRoom } from './pages/ChatRoom';
+import { FindingPair } from './pages/FindingPair';
+import { Home } from './pages/Home';
 
 // ** Pop up component import
 import { PopUp } from './componentes/popUp/PopUp';
 
 // ** CSS Import
-import './global.css';
 import { ErrorContext } from './contexts/ErrorContextProvider';
+import './global.css';
 
-import { ErrorTypes } from './types';
+import { LifeCycleContext } from './contexts/LifeCycleProvider';
 import usePopUpDataByError from './hooks/usePopUpDataByError';
 
 const App: React.FC = () => {
   // ** Contexts
-  const { connectionStatus } = useContext(WebSocketConnectionContext);
-  const { error, setError } = useContext(ErrorContext);
-
-  const isDesktop = useMediaQuery('(min-width: 1200px)');
+  const { lifeCycle } = useContext(LifeCycleContext);
+  const { error } = useContext(ErrorContext);
 
   const popUpDataByError = usePopUpDataByError();
+
+  const isDesktop = useMediaQuery('(min-width: 1200px)');
 
   if (!isDesktop)
     return (
@@ -73,14 +73,8 @@ const App: React.FC = () => {
           <Routes>
             <Route path="*" element={<Navigate to="/home" />} />
             <Route path="/home" element={<Home />} />
-            <Route
-              path="/findingPair"
-              element={connectionStatus === 'offline' ? <Navigate to="/home" /> : <FindingPair />}
-            />
-            <Route
-              path="/chatRoom"
-              element={connectionStatus === 'offline' ? <Navigate to="/home" /> : <ChatRoom />}
-            />
+            <Route path="/findingPair" element={<FindingPair />} />
+            <Route path="/chatRoom" element={<ChatRoom />} />
           </Routes>
         </BrowserRouter>
       </Box>

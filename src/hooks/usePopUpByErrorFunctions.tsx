@@ -1,23 +1,30 @@
 // usePopUpByErrorFunctions.ts
-import { useState, useContext, useRef } from 'react';
-import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
-import { UsersDataContext } from '../contexts/UsersDataProvider';
+import { useContext, useEffect, useRef } from 'react';
+import { Navigate, Router } from 'react-router-dom';
 import { ErrorContext } from '../contexts/ErrorContextProvider';
 import { LifeCycleContext } from '../contexts/LifeCycleProvider';
-import { ErrorTypes } from '../types';
+import { RequestStatusContext } from '../contexts/RequestStatusProvider';
+import { UsersDataContext } from '../contexts/UsersDataProvider';
+import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
 
 const usePopUpByErrorFunctions = () => {
-  const { setConnectionStatus, connectionStatus, sendWebSocketMessage, closeConnection } =
-    useContext(WebSocketConnectionContext);
   const { usersData, setUsersData } = useContext(UsersDataContext);
   const { setLifeCycle } = useContext(LifeCycleContext);
   const { setError } = useContext(ErrorContext);
-
-  const connectionStatusRef = useRef(connectionStatus);
+  const { sendWebSocketMessage } = useContext(WebSocketConnectionContext);
+  const { requestStatus, setRequestStatus } = useContext(RequestStatusContext);
   const usersDataRef = useRef(usersData);
+  const requestStatusRef = useRef(requestStatus);
+
+  useEffect(() => {
+    usersDataRef.current = usersData;
+  }, [usersData]);
+
+  useEffect(() => {
+    requestStatusRef.current = requestStatus;
+  }, [requestStatus]);
 
   // Handlers
-
   const acceptDisconnectionByInactivityHandler = () => {
     const path = window.location.pathname;
     const pathInParts = path.split('/');
@@ -37,16 +44,10 @@ const usePopUpByErrorFunctions = () => {
   };
 
   const acceptRequestErrorHandler = () => {
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
     setLifeCycle('userRegistered');
     setError(null);
-  };
-
-  // Ver ESTA
-  const timeOutRequestErrorHandler = () => {
-    if (connectionStatusRef.current === 'requestError') {
-      setLifeCycle('userRegistered');
-      setError(null);
-    }
+    setRequestStatus(null);
   };
 
   const cancelRequestSentHandler = () => {
@@ -56,29 +57,15 @@ const usePopUpByErrorFunctions = () => {
         user2: usersDataRef.current.toPublicKey,
       },
     };
-    setUsersData({ ...usersData, toPublicKey: null, toNickName: null });
+
+    setRequestStatus(null);
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
     sendWebSocketMessage(cancelRequestSent);
     setLifeCycle('userRegistered');
     setError(null);
   };
 
-  const timeOutRequestSentHandler = () => {
-    if (connectionStatusRef.current === 'requestSent') {
-      const cancelRequestSent = {
-        cancelRequestSent: {
-          user1: usersDataRef.current.fromPublicKey,
-          user2: usersDataRef.current.toPublicKey,
-        },
-      };
-      setUsersData({ ...usersData, toPublicKey: null, toNickName: null });
-      sendWebSocketMessage(cancelRequestSent);
-
-      setError(ErrorTypes.ErrorUserDoesntExistOrReject);
-
-      setError(null);
-    }
-  };
-
+  // 2
   const acceptRequestReceivedHandler = () => {
     if (!usersDataRef.current) throw new Error('User data is undefined');
     const confirmedRequest = {
@@ -87,8 +74,10 @@ const usePopUpByErrorFunctions = () => {
         user2: usersDataRef.current.fromPublicKey,
       },
     };
-    sendWebSocketMessage(confirmedRequest);
+
+    setRequestStatus('requestConfirmed');
     setError(null);
+    sendWebSocketMessage(confirmedRequest);
   };
 
   const rejectRequestReceivedHandler = () => {
@@ -98,18 +87,19 @@ const usePopUpByErrorFunctions = () => {
         user2: usersDataRef.current.fromPublicKey,
       },
     };
-    sendWebSocketMessage(rejectedRequest);
-    setLifeCycle('userRegistered');
-    setUsersData({ ...usersData, toPublicKey: null, toNickName: null });
+
+    setRequestStatus(null);
     setError(null);
+    setLifeCycle('userRegistered');
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
+    sendWebSocketMessage(rejectedRequest);
   };
 
   const timeOutRequestReceivedHandler = () => {
-    if (connectionStatusRef.current === 'requestReceived') {
-      setUsersData({ ...usersData, toPublicKey: null, toNickName: null });
-      setLifeCycle('userRegistered');
-      setError(null);
-    }
+    setRequestStatus(null);
+    setError(null);
+    setLifeCycle('userRegistered');
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
   };
 
   const acceptNickNameErrorHandler = () => {
@@ -117,59 +107,45 @@ const usePopUpByErrorFunctions = () => {
     setError(null);
   };
 
-  const timeOutNickNameErrorHandler = () => {
-    if (connectionStatusRef.current === 'nickNameError') {
-      setLifeCycle('offline');
-      setError(null);
-    }
-  };
-
   const acceptUserInsertedAnEmptyEntry = () => {
     setLifeCycle('userRegistered');
     setError(null);
   };
 
-  const timeOutUserInsertedAnEmptyEntry = () => {
-    if (connectionStatusRef.current === 'userInsertedAnEmptyEntry') {
-      setLifeCycle('userRegistered');
-      setError(null);
-    }
+  const canceledRequest = () => {
+    setLifeCycle('userRegistered');
+    setError(null);
+  };
+
+  const acceptTheUserHasClosedHandler = () => {
+    window.location.href = './home';
   };
 
   const acceptServerErrorHandler = () => {
     window.location.href = './home';
   };
 
-  const timeOutServerErrorHandler = () => {
-    window.location.href = './home';
-  };
-
   const acceptOtherUserHasClosedHandler = () => {
-    window.location.href = './home';
-  };
-
-  const timeOutOtherUserHasClosedHandler = () => {
-    window.location.href = './home';
+    setRequestStatus(null);
+    setError(null);
+    setLifeCycle('userRegistered');
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
   };
 
   return {
     acceptDisconnectionByInactivityHandler,
     timeOutDisconnectionByInactivityHandler,
     acceptRequestErrorHandler,
-    timeOutRequestErrorHandler,
     cancelRequestSentHandler,
-    timeOutRequestSentHandler,
     acceptRequestReceivedHandler,
     rejectRequestReceivedHandler,
     timeOutRequestReceivedHandler,
+    canceledRequest,
     acceptNickNameErrorHandler,
-    timeOutNickNameErrorHandler,
     acceptUserInsertedAnEmptyEntry,
-    timeOutUserInsertedAnEmptyEntry,
     acceptServerErrorHandler,
-    timeOutServerErrorHandler,
     acceptOtherUserHasClosedHandler,
-    timeOutOtherUserHasClosedHandler,
+    acceptTheUserHasClosedHandler,
   };
 };
 

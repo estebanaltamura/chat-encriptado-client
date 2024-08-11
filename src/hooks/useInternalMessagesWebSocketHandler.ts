@@ -5,6 +5,7 @@ import { useContext, useEffect, useRef } from 'react';
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
 import { ErrorContext } from '../contexts/ErrorContextProvider';
 import { LifeCycleContext } from '../contexts/LifeCycleProvider';
+import { RequestStatusContext } from '../contexts/RequestStatusProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { ErrorTypes } from '../types';
 
@@ -12,8 +13,6 @@ export const useInternalMessagesWebSocketHandler = () => {
   //  ** Contexts
   const { setChatHistory } = useContext(ChatHistoryContext);
   const { usersData, setUsersData } = useContext(UsersDataContext);
-  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
-  const { error, setError } = useContext(ErrorContext);
 
   //  ** Refs
   const usersDataRef = useRef<{
@@ -34,7 +33,10 @@ export const useInternalMessagesWebSocketHandler = () => {
     setLifeCycle: React.Dispatch<
       React.SetStateAction<'offline' | 'online' | 'userRegistered' | 'chating' | null>
     >,
-    connectionStatus: string | null | undefined,
+    setRequestStatus: React.Dispatch<
+      React.SetStateAction<'requestSent' | 'requestReceived' | 'requestConfirmed' | null>
+    >,
+    requestStatus: 'requestSent' | 'requestReceived' | 'requestConfirmed' | null | undefined,
     setError: React.Dispatch<React.SetStateAction<ErrorTypes | null>>,
   ) => {
     const message = event.data;
@@ -60,6 +62,8 @@ export const useInternalMessagesWebSocketHandler = () => {
         toPublicKey: publicKeySolicitorUserData,
         toNickName: nickNameSolicitorUserData,
       });
+
+      setRequestStatus('requestReceived');
       setError(ErrorTypes.RequestReceived);
     }
 
@@ -73,7 +77,6 @@ export const useInternalMessagesWebSocketHandler = () => {
 
     //Mensaje de error
     if (pardedMessage.hasOwnProperty('error') && usersDataRef.current) {
-      console.log(connectionStatus);
       setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
 
       if (pardedMessage.error === 'errorUserDoesntExistOrReject') {
@@ -82,7 +85,8 @@ export const useInternalMessagesWebSocketHandler = () => {
         setError(ErrorTypes.ErrorUserIsTheSame);
       } else if (pardedMessage.error === 'requesterIsOffline') {
         setError(ErrorTypes.RequesterIsOffline);
-      } else if (pardedMessage.error === 'canceledRequest' && connectionStatus === 'requestReceived') {
+      } else if (pardedMessage.error === 'canceledRequest' && requestStatus === 'requestReceived') {
+        setError(ErrorTypes.CanceledRequest);
       }
     }
 
@@ -97,7 +101,6 @@ export const useInternalMessagesWebSocketHandler = () => {
     //Recepcion de mensajes
     if (pardedMessage.hasOwnProperty('sentMessaje')) {
       const message = pardedMessage.sentMessaje.message;
-      console.log(message);
       const now = new Date();
       const minutes = now.getMinutes() <= 10 ? '0' + String(now.getMinutes()) : String(now.getMinutes());
       setChatHistory((chatHistory) => [

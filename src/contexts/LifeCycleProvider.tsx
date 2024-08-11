@@ -1,4 +1,4 @@
-import { createContext, SetStateAction, useState } from 'react';
+import { createContext, SetStateAction, useEffect, useState } from 'react';
 
 interface ILifeCycleContextType {
   lifeCycle: 'offline' | 'online' | 'userRegistered' | 'chating' | null;
@@ -16,6 +16,10 @@ export const LifeCycleProvider = ({ children }: { children: React.ReactNode }) =
   const [lifeCycle, setLifeCycle] = useState<'offline' | 'online' | 'userRegistered' | 'chating' | null>(
     null,
   );
+
+  useEffect(() => {
+    console.log('lifeCycleContext', lifeCycle);
+  }, [lifeCycle]);
 
   return (
     <LifeCycleContext.Provider value={{ lifeCycle, setLifeCycle }}>{children}</LifeCycleContext.Provider>

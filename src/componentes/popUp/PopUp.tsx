@@ -10,8 +10,6 @@ interface IPopUpProps {
 }
 /* eslint-disable react/prop-types */
 export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
-  console.log(props);
-
   const buttonStyles = {
     height: '50px',
     width: '270px',

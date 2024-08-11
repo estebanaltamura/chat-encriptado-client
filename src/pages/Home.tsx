@@ -9,19 +9,17 @@ import Spinner from '../componentes/spinner/Spinner';
 import { useContext, useEffect, useState } from 'react';
 import { ErrorContext } from '../contexts/ErrorContextProvider';
 import { ErrorTypes } from '../types';
+import { UsersDataContext } from '../contexts/UsersDataProvider';
+import { LastActivityTimeContext } from '../contexts/LastActivityTimeProvider';
+import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
+import { RequestStatusContext } from '../contexts/RequestStatusProvider';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
 
 export const Home: React.FC = () => {
   // ** Hooks
   const { isLoading, startSession } = useLogin();
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
-  const { error, setError } = useContext(ErrorContext);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setError(ErrorTypes.NickNameError);
-    }, 1000);
-  }, []);
 
   if (isLoading) return <Spinner />;
 
@@ -99,31 +97,29 @@ export const Home: React.FC = () => {
             sx={{
               borderRadius: '10px',
               color: 'black !important',
-
               '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                   borderRadius: '10px',
-
-                  borderColor: 'gray', // Color del borde por defecto
+                  borderColor: 'gray',
                 },
                 '&:hover fieldset': {
-                  borderColor: '#8F9FB8', // Color del borde en hover
+                  borderColor: '#8F9FB8',
                 },
                 '&.Mui-focused fieldset': {
-                  borderColor: '#8F9FB8', // Color del borde en focus
+                  borderColor: '#8F9FB8',
                 },
                 '&.Mui-focused.Mui-focusedVisible fieldset': {
-                  borderColor: '#8F9FB8', // Color del borde en focusVisible
+                  borderColor: '#8F9FB8',
                 },
               },
               '& .MuiInputLabel-root': {
-                color: 'black', // Color del label por defecto
+                color: 'black',
                 '&.Mui-focused': {
-                  color: 'green', // Color del label en focus
+                  color: 'green',
                 },
               },
               '& input::placeholder': {
-                textAlign: 'center', // Centrar el placeholder
+                textAlign: 'center',
               },
             }}
           />

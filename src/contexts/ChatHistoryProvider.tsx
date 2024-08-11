@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 interface IChatMessage {
   type: string | null;
@@ -21,6 +21,10 @@ export const ChatHistoryContext = createContext<IChatHistoryContextType>(ChatHis
 
 export const ChatHistoryProvider = ({ children }: { children: React.ReactNode }) => {
   const [chatHistory, setChatHistory] = useState<IChatMessage[] | []>([]);
+
+  useEffect(() => {
+    console.log('chatHistory', chatHistory);
+  }, [chatHistory]);
 
   return (
     <ChatHistoryContext.Provider value={{ chatHistory, setChatHistory }}>

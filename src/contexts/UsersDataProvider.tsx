@@ -1,5 +1,5 @@
 // ** React Imports
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 interface IUsersDataContextType {
   usersData: {
@@ -33,6 +33,10 @@ export const UsersDataProvider = ({ children }: { children: React.ReactNode }) =
     toPublicKey: string | null;
     toNickName: string | null;
   }>({ fromPublicKey: null, fromNickName: null, toPublicKey: null, toNickName: null });
+
+  useEffect(() => {
+    console.log('usersDataContext', usersData);
+  }, [usersData]);
 
   return (
     <UsersDataContext.Provider value={{ usersData, setUsersData }}>{children}</UsersDataContext.Provider>

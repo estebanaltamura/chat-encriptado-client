@@ -18,8 +18,7 @@ interface ChatFormElement extends HTMLFormElement {
 
 export const useChat = () => {
   // ** Contexts
-  const { setConnectionStatus, closeConnection, sendWebSocketMessage } =
-    useContext(WebSocketConnectionContext);
+  const { closeConnection, sendWebSocketMessage } = useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
   const { setChatHistory, chatHistory } = useContext(ChatHistoryContext);
   const { setError } = useContext(ErrorContext);

@@ -1,31 +1,21 @@
-// usePopUpDataByError.ts
-import { useContext, useRef } from 'react';
-import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
-import { UsersDataContext } from '../contexts/UsersDataProvider';
-
 import { ErrorTypes, IPopDataByError } from '../types';
-import { ErrorContext } from '../contexts/ErrorContextProvider';
 import usePopUpByErrorFunctions from './usePopUpByErrorFunctions';
 
 const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
   const {
     acceptServerErrorHandler,
-    timeOutServerErrorHandler,
     acceptDisconnectionByInactivityHandler,
-    timeOutDisconnectionByInactivityHandler,
     acceptRequestErrorHandler,
-    timeOutRequestErrorHandler,
     cancelRequestSentHandler,
-    timeOutRequestSentHandler,
     acceptRequestReceivedHandler,
     rejectRequestReceivedHandler,
     timeOutRequestReceivedHandler,
+    canceledRequest,
     acceptNickNameErrorHandler,
-    timeOutNickNameErrorHandler,
     acceptUserInsertedAnEmptyEntry,
-    timeOutUserInsertedAnEmptyEntry,
     acceptOtherUserHasClosedHandler,
-    timeOutOtherUserHasClosedHandler,
+    acceptTheUserHasClosedHandler,
+    timeOutDisconnectionByInactivityHandler,
   } = usePopUpByErrorFunctions();
 
   return {
@@ -37,7 +27,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptServerErrorHandler,
-      handlerTimeOut: timeOutServerErrorHandler,
+      handlerTimeOut: acceptServerErrorHandler,
     },
     [ErrorTypes.DisconnectionByInactivity]: {
       title: 'Disconnection Due to Inactivity',
@@ -56,6 +46,8 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       type: 'oneButtonAccept',
       seconds: 30,
       acceptButtonText: 'OK',
+      handlerAccept: acceptTheUserHasClosedHandler,
+      handlerTimeOut: acceptTheUserHasClosedHandler,
     },
     [ErrorTypes.OtherUserHasClosed]: {
       title: 'Connection Closed',
@@ -65,7 +57,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptOtherUserHasClosedHandler,
-      handlerTimeOut: timeOutOtherUserHasClosedHandler,
+      handlerTimeOut: acceptOtherUserHasClosedHandler,
     },
     [ErrorTypes.RequestReceived]: {
       title: 'Chat Request Received',
@@ -75,6 +67,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'START CHAT',
       rejectButtonText: 'REJECT',
+      // 1
       handlerAccept: acceptRequestReceivedHandler,
       handlerReject: rejectRequestReceivedHandler,
       handlerTimeOut: timeOutRequestReceivedHandler,
@@ -87,7 +80,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       rejectButtonText: 'CANCEL',
       handlerReject: cancelRequestSentHandler,
-      handlerTimeOut: timeOutRequestSentHandler,
+      handlerTimeOut: cancelRequestSentHandler,
     },
     [ErrorTypes.UserInsertedAnEmptyEntry]: {
       title: 'Empty Entry',
@@ -97,7 +90,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptUserInsertedAnEmptyEntry,
-      handlerTimeOut: timeOutUserInsertedAnEmptyEntry,
+      handlerTimeOut: acceptUserInsertedAnEmptyEntry,
     },
     [ErrorTypes.CanceledRequest]: {
       title: 'Request Canceled',
@@ -106,6 +99,8 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       type: 'oneButtonAccept',
       seconds: 30,
       acceptButtonText: 'OK',
+      handlerAccept: canceledRequest,
+      handlerTimeOut: canceledRequest,
     },
     [ErrorTypes.ErrorUserDoesntExistOrReject]: {
       title: 'Error Finding User',
@@ -115,7 +110,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptRequestErrorHandler,
-      handlerTimeOut: timeOutRequestErrorHandler,
+      handlerTimeOut: acceptRequestErrorHandler,
     },
     [ErrorTypes.ErrorUserIsTheSame]: {
       title: 'Invalid Public Key',
@@ -125,7 +120,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptRequestErrorHandler,
-      handlerTimeOut: timeOutRequestErrorHandler,
+      handlerTimeOut: acceptRequestErrorHandler,
     },
     [ErrorTypes.RequesterIsOffline]: {
       title: 'Requester Offline',
@@ -136,7 +131,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptRequestErrorHandler,
-      handlerTimeOut: timeOutRequestErrorHandler,
+      handlerTimeOut: acceptRequestErrorHandler,
     },
     [ErrorTypes.NickNameError]: {
       title: 'Nick Name Error',
@@ -146,7 +141,7 @@ const usePopUpDataByError = (): Record<ErrorTypes, IPopDataByError> => {
       seconds: 30,
       acceptButtonText: 'OK',
       handlerAccept: acceptNickNameErrorHandler,
-      handlerTimeOut: timeOutNickNameErrorHandler,
+      handlerTimeOut: acceptNickNameErrorHandler,
     },
   };
 };
