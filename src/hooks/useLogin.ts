@@ -7,10 +7,14 @@ import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvi
 
 // ** Crypto codes Imports
 import nacl from 'tweetnacl';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes } from '../types';
 
 interface IUser {
   publicKey: string | null;
   nickName: string | null;
+  avatarType: number | null;
   password: string | null;
   to: string | null;
   requestStatus: string | null;
@@ -18,11 +22,11 @@ interface IUser {
   lastMessageTime: number | null;
 }
 
-interface LoginFormElements extends HTMLFormControlsCollection {
+export interface LoginFormElements extends HTMLFormControlsCollection {
   nickNameInput: HTMLInputElement;
 }
 
-interface LoginFormElement extends HTMLFormElement {
+export interface LoginFormElement extends HTMLFormElement {
   elements: LoginFormElements;
 }
 
@@ -34,30 +38,28 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // ** Contexts
-  const { connectionStatus, setConnectionStatus, connectWebSocket, createUser } =
-    useContext(WebSocketConnectionContext);
+  const { connectWebSocket, createUser } = useContext(WebSocketConnectionContext);
+  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { error, setError } = useContext(ErrorContext);
 
   // ** Refs
   const user = useRef<IUser>();
 
   useEffect(() => {
-    if (connectionStatus === 'online') {
+    if (lifeCycle === 'online') {
       createUser(user.current);
     }
 
-    if (connectionStatus === 'userRegistered') {
+    if (lifeCycle === 'userRegistered') {
       setIsLoading(false);
       history('/findingPair');
     }
-
-    if (connectionStatus === 'serverError') {
-      setIsLoading(false);
-    }
-  }, [connectionStatus]);
+  }, [lifeCycle, error]);
 
   // SET USER
-  const setUserData = (inputValue: string) => {
+  const setUserData = (inputValue: string, avatarType: number) => {
     const nickNameInserted = inputValue;
+
     const regex = /['"]/g;
     const nickNameInsertedHandled = nickNameInserted.replace(regex, '');
 
@@ -69,6 +71,7 @@ export const useLogin = () => {
     user.current = {
       publicKey: publicKeyString,
       nickName: nickNameInsertedHandled,
+      avatarType: avatarType,
       password: null,
       to: null,
       requestStatus: null,
@@ -77,15 +80,15 @@ export const useLogin = () => {
     };
   };
 
-  const startSession = (e: FormEvent<LoginFormElement>) => {
+  const startSession = (e: FormEvent<LoginFormElement>, avatarType: number) => {
     e.preventDefault();
     const inputValue = e.currentTarget.elements.nickNameInput.value;
 
     if (inputValue !== '') {
-      setUserData(inputValue);
+      setUserData(inputValue, avatarType);
       setIsLoading(true);
       connectWebSocket();
-    } else setConnectionStatus('nickNameError');
+    } else setError(ErrorTypes.NickNameError);
   };
 
   // INPUT BEHAVIORS

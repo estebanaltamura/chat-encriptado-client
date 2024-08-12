@@ -1,18 +1,22 @@
 // ** React Imports
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ** Contexts Imports
 import { WebSocketConnectionContext } from '../contexts/WebSocketConnectionProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
-import { PopUpContext } from '../contexts/PopUpContextProvider';
+import { ErrorContext } from '../contexts/ErrorContextProvider';
+import { ErrorTypes, lifeCycle } from '../types';
+import { LifeCycleContext } from '../contexts/LifeCycleProvider';
+import { RequestStatusContext } from '../contexts/RequestStatusProvider';
 
 export const useFindingPair = () => {
   // ** Contexts
-  const { setConnectionStatus, connectionStatus, tryPairing, closeConnection } =
-    useContext(WebSocketConnectionContext);
+  const { tryPairing, closeConnection } = useContext(WebSocketConnectionContext);
   const { usersData } = useContext(UsersDataContext);
-  const { setShowPopUp } = useContext(PopUpContext);
+  const { setError } = useContext(ErrorContext);
+  const { lifeCycle } = useContext(LifeCycleContext);
+  const { setRequestStatus } = useContext(RequestStatusContext);
 
   // ** States
   const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
@@ -20,32 +24,51 @@ export const useFindingPair = () => {
   // ** Hooks
   const history = useNavigate();
 
+  // ** Refs
+  const usersDataRef = useRef<{
+    fromPublicKey: string | null;
+    fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
+    toPublicKey: string | null;
+    toNickName: string | null;
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
+  }>(usersData);
+  const lifeCycleRef = useRef<'offline' | 'online' | 'userRegistered' | 'chating' | null>(lifeCycle);
+
   useEffect(() => {
-    if (connectionStatus === 'chating') {
-      setShowPopUp(false);
+    usersDataRef.current = usersData;
+  }, [usersData]);
+
+  useEffect(() => {
+    lifeCycleRef.current = lifeCycle;
+  }, [lifeCycle]);
+
+  useEffect(() => {
+    if (lifeCycle === 'chating') {
+      setError(null);
       history('/chatRoom');
     }
-  }, [connectionStatus]);
+  }, [lifeCycle]);
 
   const tryPairingHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.elements.findingPairInput);
     const publicKeyUser2 = e.target.elements.findingPairInput.value;
 
-    if (publicKeyUser2 !== '' && usersData.fromPublicKey) {
-      setConnectionStatus('requestSent');
-      tryPairing(usersData.fromPublicKey, publicKeyUser2);
-    } else setConnectionStatus('userInsertedAnEmptyEntry');
+    if (publicKeyUser2 !== '' && usersDataRef.current.fromPublicKey) {
+      setError(ErrorTypes.RequestSent);
+      setRequestStatus('requestSent');
+      tryPairing(usersDataRef.current.fromPublicKey, publicKeyUser2);
+    } else setError(ErrorTypes.UserInsertedAnEmptyEntry);
   };
 
   const closeConnectionHandler = () => {
-    setConnectionStatus('theUserHasClosed');
+    setError(ErrorTypes.TheUserHasClosed); // Se disparaba cuando el propio usuario cierra la conexion
     closeConnection();
   };
 
   const copyToClipboard = async () => {
-    if (!usersData.fromPublicKey) throw new Error('Public key is undefined');
-    await navigator.clipboard.writeText(usersData.fromPublicKey);
+    if (!usersDataRef.current.fromPublicKey) throw new Error('Public key is undefined');
+    await navigator.clipboard.writeText(usersDataRef.current.fromPublicKey);
     setCopyPublicKeyText('Copied!');
     const timeOut = setTimeout(() => {
       setCopyPublicKeyText('Copy my public key');

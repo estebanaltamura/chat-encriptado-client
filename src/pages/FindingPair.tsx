@@ -8,19 +8,12 @@ import { AiOutlineCopy } from 'react-icons/ai';
 import { Box, Button, TextField, Typography } from '@mui/material';
 
 // Icons Imports
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { useState } from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 export const FindingPair: React.FC = () => {
   // ** Hooks
-  const {
-    onFocusHandler,
-    onBlurHandler,
-    tryPairingHandler,
-    copyToClipboard,
-    copyPublicKeyText,
-    closeConnectionHandler,
-  } = useFindingPair();
+  const { tryPairingHandler, copyToClipboard, copyPublicKeyText, closeConnectionHandler } = useFindingPair();
 
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
@@ -57,10 +50,6 @@ export const FindingPair: React.FC = () => {
       >
         You can talk with another user if you know their public key or the another user knows your public key.
       </Typography>
-
-      <Box sx={{ border: '1px solid #2a3942', marginTop: '40px', width: '600px', height: '140px' }}>
-        Elección del avatar
-      </Box>
 
       <Typography
         sx={{

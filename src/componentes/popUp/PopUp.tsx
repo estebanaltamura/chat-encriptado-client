@@ -3,31 +3,13 @@ import { useEffect } from 'react';
 
 // ** Material UI Imports
 import { Box, Button, Typography, useMediaQuery } from '@mui/material';
-interface PopUpProps {
-  title: string;
-  message: string;
-  type: string;
-  seconds: number;
-  acceptButtonText?: string;
-  rejectButtonText?: string;
-  handlerAccept?: () => void;
-  handlerReject?: () => void;
-  handlerTimeOut: () => void;
-  CTAtext?: string;
-}
+import { IPopDataByError } from '../../types';
 
-export const PopUp = ({
-  title,
-  message,
-  type,
-  CTAtext,
-  acceptButtonText,
-  rejectButtonText,
-  seconds,
-  handlerAccept,
-  handlerReject,
-  handlerTimeOut,
-}: PopUpProps) => {
+interface IPopUpProps {
+  props: IPopDataByError;
+}
+/* eslint-disable react/prop-types */
+export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
   const buttonStyles = {
     height: '50px',
     width: '270px',
@@ -49,11 +31,24 @@ export const PopUp = ({
     },
   };
 
+  const {
+    title,
+    message,
+    type,
+    seconds,
+    acceptButtonText,
+    rejectButtonText,
+    handlerAccept,
+    handlerReject,
+    handlerTimeOut,
+    CTAtext,
+  } = props;
+
   useEffect(() => {
     const secondsToMiliSeconds = seconds * 1000;
 
     const timeOut = setTimeout(() => {
-      handlerTimeOut();
+      handlerTimeOut && handlerTimeOut();
     }, secondsToMiliSeconds);
 
     return () => clearTimeout(timeOut);

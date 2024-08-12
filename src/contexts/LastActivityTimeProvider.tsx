@@ -1,8 +1,8 @@
 // ** React Imports
-import { createContext, useEffect, useState, useContext } from 'react';
-
-// ** Contexts Imports
-import { WebSocketConnectionContext } from './WebSocketConnectionProvider';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { ErrorTypes } from '../types';
+import { ErrorContext } from './ErrorContextProvider';
+import { LifeCycleContext } from './LifeCycleProvider';
 
 interface ILastActivityTimeContextType {
   secondsFromLastActivity: number;
@@ -18,21 +18,20 @@ export const LastActivityTimeContext = createContext(lastActivityTimeContextInit
 
 export const LastActivityTimeProvider = ({ children }: { children: React.ReactNode }) => {
   // ** Contexts
-  const { connectionStatus, setConnectionStatus } = useContext(WebSocketConnectionContext);
+  const { lifeCycle, setLifeCycle } = useContext(LifeCycleContext);
+  const { setError } = useContext(ErrorContext);
 
   // ** States
   const [secondsFromLastActivity, setSecondsFromLastActivity] = useState(0);
 
   useEffect(() => {
-    if (connectionStatus === 'userRegistered' && secondsFromLastActivity >= 120)
-      setConnectionStatus('disconnectionByInactivity');
-    if (connectionStatus === 'chating' && secondsFromLastActivity >= 30000)
-      setConnectionStatus('disconnectionByInactivity');
-  }, [secondsFromLastActivity]);
+    if (lifeCycle === 'chating' && secondsFromLastActivity >= 180)
+      setError(ErrorTypes.DisconnectionByInactivity);
+  }, [secondsFromLastActivity, lifeCycle]);
 
   useEffect(() => {
     setSecondsFromLastActivity(0);
-  }, [connectionStatus]);
+  }, [lifeCycle]);
 
   useEffect(() => {
     const clickActivityHandler = () => {
