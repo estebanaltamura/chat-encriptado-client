@@ -44,7 +44,7 @@ const usePopUpByErrorFunctions = () => {
   };
 
   const acceptRequestErrorHandler = () => {
-    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null, toAvatarType: null });
     setLifeCycle('userRegistered');
     setError(null);
     setRequestStatus(null);
@@ -59,7 +59,7 @@ const usePopUpByErrorFunctions = () => {
     };
 
     setRequestStatus(null);
-    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null, toAvatarType: null });
     sendWebSocketMessage(cancelRequestSent);
     setLifeCycle('userRegistered');
     setError(null);
@@ -91,7 +91,7 @@ const usePopUpByErrorFunctions = () => {
     setRequestStatus(null);
     setError(null);
     setLifeCycle('userRegistered');
-    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null, toAvatarType: null });
     sendWebSocketMessage(rejectedRequest);
   };
 
@@ -99,7 +99,7 @@ const usePopUpByErrorFunctions = () => {
     setRequestStatus(null);
     setError(null);
     setLifeCycle('userRegistered');
-    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
+    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null, toAvatarType: null });
   };
 
   const acceptNickNameErrorHandler = () => {
@@ -129,7 +129,6 @@ const usePopUpByErrorFunctions = () => {
     setRequestStatus(null);
     setError(null);
     setLifeCycle('userRegistered');
-    setUsersData({ ...usersDataRef.current, toPublicKey: null, toNickName: null });
   };
 
   return {

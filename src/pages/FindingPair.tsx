@@ -51,10 +51,6 @@ export const FindingPair: React.FC = () => {
         You can talk with another user if you know their public key or the another user knows your public key.
       </Typography>
 
-      <Box sx={{ border: '1px solid #2a3942', marginTop: '40px', width: '600px', height: '140px' }}>
-        Elección del avatar
-      </Box>
-
       <Typography
         sx={{
           fontFamily: 'Inter',

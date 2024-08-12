@@ -1,5 +1,5 @@
 // ** Hooks Imports
-import { useLogin } from '../hooks/useLogin';
+import { LoginFormElement, LoginFormElements, useLogin } from '../hooks/useLogin';
 
 // ** Material UI Imports
 import { Box, Typography, Button, TextField } from '@mui/material';
@@ -20,6 +20,7 @@ export const Home: React.FC = () => {
   const { isLoading, startSession } = useLogin();
   const [focused, setFocused] = useState<boolean>(false);
   const [value, setValue] = useState<string>('');
+  const [avatarType, setAvatarType] = useState<number>(1);
 
   if (isLoading) return <Spinner />;
 
@@ -44,6 +45,74 @@ export const Home: React.FC = () => {
         >
           Secret chat is a private chat encrypted end to end with private and public keys SHA256.
         </Typography>
+
+        <Box
+          sx={{
+            display: 'flex',
+            width: '600px',
+            height: '140px',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '1px solid #2a3942',
+            marginTop: '40px',
+            gap: '25px',
+          }}
+        >
+          <Box
+            onClick={() => setAvatarType(1)}
+            sx={{
+              display: 'flex',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              width: '60px',
+              height: '60px',
+            }}
+          ></Box>
+
+          <Box
+            onClick={() => setAvatarType(2)}
+            sx={{
+              display: 'flex',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              width: '60px',
+              height: '60px',
+            }}
+          ></Box>
+
+          <Box
+            onClick={() => setAvatarType(3)}
+            sx={{
+              display: 'flex',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              width: '60px',
+              height: '60px',
+            }}
+          ></Box>
+
+          <Box
+            onClick={() => setAvatarType(4)}
+            sx={{
+              display: 'flex',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              width: '60px',
+              height: '60px',
+            }}
+          ></Box>
+
+          <Box
+            onClick={() => setAvatarType(5)}
+            sx={{
+              display: 'flex',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              width: '60px',
+              height: '60px',
+            }}
+          ></Box>
+        </Box>
 
         <Typography
           sx={{
@@ -72,7 +141,7 @@ export const Home: React.FC = () => {
           margin: '0px auto 20px auto',
         }}
       >
-        <form className="formLogin" onSubmit={startSession}>
+        <form className="formLogin" onSubmit={(event: any) => startSession(event, avatarType)}>
           <TextField
             name="nickNameInput"
             type="text"

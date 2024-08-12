@@ -1,5 +1,5 @@
 // ** React Imports
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // ** Contexts Imports
@@ -24,6 +24,25 @@ export const useFindingPair = () => {
   // ** Hooks
   const history = useNavigate();
 
+  // ** Refs
+  const usersDataRef = useRef<{
+    fromPublicKey: string | null;
+    fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
+    toPublicKey: string | null;
+    toNickName: string | null;
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
+  }>(usersData);
+  const lifeCycleRef = useRef<'offline' | 'online' | 'userRegistered' | 'chating' | null>(lifeCycle);
+
+  useEffect(() => {
+    usersDataRef.current = usersData;
+  }, [usersData]);
+
+  useEffect(() => {
+    lifeCycleRef.current = lifeCycle;
+  }, [lifeCycle]);
+
   useEffect(() => {
     if (lifeCycle === 'chating') {
       setError(null);
@@ -35,10 +54,10 @@ export const useFindingPair = () => {
     e.preventDefault();
     const publicKeyUser2 = e.target.elements.findingPairInput.value;
 
-    if (publicKeyUser2 !== '' && usersData.fromPublicKey) {
+    if (publicKeyUser2 !== '' && usersDataRef.current.fromPublicKey) {
       setError(ErrorTypes.RequestSent);
       setRequestStatus('requestSent');
-      tryPairing(usersData.fromPublicKey, publicKeyUser2);
+      tryPairing(usersDataRef.current.fromPublicKey, publicKeyUser2);
     } else setError(ErrorTypes.UserInsertedAnEmptyEntry);
   };
 
@@ -48,8 +67,8 @@ export const useFindingPair = () => {
   };
 
   const copyToClipboard = async () => {
-    if (!usersData.fromPublicKey) throw new Error('Public key is undefined');
-    await navigator.clipboard.writeText(usersData.fromPublicKey);
+    if (!usersDataRef.current.fromPublicKey) throw new Error('Public key is undefined');
+    await navigator.clipboard.writeText(usersDataRef.current.fromPublicKey);
     setCopyPublicKeyText('Copied!');
     const timeOut = setTimeout(() => {
       setCopyPublicKeyText('Copy my public key');

@@ -5,21 +5,32 @@ interface IUsersDataContextType {
   usersData: {
     fromPublicKey: string | null;
     fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
     toPublicKey: string | null;
     toNickName: string | null;
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
   };
   setUsersData: React.Dispatch<
     React.SetStateAction<{
       fromPublicKey: string | null;
       fromNickName: string | null;
+      fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
       toPublicKey: string | null;
       toNickName: string | null;
+      toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
     }>
   >;
 }
 
 const UsersDataContextInitialValue: IUsersDataContextType = {
-  usersData: { fromPublicKey: null, fromNickName: null, toPublicKey: null, toNickName: null },
+  usersData: {
+    fromPublicKey: null,
+    fromNickName: null,
+    fromAvatarType: null,
+    toPublicKey: null,
+    toNickName: null,
+    toAvatarType: null,
+  },
   setUsersData: () => null,
 };
 
@@ -30,9 +41,18 @@ export const UsersDataProvider = ({ children }: { children: React.ReactNode }) =
   const [usersData, setUsersData] = useState<{
     fromPublicKey: string | null;
     fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
     toPublicKey: string | null;
     toNickName: string | null;
-  }>({ fromPublicKey: null, fromNickName: null, toPublicKey: null, toNickName: null });
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
+  }>({
+    fromPublicKey: null,
+    fromNickName: null,
+    fromAvatarType: null,
+    toPublicKey: null,
+    toNickName: null,
+    toAvatarType: null,
+  });
 
   useEffect(() => {
     console.log('usersDataContext', usersData);

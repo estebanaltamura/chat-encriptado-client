@@ -14,6 +14,7 @@ import { ErrorTypes } from '../types';
 interface IUser {
   publicKey: string | null;
   nickName: string | null;
+  avatarType: number | null;
   password: string | null;
   to: string | null;
   requestStatus: string | null;
@@ -21,11 +22,11 @@ interface IUser {
   lastMessageTime: number | null;
 }
 
-interface LoginFormElements extends HTMLFormControlsCollection {
+export interface LoginFormElements extends HTMLFormControlsCollection {
   nickNameInput: HTMLInputElement;
 }
 
-interface LoginFormElement extends HTMLFormElement {
+export interface LoginFormElement extends HTMLFormElement {
   elements: LoginFormElements;
 }
 
@@ -56,8 +57,9 @@ export const useLogin = () => {
   }, [lifeCycle, error]);
 
   // SET USER
-  const setUserData = (inputValue: string) => {
+  const setUserData = (inputValue: string, avatarType: number) => {
     const nickNameInserted = inputValue;
+
     const regex = /['"]/g;
     const nickNameInsertedHandled = nickNameInserted.replace(regex, '');
 
@@ -69,6 +71,7 @@ export const useLogin = () => {
     user.current = {
       publicKey: publicKeyString,
       nickName: nickNameInsertedHandled,
+      avatarType: avatarType,
       password: null,
       to: null,
       requestStatus: null,
@@ -77,12 +80,12 @@ export const useLogin = () => {
     };
   };
 
-  const startSession = (e: FormEvent<LoginFormElement>) => {
+  const startSession = (e: FormEvent<LoginFormElement>, avatarType: number) => {
     e.preventDefault();
     const inputValue = e.currentTarget.elements.nickNameInput.value;
 
     if (inputValue !== '') {
-      setUserData(inputValue);
+      setUserData(inputValue, avatarType);
       setIsLoading(true);
       connectWebSocket();
     } else setError(ErrorTypes.NickNameError);

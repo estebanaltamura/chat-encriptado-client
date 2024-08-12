@@ -3,9 +3,6 @@ import { useContext, useEffect, useRef } from 'react';
 
 // ** Contexts Imports
 import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
-import { ErrorContext } from '../contexts/ErrorContextProvider';
-import { LifeCycleContext } from '../contexts/LifeCycleProvider';
-import { RequestStatusContext } from '../contexts/RequestStatusProvider';
 import { UsersDataContext } from '../contexts/UsersDataProvider';
 import { ErrorTypes } from '../types';
 
@@ -18,8 +15,10 @@ export const useInternalMessagesWebSocketHandler = () => {
   const usersDataRef = useRef<{
     fromPublicKey: string | null;
     fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
     toPublicKey: string | null;
     toNickName: string | null;
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
   }>();
 
   useEffect(() => {
@@ -49,18 +48,28 @@ export const useInternalMessagesWebSocketHandler = () => {
     if (pardedMessage.hasOwnProperty('userCreated') && usersDataRef.current) {
       const userName = pardedMessage.userCreated.userName;
       const nickName = pardedMessage.userCreated.nickName;
+      const avatarType = pardedMessage.userCreated.avatarType; // TO DO
       setLifeCycle('userRegistered');
-      setUsersData({ ...usersDataRef.current, fromPublicKey: userName, fromNickName: nickName });
+      setUsersData({
+        ...usersDataRef.current,
+        fromPublicKey: userName,
+        fromNickName: nickName,
+        fromAvatarType: avatarType,
+      });
     }
 
     //Solicitud de chat de privado
     if (pardedMessage.hasOwnProperty('requestConnection') && usersDataRef.current) {
+      console.log(pardedMessage);
       const publicKeySolicitorUserData = pardedMessage.requestConnection.userName;
       const nickNameSolicitorUserData = pardedMessage.requestConnection.nickName;
+      const avatarTypeSolicitorUserData = pardedMessage.requestConnection.avatarType; // TO DO
+
       setUsersData({
         ...usersDataRef.current,
         toPublicKey: publicKeySolicitorUserData,
         toNickName: nickNameSolicitorUserData,
+        toAvatarType: avatarTypeSolicitorUserData,
       });
 
       setRequestStatus('requestReceived');
@@ -71,7 +80,13 @@ export const useInternalMessagesWebSocketHandler = () => {
     if (pardedMessage.hasOwnProperty('chatConfirmed') && usersDataRef.current) {
       const toPublicKey = pardedMessage.chatConfirmed.to;
       const toNickName = pardedMessage.chatConfirmed.toNickName;
-      setUsersData({ ...usersDataRef.current, toPublicKey: toPublicKey, toNickName: toNickName });
+      const toAvatarType = pardedMessage.chatConfirmed.avatarType; // TO DO
+      setUsersData({
+        ...usersDataRef.current,
+        toPublicKey: toPublicKey,
+        toNickName: toNickName,
+        toAvatarType: toAvatarType,
+      });
       setLifeCycle('chating');
     }
 
@@ -93,7 +108,18 @@ export const useInternalMessagesWebSocketHandler = () => {
     //cierre
     if (pardedMessage.hasOwnProperty('closing')) {
       if (pardedMessage.closing === 'otherUserHasClosed') {
-        setUsersData({ fromPublicKey: null, fromNickName: null, toPublicKey: null, toNickName: null });
+        setUsersData((prev) =>
+          prev
+            ? { ...prev, toPublicKey: null, toNickName: null, toAvatarType: null }
+            : {
+                fromPublicKey: null,
+                fromNickName: null,
+                fromAvatarType: null,
+                toPublicKey: null,
+                toNickName: null,
+                toAvatarType: null,
+              },
+        );
         setError(ErrorTypes.OtherUserHasClosed);
       }
     }

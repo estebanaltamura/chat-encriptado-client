@@ -41,8 +41,10 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
   const usersDataRef = useRef<{
     fromPublicKey: string | null;
     fromNickName: string | null;
+    fromAvatarType: 1 | 2 | 3 | 4 | 5 | null;
     toPublicKey: string | null;
     toNickName: string | null;
+    toAvatarType: 1 | 2 | 3 | 4 | 5 | null;
   } | null>(null);
   const lifeCycleRef = useRef<string | null>();
   const errorRef = useRef<ErrorTypes | null>();
@@ -100,8 +102,10 @@ export const WebSocketConnectionContextProvider = ({ children }: { children: Rea
       setUsersData({
         fromPublicKey: null,
         fromNickName: null,
+        fromAvatarType: null,
         toPublicKey: null,
         toNickName: null,
+        toAvatarType: null,
       });
       setError(ErrorTypes.ServerError);
     }
