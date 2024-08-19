@@ -19,10 +19,9 @@ span {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  max-width: 360px;
+  max-width: 450px;
   height: fit-content;
   margin: auto;
-  padding: 20px;
 }
 
 .nickNameInputLogin {
@@ -53,10 +52,9 @@ span {
   display: flex;
   flex-direction: column;
   width: 100vw;
-  max-width: 360px;
+  max-width: 380px;
   height: fit-content;
   margin: auto;
-  padding: 20px;
 }
 
 .nickNameInputFindingPair {

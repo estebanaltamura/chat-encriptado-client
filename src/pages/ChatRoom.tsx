@@ -48,15 +48,15 @@ export const ChatRoom: React.FC = () => {
         justifyContent: 'center',
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#5C67DB',
+        backgroundColor: '#444444',
       }}
     >
       <Box
         sx={{
-          margin: '35px 0 35px 0',
+          margin: 'auto',
           width: '70%',
           maxWidth: '1700px',
-          minHeight: 'calc(100vh - 70px)',
+          minHeight: 'calc(100vh - 200px)',
           borderRadius: '5px',
           border: 'none',
           zIndex: '1',
@@ -75,7 +75,20 @@ export const ChatRoom: React.FC = () => {
             backgroundColor: '#EFEFEF',
           }}
         >
-          <img src="/avatar.svg" className="avatar" />
+          <Box
+            sx={{
+              display: 'flex',
+              width: '50px',
+              height: '50px',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: '1px solid #4c4c4c',
+              borderRadius: '50px',
+              cursor: 'pointer',
+            }}
+          >
+            {usersData.toAvatarType}
+          </Box>
           <Typography
             sx={{
               whiteSpace: 'nowrap',
@@ -83,10 +96,12 @@ export const ChatRoom: React.FC = () => {
               textOverflow: 'ellipsis',
               fontFamily: 'Inter',
               lineHeight: '24px',
+
               fontSize: '20px',
               fontWeight: '700',
               color: '#353535',
               flexGrow: '1',
+              marginLeft: '15px',
             }}
           >
             {usersData.toNickName}
@@ -102,7 +117,7 @@ export const ChatRoom: React.FC = () => {
             flexDirection: 'column-reverse',
             justifyContent: 'baseline',
             width: '100%',
-            height: 'calc(100vh - 203px)',
+            height: 'calc(100vh - 303px)',
             paddingBottom: '18px',
             overflowY: 'auto',
             overflowX: 'hidden',
