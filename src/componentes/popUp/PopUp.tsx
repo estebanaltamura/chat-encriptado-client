@@ -13,21 +13,19 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
   const buttonStyles = {
     height: '50px',
     width: '270px',
-    marginTop: '20px',
-    fontSize: '20px',
-    fontWeight: '500',
-    fontFamily: 'Inter',
-    color: 'black',
-    border: '1px solid transparent',
+    marginTop: '38px',
+    fontSize: '14px',
+    fontWeight: '700',
+    fontFamily: 'Work Sans',
+    color: 'white',
+    border: '1px solid #8FDEFF',
     borderRadius: '10px',
-    boxShadow: '1px 2px 5px 0px #5c5c5c',
+    cursor: 'pointer',
+    backgroundColor: '#1D61CF',
+
     '&:hover': {
       backgroundColor: '#0f4478',
-      color: '#F09F18',
-    },
-    '&:focus-visible': {
-      outline: 'none',
-      textAlign: 'center',
+      color: '#34B9FA',
     },
   };
 
@@ -61,7 +59,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
         width: '100%',
         height: '100%',
         padding: '20px',
-        backgroundColor: '#0f4478',
+        backgroundColor: 'white',
         zIndex: '10',
       }}
     >
@@ -71,11 +69,11 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
           top: '20%',
           width: '520px',
           height: 'fit-content',
-          padding: '30px 20px',
+          padding: '45px 70px',
           margin: 'auto',
-          backgroundColor: 'white',
+          backgroundColor: 'rgba(29,153,206,0.10)',
+          border: '1.5px solid #1D61CF',
           borderRadius: '20px',
-          boxShadow: '2px 2px 8px 0px #F09F18',
           zIndex: '20',
           '&:@media (min-width: 768px)': {
             width: '460px',
@@ -92,7 +90,9 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
             width: '100%',
           }}
         >
-          <img src="https://i.postimg.cc/76bz30BG/logo-Miniatura.jpg" className="logoPopUp" />
+          <Box sx={{ display: 'flex', justifyContent: 'center', width: '60px' }}>
+            <img className="findingPairLogoImage" src="/logo.png" />
+          </Box>
           <Typography
             sx={{
               display: 'flex',
@@ -111,7 +111,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
             <Typography
               sx={{
                 display: 'flex',
-                marginTop: '10px',
+                marginTop: '5px',
                 alignItems: 'center',
                 justifyContent: 'center',
                 whiteSpace: 'pre-line',
@@ -143,7 +143,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
             <Button
               sx={{
                 ...buttonStyles,
-                backgroundColor: '#149ad9',
+                backgroundColor: '#1D61CF',
               }}
               onClick={handlerAccept}
               autoFocus
@@ -154,7 +154,10 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
             <Button
               sx={{
                 ...buttonStyles,
-                backgroundColor: '#eb5421',
+                color: 'black',
+                backgroundColor: 'transparent',
+                border: '1px solid #1D61CF',
+                marginTop: '12px',
               }}
               onClick={handlerReject}
               autoFocus
@@ -166,7 +169,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
               <Button
                 sx={{
                   ...buttonStyles,
-                  backgroundColor: '#149ad9',
+                  backgroundColor: '#1D61CF',
                 }}
                 onClick={handlerAccept}
                 autoFocus
@@ -176,7 +179,10 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
               <Button
                 sx={{
                   ...buttonStyles,
-                  backgroundColor: '#eb5421',
+                  color: 'black',
+                  backgroundColor: 'transparent',
+                  border: '1px solid #1D61CF',
+                  marginTop: '12px',
                 }}
                 onClick={handlerReject}
               >

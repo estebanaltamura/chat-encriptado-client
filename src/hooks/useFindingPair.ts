@@ -19,7 +19,7 @@ export const useFindingPair = () => {
   const { setRequestStatus } = useContext(RequestStatusContext);
 
   // ** States
-  const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copy my public key');
+  const [copyPublicKeyText, setCopyPublicKeyText] = useState('Copiar mi clave pública');
 
   // ** Hooks
   const history = useNavigate();
@@ -69,9 +69,9 @@ export const useFindingPair = () => {
   const copyToClipboard = async () => {
     if (!usersDataRef.current.fromPublicKey) throw new Error('Public key is undefined');
     await navigator.clipboard.writeText(usersDataRef.current.fromPublicKey);
-    setCopyPublicKeyText('Copied!');
+    setCopyPublicKeyText('Copiada!');
     const timeOut = setTimeout(() => {
-      setCopyPublicKeyText('Copy my public key');
+      setCopyPublicKeyText('Copiar mi clave pública');
       clearTimeout(timeOut);
     }, 1500);
   };

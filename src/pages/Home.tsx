@@ -1,19 +1,12 @@
 // ** Hooks Imports
-import { LoginFormElement, LoginFormElements, useLogin } from '../hooks/useLogin';
+import { useLogin } from '../hooks/useLogin';
 
 // ** Material UI Imports
-import { Box, Typography, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 // ** Spinner Import
+import { useState } from 'react';
 import Spinner from '../componentes/spinner/Spinner';
-import { useContext, useEffect, useState } from 'react';
-import { ErrorContext } from '../contexts/ErrorContextProvider';
-import { ErrorTypes } from '../types';
-import { UsersDataContext } from '../contexts/UsersDataProvider';
-import { LastActivityTimeContext } from '../contexts/LastActivityTimeProvider';
-import { ChatHistoryContext } from '../contexts/ChatHistoryProvider';
-import { RequestStatusContext } from '../contexts/RequestStatusProvider';
-import { LifeCycleContext } from '../contexts/LifeCycleProvider';
 
 export const Home: React.FC = () => {
   // ** Hooks
@@ -30,72 +23,167 @@ export const Home: React.FC = () => {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        width: '700px',
+        height: 'fit-content',
         border: '1px solid black',
         marginTop: '70px',
         borderRadius: '20px',
         padding: '40px',
       }}
     >
-      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center', width: '120px' }}>
-        <img
-          className="findingPairLogoImage"
-          src="https://i.postimg.cc/bNy9QWtG/logo.jpg"
-          style={{ width: '100%' }}
-        />
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '140px' }}>
+        <img className="findingPairLogoImage" src="/logo.png" style={{ width: '100%' }} />
       </Box>
 
-      <Typography
-        sx={{
-          fontFamily: 'Inter',
-          fontSize: '14px',
-          lineHeight: '16px',
-          fontWeight: '400',
-          textAlign: 'center',
-          width: '100%',
-          maxWidth: '300px',
-          margin: '10px auto 0 auto',
-        }}
-      >
-        Secret chat is a private chat encrypted end to end with private and public keys SHA256
-      </Typography>
+      {/*Test mode instructions */}
 
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
+          border: '1px solid #1D61CF',
+          borderRadius: '10px',
+          width: '522px',
+          padding: '18px',
+          marginTop: '20px',
+        }}
+      >
+        <Typography
+          sx={{
+            width: '100%',
+            textAlign: 'left',
+            lineHeight: '19px',
+            fontSize: '16px',
+            fontWeight: '500',
+            fontFamily: 'Work Sans',
+          }}
+        >
+          Si estás en esta página para testear el chat, seguí los pasos
+        </Typography>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            1
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            Clickeá este link. Te va a abrir una nueva pestaña con otro inicio de chat
+          </Typography>
+        </Box>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            2
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            En cada pestaña elegí un avatar y escribí un nickname
+          </Typography>
+        </Box>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            3
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            Hacé click en continuar
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
           marginTop: '30px',
-          backgroundColor: 'rgba(100, 26, 169, 0.10)',
+          backgroundColor: 'rgba(29,97,207,0.05)',
           borderRadius: '20px',
           padding: '60px 40px',
         }}
       >
         <Typography
           sx={{
-            fontFamily: 'Inter',
+            fontFamily: 'Work Sans',
             fontSize: '17px',
-            lineHeight: '19px',
-            fontWeight: '700',
+            lineHeight: '17px',
+            fontWeight: '600',
             textAlign: 'center',
             width: '100%',
             maxWidth: '450px',
           }}
         >
-          Please select an avatar and write your nickname
+          Seleccioná un avatar y escribí tu nickname
         </Typography>
         <Typography
           sx={{
-            fontFamily: 'Inter',
+            fontFamily: 'Work Sans',
             fontSize: '17px',
-            lineHeight: '19px',
-            fontWeight: '700',
+            lineHeight: '17px',
+            fontWeight: '600',
             textAlign: 'center',
             width: '100%',
             maxWidth: '600px',
             marginTop: '5px',
           }}
         >
-          Then click &quot;start session&quot; button
+          Luego hacé click en continuar
         </Typography>
 
         {/* Selector de avatars */}
@@ -117,7 +205,7 @@ export const Home: React.FC = () => {
               height: '60px',
               justifyContent: 'center',
               alignItems: 'center',
-              border: avatarType === 1 ? '4px solid #5E00B6' : '',
+              border: avatarType === 1 ? '4px solid #1D61CF' : '',
               borderRadius: '50px',
               cursor: 'pointer',
             }}
@@ -133,7 +221,7 @@ export const Home: React.FC = () => {
               height: '60px',
               justifyContent: 'center',
               alignItems: 'center',
-              border: avatarType === 2 ? '4px solid #5E00B6' : '',
+              border: avatarType === 2 ? '4px solid #1D61CF' : '',
               borderRadius: '50px',
               cursor: 'pointer',
             }}
@@ -149,7 +237,7 @@ export const Home: React.FC = () => {
               height: '60px',
               justifyContent: 'center',
               alignItems: 'center',
-              border: avatarType === 3 ? '4px solid #5E00B6' : '',
+              border: avatarType === 3 ? '4px solid #1D61CF' : '',
               borderRadius: '50px',
               cursor: 'pointer',
             }}
@@ -165,7 +253,7 @@ export const Home: React.FC = () => {
               height: '60px',
               justifyContent: 'center',
               alignItems: 'center',
-              border: avatarType === 4 ? '4px solid #5E00B6' : '',
+              border: avatarType === 4 ? '4px solid #1D61CF' : '',
               borderRadius: '50px',
               cursor: 'pointer',
             }}
@@ -181,7 +269,7 @@ export const Home: React.FC = () => {
               height: '60px',
               justifyContent: 'center',
               alignItems: 'center',
-              border: avatarType === 5 ? '4px solid #5E00B6' : '',
+              border: avatarType === 5 ? '4px solid #1D61CF' : '',
               borderRadius: '50px',
               cursor: 'pointer',
             }}
@@ -205,7 +293,7 @@ export const Home: React.FC = () => {
             <TextField
               name="nickNameInput"
               type="text"
-              placeholder={!focused && value === '' ? 'Write a nickname' : ''}
+              placeholder={!focused && value === '' ? 'Escribí un nickname' : ''}
               variant="outlined"
               autoComplete="off"
               autoCapitalize="none"
@@ -248,6 +336,10 @@ export const Home: React.FC = () => {
                     color: 'green',
                   },
                 },
+                '& .MuiOutlinedInput-input::placeholder': {
+                  color: 'grey', // Aquí se establece el color del placeholder
+                  textAlign: 'center',
+                },
                 '& input::placeholder': {
                   textAlign: 'center',
                 },
@@ -257,15 +349,16 @@ export const Home: React.FC = () => {
               sx={{
                 width: '100%',
                 height: '58px',
-                fontFamily: 'Inter',
+                fontFamily: 'Work Sans',
                 fontSize: '14px',
                 textTransform: 'none',
-                backgroundColor: '#5E00B6',
+                backgroundColor: '#1D61CF',
                 color: 'white',
-                marginTop: '25px',
-                border: '1px solid transparent',
+                marginTop: '20px',
+                border: '1px solid #8FDEFF',
                 borderRadius: '10px',
                 cursor: 'pointer',
+                fontWeight: '700',
                 '&:hover': {
                   backgroundColor: '#0f4478',
                   color: '#34B9FA',
@@ -273,7 +366,7 @@ export const Home: React.FC = () => {
               }}
               type="submit"
             >
-              START SESSION
+              CONTINUAR
             </Button>
           </form>
         </Box>

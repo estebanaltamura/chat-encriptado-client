@@ -10,6 +10,7 @@ import { Box, Button, Divider, TextField, Typography } from '@mui/material';
 // Icons Imports
 import { useState } from 'react';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
+import { ContentCopy } from '@mui/icons-material';
 
 export const FindingPair: React.FC = () => {
   // ** Hooks
@@ -25,35 +26,156 @@ export const FindingPair: React.FC = () => {
         flexDirection: 'column',
         width: '700px',
         height: 'fit-content',
-        padding: '40px',
+        padding: '25px 40px',
         alignItems: 'center',
         border: '1px solid black',
         borderRadius: '20px',
         marginTop: '70px',
       }}
     >
-      <Box sx={{ marginTop: '20px', display: 'flex', justifyContent: 'center', width: '120px' }}>
-        <img
-          className="findingPairLogoImage"
-          src="https://i.postimg.cc/bNy9QWtG/logo.jpg"
-          style={{ width: '100%' }}
-        />
+      <Box sx={{ display: 'flex', justifyContent: 'center', width: '120px' }}>
+        <img className="findingPairLogoImage" src="/logo.png" style={{ height: '100%' }} />
       </Box>
 
-      <Typography
+      {/*Test mode instructions */}
+
+      <Box
         sx={{
-          fontFamily: 'Inter',
-          fontSize: '14px',
-          lineHeight: '16px',
-          fontWeight: '400',
-          textAlign: 'center',
-          width: '100%',
-          maxWidth: '300px',
-          marginTop: '15px',
+          display: 'flex',
+          flexDirection: 'column',
+          border: '1px solid #1D61CF',
+          borderRadius: '10px',
+          width: '522px',
+          padding: '18px',
+          marginTop: '25px',
         }}
       >
-        You can talk with another user if you know their public key or the another user knows your public key
-      </Typography>
+        <Typography
+          sx={{
+            width: '100%',
+            textAlign: 'left',
+            lineHeight: '19px',
+            fontSize: '16px',
+            fontWeight: '500',
+            fontFamily: 'Work Sans',
+          }}
+        >
+          Si estás en esta página para testear el chat, seguí los pasos
+        </Typography>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            4
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            Copiá la clave pública de uno de los usuarios, que se encuentra debajo, y pegala en el navegador
+            contrario en la sección de “pegá aca tu clave pública”{' '}
+          </Typography>
+        </Box>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            5
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            En el navegador donde pegaste la clave, clickeá “enviar invitación”
+          </Typography>
+        </Box>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            6
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            Aceptá la invitación en el navegador contrario
+          </Typography>
+        </Box>
+
+        {/*paso */}
+        <Box sx={{ display: 'flex', marginTop: '15px', padding: '0 15px' }}>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+              textAlign: 'center',
+              lineHeight: '19px',
+              fontSize: '17px',
+              fontWeight: '700',
+            }}
+          >
+            7
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Work Sans',
+
+              textAlign: 'left',
+              lineHeight: '19px',
+              fontSize: '14px',
+              fontWeight: '400',
+              marginLeft: '10px',
+            }}
+          >
+            Ya podés empezar a chatear
+          </Typography>
+        </Box>
+      </Box>
 
       <Box
         sx={{
@@ -61,164 +183,288 @@ export const FindingPair: React.FC = () => {
           flexDirection: 'column',
           alignItems: 'center',
           marginTop: '30px',
-          backgroundColor: 'rgba(100, 26, 169, 0.10)',
+          backgroundColor: 'rgba(29,97,207,0.05)',
           borderRadius: '20px',
-          padding: '60px 40px',
+          padding: '30px 40px',
           width: '100%',
         }}
       >
         <Typography
           sx={{
-            fontFamily: 'Inter',
+            fontFamily: 'Work Sans',
             fontSize: '17px',
             lineHeight: '22px',
-            fontWeight: '700',
+            fontWeight: '500',
             textAlign: 'center',
             width: '100%',
             maxWidth: '450px',
           }}
         >
-          There are two ways to use encrypted chat: either by pasting your peer&apos;s public key into the
-          input or by sharing your key with your partner
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: 'Inter',
-            fontSize: '17px',
-            lineHeight: '22px',
-            fontWeight: '700',
-            textAlign: 'center',
-            width: '100%',
-            maxWidth: '500px',
-            marginTop: '15px',
-          }}
-        >
-          If you have your peer&apos;s key, paste it below
+          Hay dos metodos para usar Encryted chat
         </Typography>
 
         <Box
           sx={{
             display: 'flex',
+            flexDirection: 'column',
             position: 'relative',
             justifyContent: 'center',
             borderRadius: '7px',
             width: 'fit-content',
             height: 'fit-content',
-            margin: '20px auto 20px auto',
+            margin: '20px auto 0 auto',
           }}
         >
-          <form className="formFindingPair" onSubmit={tryPairingHandler}>
-            <TextField
-              name="findingPairInput"
-              type="text"
-              placeholder={!focused && value === '' ? 'Paste here the public key of your peer' : ''}
-              variant="outlined"
-              autoComplete="off"
-              autoCapitalize="none"
-              onChange={(e) => setValue(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              fullWidth
-              InputLabelProps={{
-                style: {
-                  textAlign: 'center',
-                },
-              }}
-              inputProps={{
-                style: {
-                  textAlign: 'center',
-                },
-              }}
-              sx={{
-                backgroundColor: 'white',
-                borderRadius: '10px',
-                color: 'black !important',
-
-                '& .MuiOutlinedInput-root': {
-                  '& fieldset': {
-                    borderRadius: '10px',
-
-                    borderColor: 'gray', // Color del borde por defecto
-                  },
-                  '&:hover fieldset': {
-                    borderColor: '#8F9FB8', // Color del borde en hover
-                  },
-                  '&.Mui-focused fieldset': {
-                    borderColor: '#8F9FB8', // Color del borde en focus
-                  },
-                  '&.Mui-focused.Mui-focusedVisible fieldset': {
-                    borderColor: '#8F9FB8', // Color del borde en focusVisible
-                  },
-                },
-                '& .MuiInputLabel-root': {
-                  color: 'black', // Color del label por defecto
-                  '&.Mui-focused': {
-                    color: 'green', // Color del label en focus
-                  },
-                },
-                '& input::placeholder': {
-                  textAlign: 'center', // Centrar el placeholder
-                },
-              }}
-            />
-
-            <Divider sx={{ border: '1px solid #4c4c4c', marginTop: '30px' }} />
-            <Box sx={{ margin: 'auto', cursor: 'pointer', marginTop: '30px' }} onClick={copyToClipboard}>
-              <AiOutlineCopy className="copyIcon" />
-              <Typography
-                sx={{
-                  display: 'inline',
-                  margin: 'auto',
-                  fontFamily: 'Inter',
-                  fontSize: '15px',
-                  fontWeight: 'bold',
-                  color: 'black',
-                }}
-              >
-                {copyPublicKeyText}
-              </Typography>
-            </Box>
-            <Button
-              sx={{
-                width: '100%',
-                height: '58px',
-                fontFamily: 'Inter',
-                fontSize: '16px',
-                textTransform: 'none',
-                backgroundColor: '#0f4478',
-                color: 'white',
-                marginTop: '35px',
-                border: '1px solid transparent',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                '&:hover': {
-                  backgroundColor: '#0f4478',
-                  color: '#34B9FA',
-                },
-              }}
-              type="submit"
-            >
-              START CHAT
-            </Button>
+          {/* Paso 1 */}
+          <Box sx={{ display: 'flex', border: '1px solid #1D61CF', borderRadius: '10px' }}>
             <Box
               sx={{
                 display: 'flex',
-                alignItems: 'center',
+                flexDirection: 'column',
                 justifyContent: 'center',
-                marginTop: '15px',
-                cursor: 'pointer',
-                width: '100%',
-                height: '40px',
-                textAlign: 'center',
-                fontSize: '16px',
-                fontFamily: 'Inter',
+                alignItems: 'center',
+                width: '64px',
+                minWidth: '64px',
+                height: '100%',
+                borderTopLeftRadius: '10px',
+                borderBottomLeftRadius: '10px',
+                backgroundColor: 'rgba(29,153,206,0.20)',
               }}
-              onClick={closeConnectionHandler}
             >
-              CANCEL
+              <Typography
+                sx={{ fontFamily: 'Work Sans', fontSize: '14px', fontWeight: '500', color: '#1D61CF' }}
+              >
+                Metodo
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: 'Work Sans',
+                  fontSize: '34px',
+                  lineHeight: '38px',
+                  fontWeight: '700',
+                  color: '#1D61CF',
+                }}
+              >
+                1
+              </Typography>
             </Box>
-          </form>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '20px 40px',
+                backgroundColor: 'white',
+                borderTopRightRadius: '10px',
+                borderBottomRightRadius: '10px',
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Work Sans',
+                  color: 'black',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
+              >
+                Copiá tu clave pública, compartila con el destinatario y esperá su invitación
+              </Typography>
+
+              <Button
+                onClick={copyToClipboard}
+                endIcon={<ContentCopy />}
+                sx={{
+                  display: 'flex',
+                  border: '1px solid #1D61CF',
+                  borderRadius: '5px',
+                  padding: '10px',
+                  marginTop: '19px',
+                }}
+              >
+                <Typography
+                  sx={{
+                    lineHeight: '18px',
+                    fontFamily: 'Work Sans',
+                    fontSize: '15px',
+                    fontWeight: '500',
+                    color: '#1D61CF',
+                    textTransform: 'none',
+                  }}
+                >
+                  {copyPublicKeyText}
+                </Typography>
+              </Button>
+            </Box>
+          </Box>
+
+          <Divider sx={{ border: '1px dotted #4c4c4c', marginTop: '30px' }} />
+
+          {/* Paso 2 */}
+
+          <Box sx={{ display: 'flex', border: '1px solid #1D61CF', borderRadius: '10px', marginTop: '30px' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '64px',
+                minWidth: '64px',
+                height: '100%',
+                borderTopLeftRadius: '10px',
+                borderBottomLeftRadius: '10px',
+                backgroundColor: 'rgba(29,153,206,0.20)',
+              }}
+            >
+              <Typography
+                sx={{ fontFamily: 'Work Sans', fontSize: '14px', fontWeight: '500', color: '#1D61CF' }}
+              >
+                Metodo
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: 'Work Sans',
+                  fontSize: '34px',
+                  lineHeight: '38px',
+                  fontWeight: '700',
+                  color: '#1D61CF',
+                }}
+              >
+                2
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '20px 40px',
+                backgroundColor: 'white',
+                borderTopRightRadius: '10px',
+                borderBottomRightRadius: '10px',
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Work Sans',
+                  color: 'black',
+                  fontSize: '14px',
+                  fontWeight: '500',
+                  width: '100%',
+                  textAlign: 'left',
+                }}
+              >
+                Pegá abajo la clave pública que te compartieron y presioná &apos;enviar invitación&apos;
+              </Typography>
+              <form className="formFindingPair" onSubmit={tryPairingHandler}>
+                <TextField
+                  name="findingPairInput"
+                  type="text"
+                  placeholder={!focused && value === '' ? 'Pegá aca la clave pública' : ''}
+                  variant="outlined"
+                  autoComplete="off"
+                  autoCapitalize="none"
+                  onChange={(e) => setValue(e.target.value)}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                  fullWidth
+                  InputLabelProps={{
+                    style: {
+                      textAlign: 'center',
+                    },
+                  }}
+                  inputProps={{
+                    style: {
+                      textAlign: 'center',
+                    },
+                  }}
+                  sx={{
+                    backgroundColor: 'white',
+                    borderRadius: '10px',
+                    color: 'black !important',
+
+                    '& .MuiOutlinedInput-root': {
+                      '& fieldset': {
+                        borderRadius: '10px',
+
+                        borderColor: 'gray', // Color del borde por defecto
+                      },
+                      '&:hover fieldset': {
+                        borderColor: '#8F9FB8', // Color del borde en hover
+                      },
+                      '&.Mui-focused fieldset': {
+                        borderColor: '#8F9FB8', // Color del borde en focus
+                      },
+                      '&.Mui-focused.Mui-focusedVisible fieldset': {
+                        borderColor: '#8F9FB8', // Color del borde en focusVisible
+                      },
+                    },
+                    '& .MuiInputLabel-root': {
+                      color: 'black', // Color del label por defecto
+                      '&.Mui-focused': {
+                        color: 'green', // Color del label en focus
+                      },
+                    },
+                    '& input::placeholder': {
+                      textAlign: 'center', // Centrar el placeholder
+                    },
+                  }}
+                />
+
+                <Button
+                  disabled={!value}
+                  sx={{
+                    width: '100%',
+                    height: '58px',
+                    fontFamily: 'Work Sans',
+                    fontSize: '14px',
+                    textTransform: 'none',
+                    backgroundColor: '#1D61CF',
+                    color: 'white',
+                    marginTop: '20px',
+                    border: '1px solid #8FDEFF',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    fontWeight: '700',
+                    '&:hover': {
+                      backgroundColor: '#0f4478',
+                      color: '#34B9FA',
+                    },
+                    '&.Mui-disabled': {
+                      backgroundColor: '#E0E0E0', // Gris claro
+                      color: '#A0A0A0', // Gris oscuro
+                      borderColor: '#E0E0E0', // Opcional: cambiar el borde también
+                    },
+                  }}
+                  type="submit"
+                >
+                  ENVIAR INVITACION
+                </Button>
+              </form>
+            </Box>
+          </Box>
         </Box>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginTop: '15px',
+          cursor: 'pointer',
+          width: '100%',
+          height: '40px',
+          textAlign: 'center',
+          fontSize: '16px',
+          fontFamily: 'Work Sans',
+        }}
+        onClick={closeConnectionHandler}
+      >
+        VOLVER
       </Box>
     </Box>
   );

@@ -94,7 +94,7 @@ export const ChatRoom: React.FC = () => {
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              fontFamily: 'Inter',
+              fontFamily: 'Work Sans',
               lineHeight: '24px',
 
               fontSize: '20px',
