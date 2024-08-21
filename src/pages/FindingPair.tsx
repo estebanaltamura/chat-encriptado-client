@@ -30,7 +30,7 @@ export const FindingPair: React.FC = () => {
         alignItems: 'center',
         border: '1px solid black',
         borderRadius: '20px',
-        marginTop: '70px',
+        margin: '70px 0',
       }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'center', width: '120px' }}>
@@ -88,7 +88,7 @@ export const FindingPair: React.FC = () => {
             }}
           >
             Copiá la clave pública de uno de los usuarios, que se encuentra debajo, y pegala en el navegador
-            contrario en la sección de “pegá aca tu clave pública”{' '}
+            contrario en la sección de “pegá aca la clave pública”{' '}
           </Typography>
         </Box>
 
@@ -216,7 +216,14 @@ export const FindingPair: React.FC = () => {
           }}
         >
           {/* Paso 1 */}
-          <Box sx={{ display: 'flex', border: '1px solid #1D61CF', borderRadius: '10px' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              border: '1px solid #1D61CF',
+              borderRadius: '10px',
+              height: '100%',
+            }}
+          >
             <Box
               sx={{
                 display: 'flex',
@@ -225,7 +232,7 @@ export const FindingPair: React.FC = () => {
                 alignItems: 'center',
                 width: '64px',
                 minWidth: '64px',
-                height: '100%',
+                minHeight: '100%',
                 borderTopLeftRadius: '10px',
                 borderBottomLeftRadius: '10px',
                 backgroundColor: 'rgba(29,153,206,0.20)',
@@ -282,6 +289,7 @@ export const FindingPair: React.FC = () => {
                   borderRadius: '5px',
                   padding: '10px',
                   marginTop: '19px',
+                  width: '100%',
                 }}
               >
                 <Typography
@@ -313,7 +321,7 @@ export const FindingPair: React.FC = () => {
                 alignItems: 'center',
                 width: '64px',
                 minWidth: '64px',
-                height: '100%',
+                minHeight: '100%',
                 borderTopLeftRadius: '10px',
                 borderBottomLeftRadius: '10px',
                 backgroundColor: 'rgba(29,153,206,0.20)',

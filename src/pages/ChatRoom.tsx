@@ -48,7 +48,7 @@ export const ChatRoom: React.FC = () => {
         justifyContent: 'center',
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#444444',
+        backgroundColor: 'white',
       }}
     >
       <Box
@@ -87,7 +87,7 @@ export const ChatRoom: React.FC = () => {
               cursor: 'pointer',
             }}
           >
-            {usersData.toAvatarType}
+            <img src={`/avatar${usersData.toAvatarType}.svg`} className="userAvatar" />
           </Box>
           <Typography
             sx={{

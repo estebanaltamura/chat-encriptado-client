@@ -43,6 +43,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
   } = props;
 
   useEffect(() => {
+    scrollTo(0, 0);
     const secondsToMiliSeconds = seconds * 1000;
 
     const timeOut = setTimeout(() => {
@@ -61,6 +62,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
         padding: '20px',
         backgroundColor: 'white',
         zIndex: '10',
+        overflowY: 'hidden',
       }}
     >
       <Box

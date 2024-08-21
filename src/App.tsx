@@ -42,7 +42,8 @@ const App: React.FC = () => {
           alignItems: 'center',
           textAlign: 'center',
           padding: '0 20px',
-          height: '100vh',
+          height: '100%',
+          minHeight: '100vh',
           width: '100vw',
         }}
       >
@@ -66,7 +67,9 @@ const App: React.FC = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          height: '100vh',
+          height: '100%',
+          minHeight: '100vh',
+          overflow: error ? 'hidden !important' : 'auto',
         }}
       >
         <BrowserRouter>

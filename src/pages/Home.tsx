@@ -26,7 +26,7 @@ export const Home: React.FC = () => {
         width: '700px',
         height: 'fit-content',
         border: '1px solid black',
-        marginTop: '70px',
+        margin: '70px 0px',
         borderRadius: '20px',
         padding: '40px',
       }}
@@ -85,7 +85,11 @@ export const Home: React.FC = () => {
               marginLeft: '10px',
             }}
           >
-            Clickeá este link. Te va a abrir una nueva pestaña con otro inicio de chat
+            Clickeá este{' '}
+            <a href="https://www.encrypted-chat.xyz/home" target="_black">
+              link
+            </a>
+            . Te va a abrir una nueva pestaña con otro inicio de chat
           </Typography>
         </Box>
 
