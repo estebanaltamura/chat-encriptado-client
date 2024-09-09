@@ -138,7 +138,7 @@ span {
   min-height: 38px;
   margin-right: 5px;
   color: #353535;
-  cursor: poWork Sans;
+  cursor: pointer;
 }
 
 .sendMessageIconMessageBar {

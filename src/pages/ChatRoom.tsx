@@ -84,10 +84,9 @@ export const ChatRoom: React.FC = () => {
               alignItems: 'center',
               border: '1px solid #4c4c4c',
               borderRadius: '50px',
-              cursor: 'pointer',
             }}
           >
-            {usersData.toAvatarType}
+            <img src={`/avatar${usersData.toAvatarType}.svg`} alt="" />
           </Box>
           <Typography
             sx={{

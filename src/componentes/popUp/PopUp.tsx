@@ -45,11 +45,30 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
   useEffect(() => {
     const secondsToMiliSeconds = seconds * 1000;
 
+    // Desplazar la ventana al inicio
+    window.scrollTo(0, 0);
+
+    // Función para evitar el scroll
+    const avoidScrolling = (event) => {
+      event.preventDefault();
+      window.scrollTo(0, 0); // Mantener la página en la parte superior
+    };
+
+    // Agregar el listener de scroll
+    window.addEventListener('scroll', avoidScrolling, { passive: false });
+
+    // Configurar un timeout que ejecutará el handler
     const timeOut = setTimeout(() => {
-      handlerTimeOut && handlerTimeOut();
+      if (handlerTimeOut) {
+        handlerTimeOut();
+      }
     }, secondsToMiliSeconds);
 
-    return () => clearTimeout(timeOut);
+    // Limpiar el listener y timeout cuando el componente se desmonta
+    return () => {
+      window.removeEventListener('scroll', avoidScrolling);
+      clearTimeout(timeOut);
+    };
   }, []);
 
   return (
@@ -61,6 +80,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
         padding: '20px',
         backgroundColor: 'white',
         zIndex: '10',
+        overflowY: 'hidden',
       }}
     >
       <Box
