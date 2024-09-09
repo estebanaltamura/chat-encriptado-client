@@ -43,6 +43,7 @@ export const PopUp: React.FC<IPopUpProps> = ({ props }) => {
   } = props;
 
   useEffect(() => {
+    scrollTo(0, 0);
     const secondsToMiliSeconds = seconds * 1000;
 
     // Desplazar la ventana al inicio
